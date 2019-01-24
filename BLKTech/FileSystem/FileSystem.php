@@ -39,6 +39,7 @@ class FileSystem extends Path
     public static function pathValidateExistence(Path $path)     {if(!self::pathExists($path))      throw new NotFoundException($path);}
                
 
+
         
     public static function pathExists(Path $path) {return file_exists($path->__toString());}       
     
@@ -136,9 +137,12 @@ class FileSystem extends Path
     public function getModificationTime()       {return self::pathGetModificationTime($this);}    
     public function setModificationTime($time)  {return self::pathSetModificationTime($this, $time);}    
     
-    protected function validateExistence() {self::pathValidateExistence($this);}
-    protected function validateReadable() {self::pathValidateReadable($this);}
-    protected function validateWritable() {self::pathValidateWritable($this);}
+    protected function validateExistence()     {self::pathValidateExistence($this);}
+    protected function validateReadable()      {self::pathValidateReadable($this);}
+    protected function validateWritable()      {self::pathValidateWritable($this);}
+    protected function validateIsDirectory()   {return self::pathValidateIsDirectory($this);}
+    protected function validateIsFile()        {return self::pathValidateIsFile($this);}    
+    protected function validateIsLink()        {return self::pathValidateIsLink($this);}    
     
     protected function __construct(Path $path)     {parent::__construct($path->pathElements,$path->getDirectorySeparator());}    
     public function combinePath(Path $subPath)  {return new FileSystem(parent::combinePath($subPath),parent::getDirectorySeparator());}        

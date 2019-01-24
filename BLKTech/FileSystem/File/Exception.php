@@ -13,13 +13,13 @@
  *
  */
 
-namespace BLKTech\FileSystem\Exception;
+namespace BLKTech\FileSystem\File;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
+ 
+class Exception extends \BLKTech\FileSystem\Exception {
 
-class NotIsWritableException extends Exception {
-    //put your code here
 }

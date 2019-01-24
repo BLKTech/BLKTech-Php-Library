@@ -13,7 +13,7 @@
  *
  */
 
-namespace BLKTech\Exception\FileSystem;
+namespace BLKTech\FileSystem\Exception;
 
 /**
  *
