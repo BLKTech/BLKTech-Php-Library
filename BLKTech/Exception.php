@@ -13,13 +13,13 @@
  *
  */
 
-namespace BLKTech\FileSystem\Exception;
+namespace BLKTech\PSR0\BLKTech;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
+ 
+class Exception extends \BLKTech\PSR0\Exception {
 
-class NotFoundException extends Exception {
-    //put your code here
 }
