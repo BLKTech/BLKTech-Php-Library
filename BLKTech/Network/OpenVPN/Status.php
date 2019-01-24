@@ -15,7 +15,7 @@
 
 namespace BLKTech\Network\OpenVPN;
 use BLKTech\DataType\Path;
-        
+use BLKTech\FileSystem\File\Reader;        
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
@@ -53,7 +53,7 @@ class Status
         $this->routes = array();
         $this->lines = array();
 
-        $reader = new \BLKTech\FileSystem\File\Reader($this->statusFilePath);
+        $reader = new Reader($this->statusFilePath);
 
         $clientsSection = false;
         $routingSection = false;
