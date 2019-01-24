@@ -13,13 +13,22 @@
  *
  */
 
-namespace BLKTech\PSR0;
+
+namespace BLKTech;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\Exception {
+
+class Exception extends \Exception
+{
+    public function __construct(string $message = "", int $code = 0, \Throwable $previous = null) 
+    {
+        if($code===0 || $code===null)
+            $code = crc32(get_class($this));
+        
+        parent::__construct($message, $code, $previous);
+    }
 
 }
