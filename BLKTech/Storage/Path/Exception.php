@@ -13,13 +13,13 @@
  *
  */
 
-namespace BLKTech\PSR0\BLKTech\Storage\Path;
+namespace BLKTech\Storage\Path;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Exception extends \BLKTech\PSR0\BLKTech\Storage\Exception {
+class Exception extends \BLKTech\Storage\Exception {
 
 }
