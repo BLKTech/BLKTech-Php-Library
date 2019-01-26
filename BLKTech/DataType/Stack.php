@@ -13,16 +13,19 @@
  *
  */
 
-namespace BLKTech\HTTP;
+namespace BLKTech\DataType;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Exception extends \BLKTech\Exception {
-    public static function throwByHTTPCode($code)
-    {
-        throw new self(Response::getCodeMessage($code), 10000+$code);
-    }
+abstract class Stack 
+{
+   public abstract function push($e);
+   public abstract function pop();
+   public abstract function peek();
+   
+   public abstract function clear();
+   public abstract function isEmpty();
 }

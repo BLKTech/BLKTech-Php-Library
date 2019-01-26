@@ -13,16 +13,13 @@
  *
  */
 
-namespace BLKTech\HTTP;
+namespace BLKTech\PSR0\BLKTech\Storage\String;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Exception extends \BLKTech\Exception {
-    public static function throwByHTTPCode($code)
-    {
-        throw new self(Response::getCodeMessage($code), 10000+$code);
-    }
+class Exception extends \BLKTech\PSR0\BLKTech\Storage\Exception {
+
 }
