@@ -13,13 +13,13 @@
  *
  */
 
-namespace BLKTech\PSR0\BLKTech\Storage\String\Driver\SQL;
+namespace BLKTech\Storage\String\Driver\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Exception extends \BLKTech\PSR0\BLKTech\Storage\String\Driver\Exception {
+class Exception extends \BLKTech\Storage\String\Driver\Exception {
 
 }
