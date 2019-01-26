@@ -13,13 +13,13 @@
  *
  */
 
-namespace BLKTech\PSR0\BLKTech\HTTP;
+namespace BLKTech\HTTP;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Exception extends \BLKTech\PSR0\BLKTech\Exception {
+class Exception extends \BLKTech\Exception {
 
 }
