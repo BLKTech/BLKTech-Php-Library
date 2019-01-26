@@ -42,7 +42,8 @@ class Dynamic extends \BLKTech\Storage\String\Driver\SQL
         return $this->driver->exists($_['table'], $_['where']);
     }
 
-    public function get($id) {
+    public function get($id) 
+    {
         $_ = $this->getTableAndWhere($id);
         return $this->driver->getText($_['table'], 'value', $_['where']);
     }
