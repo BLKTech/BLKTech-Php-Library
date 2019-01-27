@@ -51,11 +51,16 @@ class URL
             
     protected $urlElements;
  
-    protected $path;
-    protected $query;
+    private $service;
+    private $path;
+    private $query;
+    private $fragment;
+    
     protected function __construct($urlElements = array())
     {        
         $this->urlElements = $urlElements;
+        
+        $this->service = new Service($this->getElement('host'), $this->getElement('port'), $this->getElement('scheme'), $this->getElement('user'), $this->getElement('password'), '://');
         
         if(isset($urlElements['path']))
             $this->path = Path::getPathFromString($urlElements['path'], '/');
@@ -66,6 +71,8 @@ class URL
             $this->query = Query::getFromString ($urlElements['query']);
         else
             $this->query = Query::getFromString ('');
+        
+        $this->fragment = $this->getElement('fragment');
     }    
     
     private function getElement($element,$default=null,$prefix='',$suffix='') 
@@ -76,37 +83,21 @@ class URL
         return $prefix.$this->urlElements[$element].$suffix;
     }
     
-    public function getScheme()     {return $this->getElement('scheme');}
-    public function getHost()       {return $this->getElement('host');}
-    public function getPort()       {return $this->getElement('port');}
-    public function getUser()       {return $this->getElement('user');}
-    public function getPassword()   {return $this->getElement('password');}
-    public function getPath()       {return $this->path;}
-    public function getQuery()      {return $this->query;}
-    public function getFragment()   {return $this->getElement('fragment');}
+
    
     public function __toString() 
     { 
-        $scheme = $this->getElement('scheme','//','','://');  
         
-        $pass   = $this->getElement('password',':','@');                
-        if($pass==null)
-            $user   = $this->getElement('user','','','@');        
-        else
-            $user   = $this->getElement('user','','',$pass);        
-        
-        $host     = $this->getElement('host','');
-        $port     =  $this->getElement('port','',':');
-
-        $path     = $this->path->__toString(); 
-
+        $_ = $this->service->__toString() . $this->path->__toString();
+                
         $query    = $this->query->__toString();
         if(!empty($query))
-            $query = '?' . $query;
+            $_ = '?' . $query;
         
-        $fragment = $this->getElement('fragment','','#');
+        if(!empty($this->fragment))
+            $_ = '#' . $this->fragment;
 
-        return "$scheme$user$host$port$path$query$fragment"; 
+        return $_; 
     } 
     
     public function combineURL(URL $otherURL)
@@ -118,4 +109,33 @@ class URL
         $elements['path'] = $this->getPath()->combinePath($otherURL->getPath())->__toString();
         return new URL($elements);
     }
+    
+
+    public function getService()    {return $this->service;}
+    public function getPath()       {return $this->path;}
+    public function getQuery()      {return $this->query;}
+    public function getFragment()   {return $this->fragment;}
+    
+    public function setService($service) 
+    {
+        $this->service = $service;
+        return $this;
+    }
+    public function setPath($path) 
+    {
+        $this->path = $path;
+        return $this;
+    }
+    public function setQuery($query) 
+    {
+        $this->query = $query;
+        return $this;
+    }   
+    function setFragment($fragment) 
+    {
+        $this->fragment = $fragment;
+        return $this;
+    }
+
+
 }

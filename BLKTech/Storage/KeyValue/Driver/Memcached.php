@@ -1,27 +1,34 @@
 <?php
-
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
  */
 
 namespace BLKTech\Storage\KeyValue\Driver;
+use \BLKTech\DataType\Service;
 
 /**
- * Description of Memcached
  *
- * @author instalacion
+ * @author TheKito < blankitoracing@gmail.com >
  */
+ 
 class Memcached extends \BLKTech\Storage\KeyValue\Driver{
     
     private $memcached;
-    function __construct($servers = array('127.0.0.1')) 
-    {
-        $this->memcached = new \Memcached();
         
-        foreach ($servers as $server)
-            $this->memcached->addServer($server,11211);                
+    function __construct(Service $server)
+    {
+        $this->memcached = new \Memcached();        
+        $this->memcached->addServer($server->getHost(),$server->getPort());                
     }
 
     

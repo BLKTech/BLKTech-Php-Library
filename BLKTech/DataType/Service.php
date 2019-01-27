@@ -22,21 +22,22 @@ namespace BLKTech\DataType;
  
 class Service 
 {
-
+    
     private $host;
     private $port;
     private $scheme;
     private $user;
     private $passowrd;
-
+    private $schemeSeparator;
 
     
-    function __construct($host, $port, $scheme = null, $user = null, $passowrd = null, $schemeSeparator = '://') {
+    public function __construct($host, $port = null, $scheme = null, $user = null, $passowrd = null, $schemeSeparator = '://') {
         $this->host = $host;
         $this->port = $port;
         $this->scheme = $scheme;
         $this->user = $user;
-        $this->passowrd = $passowrd;                
+        $this->passowrd = $passowrd;       
+        $this->schemeSeparator = $schemeSeparator;
     }
 
     
@@ -87,5 +88,30 @@ class Service
 
 
 
-    
+    public function __toString() 
+    {
+        $_ = '';
+        
+        if($this->scheme!==NULL)
+            $_.= $this->scheme . $this->schemeSeparator;
+        
+        if($this->user!==NULL)
+        {
+            $_.= $this->user;
+            
+            if($this->passowrd!==NULL)
+                $_.= ':' . $this->passowrd;
+            
+            $_.= '@';
+        }
+        
+        if($this->host!==NULL)
+            $_.= $this->host;
+        
+        if($this->port!==NULL)
+            $_.= ':' . $this->port;
+        
+        
+    }
+
 }
