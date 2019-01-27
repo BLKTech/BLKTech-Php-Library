@@ -21,7 +21,7 @@ use \Psr\Log\LoggerInterface;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-abstract class Logger extends \BLKTech\Loader\Console implements LoggerInterface
+abstract class Logger extends \BLKTech\Logger\Console implements LoggerInterface
 {        
     
 }

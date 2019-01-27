@@ -22,7 +22,7 @@ use \BLKTech\DesignPattern\Singleton;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class Logger extends Singleton implements LoggerInterface
+class Console extends Singleton implements LoggerInterface
 {        
     
     private $ms=0;
