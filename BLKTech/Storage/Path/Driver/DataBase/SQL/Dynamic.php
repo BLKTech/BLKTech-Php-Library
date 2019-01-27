@@ -102,7 +102,7 @@ class Dynamic extends \BLKTech\Storage\Path\Driver\DataBase\SQL
         foreach ($path->getPathElements() as $element)
         {
             $idString = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($element));
-            $idParent = array_shift($this->driver->autoTable($this->getTableNameNode($level), array('idParent' => $idParent, 'idElement' => $idString[1], 'lenElement' => $idString[0]), array('id')));
+            $idParent = $this->driver->autoTable($this->getTableNameNode($level), array('idParent' => $idParent, 'idElement' => $idString[1], 'lenElement' => $idString[0]), array('id'))['id'];
 
             $level++;
         }
