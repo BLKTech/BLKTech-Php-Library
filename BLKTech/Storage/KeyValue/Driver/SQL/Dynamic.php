@@ -8,6 +8,7 @@
 
 namespace BLKTech\Storage\KeyValue\Driver\SQL;
 use BLKTech\DataBase\SQL\Driver\MySQL;
+use BLKTech\DataType\Integer;
 
 /**
  * Description of Dynamic
@@ -52,7 +53,7 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\SQL{
     {
         $_ = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($key));                      
         return array(
-            'table'=>$this->getTableNameString($_[0]),
+            'table'=>$this->getTableNameKeyValue($_[0]),
             'where'=>array('idKey'=>$_[1])
         );
     }
@@ -76,7 +77,7 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\SQL{
         $_ = 'blktech_storage_keyvalue__' . $length;
         
         if($this->checkTable($_))
-            $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $_ . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `idKey` int(11) UNSIGNED NOT NULL, `idValue` bigint(11) UNSIGNED NOT NULL) NOT NULL, PRIMARY KEY (id),UNIQUE (`value`)) ENGINE=MyISAM;");
+            $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $_ . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `idKey` int(11) UNSIGNED NOT NULL, `idValue` bigint(20) UNSIGNED NOT NULL, PRIMARY KEY (id),INDEX (`idKey`)) ENGINE=MyISAM;");
         
         return $_;        
     }    
