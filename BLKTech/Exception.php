@@ -25,10 +25,12 @@ class Exception extends \Exception
 {
     public function __construct(string $message = "", int $code = 0, \Throwable $previous = null) 
     {
-        if($code===0 || $code===null)
-            $code = crc32(get_class($this));
+        $classFullName = get_class($this);
         
-        parent::__construct($message, $code, $previous);
+        if($code===0 || $code===null)
+            $code = crc32($classFullName);
+        
+        parent::__construct($classFullName . ': ' . $message, $code, $previous);
     }
 
 }

@@ -13,7 +13,7 @@
  *
  */
 
-namespace BLKTech\Storage\KeyValue\Driver\DataBase\SQL;
+namespace BLKTech\Storage\KeyValue\Driver\DataBase;
 use \BLKTech\DataBase\SQL\Driver\MySQL;
 /**
  *
