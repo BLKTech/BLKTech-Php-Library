@@ -12,7 +12,7 @@ namespace BLKTech\Storage\String;
  * Description of Driver
  *
  */
-abstract class Driver {
+abstract class Driver implements \BLKTech\Storage\DriverInterface{
     
     public abstract function exists($id);
     public abstract function delete($id);

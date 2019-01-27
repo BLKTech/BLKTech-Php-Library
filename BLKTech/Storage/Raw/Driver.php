@@ -21,7 +21,7 @@ use BLKTech\Storage\Raw\Exception\CorruptedFileException;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-abstract class Driver
+abstract class Driver implements \BLKTech\Storage\DriverInterface
 {
     public abstract function exists($id);
     public abstract function delete($id);
