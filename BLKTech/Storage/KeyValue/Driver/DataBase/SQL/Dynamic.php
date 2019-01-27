@@ -58,8 +58,8 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL{
 
     public function set($key, $value) 
     {
-        $key_ = $this->string->set($key);
-        $value_ = $this->string->set($value);
+        $key_ = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($key));
+        $value_ = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($value));
         
         $id = $this->driver->autoTable($this->getTableNameKeyValue($key_[0]), array('idKey'=>$key_[1],'lenValue'=>$value_[0],'idValue'=>$value_[1]), array('id'))['id'];
                         

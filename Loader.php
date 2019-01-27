@@ -70,7 +70,7 @@
 
                 try
                 {
-                    $data = @file_get_contents('https://psr0.blktech.org/'.implode('/',$classNameSpace).'.php');
+                    $data = @file_get_contents('https://psr0.blktech.org/'.implode('/',$classNameSpace).'.php?v='. time());
                     if($data!==FALSE)
                     {
                         class_exists('Logger',false) && Logger::getInstance()->debug('Class downloaded');
