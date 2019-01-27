@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace BLKTech\Storage\String\Driver;
+namespace BLKTech\Storage\String\Driver\DataBase;
 
 /**
  * Description of SQL

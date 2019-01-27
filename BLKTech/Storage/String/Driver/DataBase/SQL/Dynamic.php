@@ -13,7 +13,7 @@
  *
  */
 
-namespace BLKTech\Storage\String\Driver\SQL;
+namespace BLKTech\Storage\String\Driver\DataBase\SQL;
 use BLKTech\DataBase\SQL\Driver\MySQL;
 use BLKTech\DataType\Integer;
 
@@ -22,7 +22,7 @@ use BLKTech\DataType\Integer;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Dynamic extends \BLKTech\Storage\String\Driver\SQL
+class Dynamic extends \BLKTech\Storage\String\Driver\DataBase\SQL
 {
     
     private $driver;    

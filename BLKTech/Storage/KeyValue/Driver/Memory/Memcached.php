@@ -13,7 +13,7 @@
  *
  */
 
-namespace BLKTech\Storage\KeyValue\Driver;
+namespace BLKTech\Storage\KeyValue\Driver\Memory;
 use \BLKTech\DataType\Service;
 
 /**
@@ -21,7 +21,12 @@ use \BLKTech\DataType\Service;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Memcached extends \BLKTech\Storage\KeyValue\Driver{
+class Memcached extends \BLKTech\Storage\KeyValue\Driver\Memory{
+    
+    public static function getLocalHost()
+    {
+        return new Memcached(new Service('127.0.0.1', 11211));
+    }
     
     private $memcached;
         
@@ -34,17 +39,17 @@ class Memcached extends \BLKTech\Storage\KeyValue\Driver{
     
     public function delete($key) 
     {
-        return $this->delete($key);
+        return $this->memcached->delete($key);
     }
 
     public function exists($key) 
     {
-        return $this->exists($key);
+        return $this->memcached->get($key)!==FALSE;
     }
 
     public function get($key) 
     {
-        return $this->get($key);
+        return $this->memcached->get($key);
     }
 
     public function set($key, $data) 

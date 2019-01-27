@@ -13,7 +13,7 @@
  *
  */
 
-namespace BLKTech\Storage\Path\Driver\SQL;
+namespace BLKTech\Storage\Path\Driver\DataBase\SQL;
 use BLKTech\DataBase\SQL\Driver\MySQL;
 use BLKTech\DataType\Path;
 
@@ -22,13 +22,15 @@ use BLKTech\DataType\Path;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Dynamic extends SQL
+class Dynamic extends \BLKTech\Storage\Path\Driver\DataBase\SQL
 {
     
     private $driver;    
+    private $string;
     public function __construct(MySQL $driver)
     {
         $this->driver = $driver;
+        $this->string = new \BLKTech\Storage\String\Driver\DataBase\SQL\Dynamic($driver);
     }
     
     private function checkTable($tableName)
@@ -120,6 +122,8 @@ class Dynamic extends SQL
         $idParent = 0;
         foreach ($path->getPathElements() as $element)
         {
+            $idString = $this->string->set($element);
+            
             $lenElement = strlen($element);        
             $idElement = array_shift($this->driver->autoTable($this->getTableNameElement($lenElement), array('value' => $element), array('id')));            
             $idParent = array_shift($this->driver->autoTable($this->getTableNameNode($level), array('idParent' => $idParent, 'idElement' => $idElement, 'lenElement' => $lenElement), array('id')));

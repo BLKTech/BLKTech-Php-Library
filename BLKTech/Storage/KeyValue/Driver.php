@@ -7,13 +7,14 @@
  */
 
 namespace BLKTech\Storage\KeyValue;
-
+use BLKTech\DataType\Service;
 /**
  * Description of Driver
  *
  */
 abstract class Driver {
     
+
     public abstract function exists($key);
     public abstract function delete($key);
     public abstract function get($key);

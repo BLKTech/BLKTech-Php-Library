@@ -13,7 +13,7 @@
  *
  */
 
-namespace BLKTech\Storage\KeyValue\Driver\SQL;
+namespace BLKTech\Storage\KeyValue\Driver\DataBase\SQL;
 use BLKTech\DataBase\SQL\Driver\MySQL;
 use BLKTech\DataType\Integer;
 
@@ -22,14 +22,14 @@ use BLKTech\DataType\Integer;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Dynamic extends \BLKTech\Storage\KeyValue\Driver\SQL{
+class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL{
     
     private $driver;    
     private $string;
     public function __construct(MySQL $driver)
     {
         $this->driver = $driver;
-        $this->string = new \BLKTech\Storage\String\Driver\SQL\Dynamic($driver);
+        $this->string = new \BLKTech\Storage\String\Driver\DataBase\SQL\Dynamic($driver);
     }
     
     public function delete($key) 

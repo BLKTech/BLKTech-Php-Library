@@ -13,13 +13,16 @@
  *
  */
 
-namespace BLKTech\Storage\KeyValue\Driver;
+namespace BLKTech\Storage\Path\Driver\DataBase;
+use BLKTech\Storage\Path\Driver;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-abstract class SQL extends \BLKTech\Storage\KeyValue\Driver{
-    //put your code here
+abstract class SQL extends Driver{
+
+
+
 }
