@@ -28,7 +28,7 @@ use BLKTech\DataBase\SQL\Exception\DeleteException;
  */
 
 
-class MySQL extends \BLKTech\DataBase\SQL\Driver
+class MySQL extends \BLKTech\DataBase\Driver
 {
 
     public static function getMySqlConnection($server = "127.0.0.1", $database = "test", $user = "test", $password = null)
