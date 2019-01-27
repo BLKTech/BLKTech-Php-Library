@@ -18,10 +18,10 @@ class Memcached extends \BLKTech\Storage\KeyValue\Driver{
     private $memcached;
     function __construct($servers = array('127.0.0.1')) 
     {
-        $this->memcached = new \Memcache();
+        $this->memcached = new \Memcached();
         
         foreach ($servers as $server)
-            $this->memcached->addServer($server);                
+            $this->memcached->addServer($server,11211);                
     }
 
     
