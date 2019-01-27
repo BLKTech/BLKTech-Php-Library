@@ -14,10 +14,10 @@ namespace BLKTech\Storage\KeyValue;
  */
 abstract class Driver {
     
-    public abstract function exists($id);
-    public abstract function delete($id);
-    public abstract function get($id);
-    public abstract function set($id,$data);
+    public abstract function exists($key);
+    public abstract function delete($key);
+    public abstract function get($key);
+    public abstract function set($key,$data);
     
     
 //    public abstract function spaceAvailable();  
