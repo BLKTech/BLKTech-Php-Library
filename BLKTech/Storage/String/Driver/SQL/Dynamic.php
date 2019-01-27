@@ -16,6 +16,7 @@
 namespace BLKTech\Storage\String\Driver\SQL;
 use BLKTech\DataBase\SQL\Driver\MySQL;
 use BLKTech\DataType\Integer;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
@@ -52,7 +53,7 @@ class Dynamic extends \BLKTech\Storage\String\Driver\SQL
     {
         $length = mb_strlen($string);
         $table = $this->getTableNameString($length);
-        $id = array_pop($this->driver->autoTable($table, array('value'=>$string), array('id')));
+        $id = $this->driver->autoTable($table, array('value'=>$string), array('id'))['id'];
         
         return Integer::unSignedInt32CombineIntoInt64($length, $id);
     }
@@ -61,7 +62,7 @@ class Dynamic extends \BLKTech\Storage\String\Driver\SQL
     {
         $_ = Integer::unSignedInt64UnCombineIntoInt32($id);                
         return array(
-            'table'=>$this->getTableNameString(mb_strlen($_[0])),
+            'table'=>$this->getTableNameString($_[0]),
             'where'=>array('id'=>$_[1])
         );
     }

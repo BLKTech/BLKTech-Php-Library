@@ -14,7 +14,7 @@
  *
  */
 
-namespace BLKTech\DesignPatterns;
+namespace BLKTech\DesignPattern;
 
 /**
  * Singleton Pattern
