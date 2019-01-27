@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace BLKTech\Storage\Link\DataBase;
+namespace BLKTech\Storage\Link\Driver;
 
 /**
  * Description of DataBase

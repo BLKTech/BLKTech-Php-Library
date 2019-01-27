@@ -9,7 +9,7 @@
 namespace BLKTech\Storage\Link\Driver\DataBase\SQL;
 use BLKTech\DataType\Integer;
 use BLKTech\DataBase\SQL\Driver\MySQL;
-use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic;
+use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
 
 
 /**
@@ -26,23 +26,23 @@ class Dynamic extends \BLKTech\Storage\Link\Driver\DataBase\SQL{
     public function __construct(MySQL $driver)
     {
         $this->driver = $driver;
-        $this->dynamic = new Dynamic($driver);
+        $this->dynamic = new MySQLDynamic($driver);
     }    
     
     public function delete($id) 
     {
-        return $this->dynamic->delete($this->tableNamePrefix,$id);
+        return $this->dynamic->delete($this::tableNamePrefix,$id);
     }
 
     public function exists($id) 
     {
-        return $this->dynamic->exists($this->tableNamePrefix,$id);
+        return $this->dynamic->exists($this::tableNamePrefix,$id);
     }
 
     public function get($id) 
     {
         $id_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        $row = $this->dynamic->get($this->tableNamePrefix,$id);
+        $row = $this->dynamic->get($this::tableNamePrefix,$id);
         return array(
             Integer::unSignedInt32CombineIntoInt64($id_[0], $row['idSourceLow']),
             Integer::unSignedInt32CombineIntoInt64($row['idDestinationHigh'], $row['idDestinationLow']),
@@ -61,7 +61,7 @@ class Dynamic extends \BLKTech\Storage\Link\Driver\DataBase\SQL{
             );
                 
         $this->createTable($idSource_[0]);
-        return $this->dynamic->set($this->tableNamePrefix, $idSource_[0], $data);
+        return $this->dynamic->set($this::tableNamePrefix, $idSource_[0], $data);
     }
    
     private function createTable($suffix)
