@@ -110,7 +110,7 @@
             if(!class_exists(implode("\\",$classNameSpace), false) && !interface_exists (implode("\\",$classNameSpace), false) &&! trait_exists(implode("\\",$classNameSpace), false) )
             {
                 class_exists('Logger',false) && Logger::getInstance()->emergency('Class not found');
-                throw new ClassNotFoundException(implode("\\",$classNameSpace));
+                throw new BLKTech\Loader\ClassNotFoundException(implode("\\",$classNameSpace));
             }
         }
     );
@@ -122,7 +122,7 @@
         class_exists('Logger');
         
         if(!method_exists('\Application','Main'))         
-            throw new StaticMethodNotFoundException('\Application::Main()');
+            throw new BLKTech\Loader\StaticMethodNotFoundException('\Application::Main()');
         
         \Application::Main();
     } 

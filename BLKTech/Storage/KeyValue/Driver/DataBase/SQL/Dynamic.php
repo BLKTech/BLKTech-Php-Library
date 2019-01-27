@@ -46,14 +46,16 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL{
 
     public function get($key) 
     {
-        $_ = $this->getTableAndWhere($key);        
-        return $this->string->get($this->driver->getText($_['table'], 'idValue', $_['where']));
+        $_ = $this->getTableAndWhere($key);
+        $_ = $this->driver->getRow($_['table'], array('lenValue','idValue'), $_['where']) ;        
+        return $this->string->get(Integer::unSignedInt32CombineIntoInt64($_['lenValue'], $_['idValue']));
     }
 
     public function set($key, $data) 
     {
+        $data = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($data));
         $_ = $this->getTableAndWhere($key);
-        $this->driver->autoInsert($_['table'], array_merge($_['where'], array('idValue'=> $this->string->set($data))));
+        $this->driver->autoInsert($_['table'], array_merge($_['where'], array('lenValue'=> $data[0], 'idValue'=> $data[1])));
     }
 
     private function getTableAndWhere($key)
@@ -84,7 +86,7 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL{
         $_ = 'blktech_storage_keyvalue__' . $length;
         
         if($this->checkTable($_))
-            $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $_ . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `idKey` int(11) UNSIGNED NOT NULL, `idValue` bigint(20) UNSIGNED NOT NULL, PRIMARY KEY (id),INDEX (`idKey`)) ENGINE=MyISAM;");
+            $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $_ . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `idKey` int(11) UNSIGNED NOT NULL, `lenValue` int(11) UNSIGNED NOT NULL, `idValue` int(11) UNSIGNED NOT NULL, PRIMARY KEY (id),INDEX (`idKey`)) ENGINE=MyISAM;");
         
         return $_;        
     }    
