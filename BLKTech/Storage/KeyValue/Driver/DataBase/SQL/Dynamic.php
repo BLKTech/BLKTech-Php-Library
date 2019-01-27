@@ -16,6 +16,8 @@
 namespace BLKTech\Storage\KeyValue\Driver\DataBase\SQL;
 use BLKTech\DataBase\SQL\Driver\MySQL;
 use BLKTech\DataType\Integer;
+use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
+
 
 /**
  *
@@ -28,31 +30,31 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL{
     
     private $driver;    
     private $string;
+    private $dynamic;
     public function __construct(MySQL $driver)
     {
         $this->driver = $driver;
         $this->string = new \BLKTech\Storage\String\Driver\DataBase\SQL\Dynamic($driver);
+        $this->dynamic = new MySQLDynamic($driver);
     }
     
     public function delete($id) 
     {
-        $_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        return $this->driver->delete($this->getTableNameKeyValue($_[0]), array('id'=>$_[1]));    
+        return $this->dynamic->delete($this::tableNamePrefix,$id);
     }
 
     public function exists($id) 
     {
-        $_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        return $this->driver->exists($this->getTableNameKeyValue($_[0]), array('id'=>$_[1]));
+        return $this->dynamic->exists($this::tableNamePrefix,$id);
     }
 
     public function get($id) 
     {
         $_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        $row_ = $this->driver->getRow($this->getTableNameKeyValue($_[0]), array('idKey','lenValue','idValue'),array('id'=>$_[1]));        
+        $row = $this->dynamic->get($this::tableNamePrefix,$id);
         return array(
-            $this->string->get(Integer::unSignedInt32CombineIntoInt64($_[0], $row_['idKey'])),
-            $this->string->get(Integer::unSignedInt32CombineIntoInt64($row_['lenValue'], $row_['idValue']))
+            $this->string->get(Integer::unSignedInt32CombineIntoInt64($_[0], $row['idKey'])),
+            $this->string->get(Integer::unSignedInt32CombineIntoInt64($row['lenValue'], $row['idValue']))
         );
     }
 
@@ -61,37 +63,35 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL{
         $key_ = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($key));
         $value_ = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($value));
         
-        $id = $this->driver->autoTable($this->getTableNameKeyValue($key_[0]), array('idKey'=>$key_[1],'lenValue'=>$value_[0],'idValue'=>$value_[1]), array('id'))['id'];
-                        
-        return Integer::unSignedInt32CombineIntoInt64($key_[0], $id);               
+        $data = array(
+            'idKey'=>$key_[1],
+            'lenValue'=>$value_[0],
+            'idValue'=>$value_[1]
+        );
+        
+        $this->createTable($key_[0]);
+        return $this->dynamic->set($this::tableNamePrefix, $key_[0], $data);
     }
 
 
-    private function checkTable($tableName)
+
+    
+    private function createTable($suffix)
     {
+        $tableName = self::tableNamePrefix . $suffix;
+                
         static $_ = null;
         
         if($_ === null)
             $_ = array();
         
-        if(isset($_[$tableName]))
-            return false;
-        else
-        {
-            $_[$tableName] = true;
-            return true;
-        }
-    }      
-    private function getTableNameKeyValue($length)
-    {
-        $_ = self::tableNamePrefix . $length;
+        if(!isset($_[$tableName]))        
+            $_[$tableName] = $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $tableName . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `idKey` int(11) UNSIGNED NOT NULL, `lenValue` int(11) UNSIGNED NOT NULL, `idValue` int(11) UNSIGNED NOT NULL, PRIMARY KEY (id),INDEX (`idKey`)) ENGINE=MyISAM;");
         
-        if($this->checkTable($_))
-            $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $_ . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `idKey` int(11) UNSIGNED NOT NULL, `lenValue` int(11) UNSIGNED NOT NULL, `idValue` int(11) UNSIGNED NOT NULL, PRIMARY KEY (id),INDEX (`idKey`)) ENGINE=MyISAM;");
-        
-        return $_;        
-    }
-
+        return $tableName;        
+    }  
+    
+    
     public function getKeys() 
     {
         $_ = array();
