@@ -57,4 +57,14 @@ class Memcached extends \BLKTech\Storage\KeyValue\Driver\Memory{
         return $this->memcached->set($key, $data);
     }
 
+    public function getKeys() 
+    {
+        throw new \BLKTech\NotImplementedException();       
+    }
+
+    public function getValues($key) 
+    {
+        throw new \BLKTech\NotImplementedException();        
+    }
+
 }

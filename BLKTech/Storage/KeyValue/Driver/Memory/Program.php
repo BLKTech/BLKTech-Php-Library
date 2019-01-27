@@ -22,26 +22,49 @@ namespace BLKTech\Storage\KeyValue\Driver\Memory;
  
 class Program extends \BLKTech\Storage\KeyValue\Driver\Memory{
     
-    private $cache = array();
+    private $keys = array();
+    private $values = array();
     
-    public function delete($key) 
+    public function delete($id) 
     {
-        unset($this->cache[$key]);
+        $id_ = \BLKTech\DataType\Integer::unSignedInt64UnCombineIntoInt32($id);
+        unset($this->values[$id_[1]]);
     }
 
-    public function exists($key) 
+    public function exists($id) 
     {
-        return isset($this->cache[$key]);
+        $id_ = \BLKTech\DataType\Integer::unSignedInt64UnCombineIntoInt32($id);
+        return isset($this->keys[$id_[0]]) && isset($this->values[$id_[1]]);
     }
 
-    public function get($key) 
+    public function get($id) 
     {
-        return $this->cache[$key];
+        $id_ = \BLKTech\DataType\Integer::unSignedInt64UnCombineIntoInt32($id);
+        return array(
+            $this->keys[$id_[0]],
+            $this->values[$id_[1]]
+        );
     }
 
-    public function set($key, $data) 
+    public function set($key, $value) 
     {
-        $this->cache[$key] = $data;
+        if(!in_array($key, $this->keys))
+            $this->keys[] = $key;
+        
+        if(!in_array($value, $this->values))
+            $this->values[] = $value;
+        
+        return \BLKTech\DataType\Integer::unSignedInt32CombineIntoInt64(array_search($key, $this->keys) , array_search($value, $this->values));
+    }
+
+    public function getKeys() 
+    {
+        return $this->keys;      
+    }
+
+    public function getValues($key) 
+    {
+        throw new \BLKTech\NotImplementedException();
     }
 
 }
