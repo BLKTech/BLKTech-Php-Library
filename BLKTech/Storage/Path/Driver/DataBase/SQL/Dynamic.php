@@ -16,6 +16,7 @@
 namespace BLKTech\Storage\Path\Driver\DataBase\SQL;
 use BLKTech\DataBase\SQL\Driver\MySQL;
 use BLKTech\DataType\Path;
+use BLKTech\DataType\Integer;
 
 /**
  *
@@ -48,30 +49,12 @@ class Dynamic extends \BLKTech\Storage\Path\Driver\DataBase\SQL
             return true;
         }
     }        
-    private function getTableNameHash($hash)
-    {
-        $_ = 'blktech_storage_path_hash__' . substr($hash, 0, 2);
-        
-        if($this->checkTable($_))
-            $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $_ . "` (`id` int(11) NOT NULL AUTO_INCREMENT, `idParent` int(11) NOT NULL, `level` int(11) NOT NULL, `hash` char(40) NOT NULL, PRIMARY KEY (id),UNIQUE (`hash`),UNIQUE (`idParent`,`level`)) ENGINE=MyISAM");
-        
-        return $_;
-    }
     private function getTableNameNode($level)
     {
-        $_ = 'blktech_storage_path_tree__' . $level;
-        
-        if($this->heckTable($_))
-            $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $_ . "` (`id` int(11) NOT NULL AUTO_INCREMENT, `idParent` int(11) NOT NULL, `idElement` int(11) NOT NULL, `lenElement` int(11) NOT NULL, PRIMARY KEY (id),UNIQUE (`idParent`,`idElement`,`lenElement`)) ENGINE=MyISAM");
-        
-        return $_;        
-    }
-    private function getTableNameElement($lenElement)
-    {
-        $_ = 'blktech_storage_path_element__' . $lenElement;
+        $_ = 'blktech_storage_path__' . $level;
         
         if($this->checkTable($_))
-            $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $_ . "` (`id` int(11) NOT NULL AUTO_INCREMENT, `value` char(" . $lenElement . ") NOT NULL, PRIMARY KEY (id),UNIQUE (`value`)) ENGINE=MyISAM;");
+            $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $_ . "` (`id` int(11) NOT NULL AUTO_INCREMENT, `idParent` int(11) NOT NULL, `idElement` int(11) NOT NULL, `lenElement` int(11) NOT NULL, PRIMARY KEY (id),UNIQUE (`idParent`,`idElement`,`lenElement`)) ENGINE=MyISAM");
         
         return $_;        
     }
@@ -93,21 +76,17 @@ class Dynamic extends \BLKTech\Storage\Path\Driver\DataBase\SQL
 
     public function get($id) 
     {
-        $row = $this->getHashData($id);
-
-        if ($row === null)
-            return null;
-
+        $row = Integer::unSignedInt64UnCombineIntoInt32($id);
         $stringPath = '';
 
-        $level = $row['level'];
-        $idParent = $row['idParent'];
+        $level = $row[0];
+        $idParent = $row[1];
         while ($level >= 0)
         {
             $rowTree = $this->driver->getRow($this->getTableNameNode($level), array('idParent', 'idElement', 'lenElement'), array('id' => $idParent));
 
-            $element = $this->driver->getText($this->getTableNameElement($rowTree['lenElement']), 'value', array('id' => $rowTree['idElement']));
-
+            $element = $this->string->get(Integer::unSignedInt32CombineIntoInt64($rowTree['lenElement'], $rowTree['idElement']));
+            
             $stringPath = $element . DIRECTORY_SEPARATOR . $stringPath;
 
             $idParent = $rowTree['idParent'];
@@ -122,37 +101,27 @@ class Dynamic extends \BLKTech\Storage\Path\Driver\DataBase\SQL
         $idParent = 0;
         foreach ($path->getPathElements() as $element)
         {
-            $idString = $this->string->set($element);
-            
-            $lenElement = strlen($element);        
-            $idElement = array_shift($this->driver->autoTable($this->getTableNameElement($lenElement), array('value' => $element), array('id')));            
-            $idParent = array_shift($this->driver->autoTable($this->getTableNameNode($level), array('idParent' => $idParent, 'idElement' => $idElement, 'lenElement' => $lenElement), array('id')));
+            $idString = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($element));
+            $idParent = array_shift($this->driver->autoTable($this->getTableNameNode($level), array('idParent' => $idParent, 'idElement' => $idString[1], 'lenElement' => $idString[0]), array('id')));
 
             $level++;
         }
 
-        $hash = $path->getHash(new Hash('SHA1'));
-
-        $this->driver->autoInsert($this->getTableNameHash($hash), array('hash' => $hash, 'idParent' => $idParent, 'level' => $level - 1));
-
-        return $hash;
+        return Integer::unSignedInt32CombineIntoInt64($level, $idParent);
     }
     public function getChilds($id)
     {
-        $basePath = $this->getPathByHash($id);
+        $row = Integer::unSignedInt64UnCombineIntoInt32($id);
 
-        $row = $this->getHashData($id);
 
-        if ($row === null)
-            return null;
-
-        $level = $row['level'];
-        $idParent = $row['idParent'];
+        $level = $row[0];
+        $idParent = $row[1];
 
         $_ = array();
 
         foreach ($this->driver->select($this->getTableNameNode($level + 1), array('idElement', 'lenElement'), array('idParent' => $idParent)) as $row)
-            $_[] = $basePath->getChild($this->driver->getText($this->getTableNameElement($row['lenElement']), 'value', array('id' => $row['idElement'])));
+            $_[] = $this->string->get (Integer::unSignedInt32CombineIntoInt64 ($row['lenElement'], $row['idElement']));
+                
 
         return $_;
     }
