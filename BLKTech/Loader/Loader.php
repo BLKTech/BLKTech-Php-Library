@@ -29,6 +29,7 @@ use \BLKTech\DesignPattern\Singleton;
 
 class Loader extends Singleton
 {        
+
     /**
      * An associative array where the key is a namespace prefix and the value
      * is an instance of Library class.
@@ -37,20 +38,13 @@ class Loader extends Singleton
      */
     protected $libraries = array();    
     
-    /**
-     * Register loader with SPL autoloader stack.
-     *
-     * @return void
-     */    
-    public function register()
+    protected function __construct() 
     {
-        static $registered = FALSE;
-        
-        if($registered)
-            return;
-        
-        $registered = spl_autoload_register(array($this, 'loadClass'));
+        parent::__construct();
+        spl_autoload_register(array($this, 'loadClass'));
+        $this->libraries[] = new Library(Path::getPathFromString('/BLKTech'), __DIR__ . '../', 'https://psr0.blktech.com');
     }
+
     
     /**
      * Adds a Library
@@ -74,7 +68,7 @@ class Loader extends Singleton
     {
         self::log('SPL Loading ' . $classNameSpace);
         
-        $classPath = Path::getPathFromString($classNameSpace);
+        $classPath = Path::getPathFromString($classNameSpace,"\\");
         
         $nameSpacePath = $classPath->getParent();
         $middle = array();

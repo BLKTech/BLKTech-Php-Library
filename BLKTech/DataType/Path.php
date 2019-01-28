@@ -72,7 +72,7 @@ class Path
     public function getHash(\Cryptography\Hash $hash) {return $hash->calc($this->__toString());}   
     public function getUID() {return implode('#', $this->pathElements);}   
     
-    function setDirectorySeparator($directorySeparator) {$this->directorySeparator = $directorySeparator;}
+    public function setDirectorySeparator($directorySeparator) {$this->directorySeparator = $directorySeparator;}
 
 
 }
