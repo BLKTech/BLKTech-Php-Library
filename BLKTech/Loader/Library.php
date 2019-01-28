@@ -33,8 +33,14 @@ class Library
         $this->namespace = $namespace;
         $this->path = $path;
         $this->url = $url;
+        
+        $this->namespace->setDirectorySeparator("\\");        
     }
 
-    
+    public function getNamespace() {return $this->namespace;}
+    public function getPath() {return $this->path;}
+    public function getUrl() {return $this->url;}
+
+
 
 }

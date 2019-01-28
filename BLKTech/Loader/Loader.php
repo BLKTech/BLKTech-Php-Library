@@ -14,7 +14,10 @@
  */
 
 namespace BLKTech\Loader;
+use BLKTech\Loader\Library;
+use \BLKTech\DataType\Path;
 use \BLKTech\DesignPattern\Singleton;
+
 
 /**
  * Description of Loader
@@ -25,6 +28,14 @@ use \BLKTech\DesignPattern\Singleton;
 
 class Loader extends Singleton
 {        
+    /**
+     * An associative array where the key is a namespace prefix and the value
+     * is an instance of Library class.
+     *
+     * @var array
+     */
+    protected $libraries = array();    
+    
     /**
      * Register loader with SPL autoloader stack.
      *
@@ -40,5 +51,64 @@ class Loader extends Singleton
         $registered = spl_autoload_register(array($this, 'loadClass'));
     }
     
+    /**
+     * Adds a Library
+     *
+     * @param Library $library
+     * @return void
+     */
+    public function addLibrary(Library $library)
+    {
+        $this->libraries[$library->getNamespace()->__toString()] = $library;
+    }    
     
+    /**
+     * Loads the class file for a given class name.
+     *
+     * @param string $class The fully-qualified class name.
+     * @return mixed The mapped file name on success, or boolean false on
+     * failure.
+     */
+    public function loadClass($class)
+    {
+        $classPath = Path::getPathFromString($class);
+        
+        $nameSpacePath = $classPath->getParent();
+        $middle = array();
+        while(!$nameSpacePath->isRoot())
+        {
+            if(isset($this->libraries[$nameSpacePath->__toString()]))
+            {
+                $library = $this->libraries[$nameSpacePath->__toString()];
+                
+                $basePath = $library->getPath();
+                error_log($basePath->__toString());
+                
+                $middlePath = Path::getPathFromString(implode(DIRECTORY_SEPARATOR, $middle));
+                error_log($middlePath->__toString());
+                
+                $className = $classPath->getName();
+                error_log($className->__toString());
+
+                
+                $filePath = $basePath->combinePath($middlePath)->combinePath($className);
+                error_log($filePath->__toString());
+                
+                
+                var_dump("BASE:" . $nameSpacePath->__toString());
+                print_r($middle);                
+                var_dump("CLASE:" . $classPath->getName());
+                
+                
+                
+                
+                
+                break;
+            }            
+            
+            $middle[] = $nameSpacePath->getName();
+            $nameSpacePath = $nameSpacePath->getParent();
+        }
+    }
+
 }

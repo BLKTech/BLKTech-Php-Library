@@ -61,7 +61,7 @@ class Path
         $this->pathElements = $pathElements;
     }    
     public function isRoot()                    {return count($this->pathElements)==0;}    
-    public function getName()                   {return end(pathElements);}    
+    public function getName()                   {return end($this->pathElements);}    
     public function getChild($name)             {return new Path(array_merge($this->pathElements,array($name)) , $this->directorySeparator);}    
     public function getParent()                 {if($this->isRoot())return null ; return new Path(array_slice ($this->pathElements, 0, count($this->pathElements)-1, true) , $this->directorySeparator);}    
     public function __toString()                {return $this->directorySeparator . implode($this->directorySeparator, $this->pathElements);}    
