@@ -71,4 +71,8 @@ class Path
     public function getPathElement($index)      {return isset($this->pathElements[$index])?$this->pathElements[$index]:null;}
     public function getHash(\Cryptography\Hash $hash) {return $hash->calc($this->__toString());}   
     public function getUID() {return implode('#', $this->pathElements);}   
+    
+    function setDirectorySeparator($directorySeparator) {$this->directorySeparator = $directorySeparator;}
+
+
 }
