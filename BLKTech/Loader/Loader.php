@@ -136,9 +136,10 @@ class Loader extends Singleton
         }      
         elseif($library->getUrl()!==NULL)
         {
-            self::log('File Not Found, Trying Download');
             $fileURL = self::getFileURL($library, $middle, $className);
-            $data = @file_get_contents($fileURL->__toString());
+            $url = $fileURL->__toString();
+            self::log('File Not Found, Trying Download: '.$url);            
+            $data = @file_get_contents($url);
             
             if($data!==FALSE && self::writeClass($filePath, $data))
             {   
