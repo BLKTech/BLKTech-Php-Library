@@ -111,7 +111,7 @@ class Service
         if($this->port!==NULL)
             $_.= ':' . $this->port;
         
-        
+        return $_;
     }
 
 }
