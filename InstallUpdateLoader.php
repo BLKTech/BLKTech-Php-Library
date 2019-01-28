@@ -32,7 +32,7 @@ foreach($clasess as $class)
         continue;
     }    
     
-    $data = file_get_contents($url);
+    $data = file_get_contents($url . '?time=' . time());
     if($data===FALSE)
     {
         error_log("Download ERROR");
@@ -50,7 +50,7 @@ foreach($clasess as $class)
     require_once $file;
     error_log('OK');
 }
-error_log("================================ Install Finish ================================");
+error_log("================================ Install Finished ================================");
 if($ok)
 {
     error_log("OK");
