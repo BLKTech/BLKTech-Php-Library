@@ -55,7 +55,6 @@ if($ok)
 {
     error_log("OK");
     $loader = BLKTech\Loader\Loader::getInstance();
-    $loader->register();
     \BLKTech\Logger\Console::getInstance()->info('Core Ready');
 }
 else

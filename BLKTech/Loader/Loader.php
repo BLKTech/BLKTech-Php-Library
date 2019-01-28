@@ -42,7 +42,11 @@ class Loader extends Singleton
     {
         parent::__construct();
         spl_autoload_register(array($this, 'loadClass'));
-        $this->libraries[] = new Library(Path::getPathFromString('/BLKTech'), __DIR__ . '../', 'https://psr0.blktech.com');
+        $this->addLibrary(new Library(
+                    Path::getPathFromString('/BLKTech'), 
+                    Path::getPathFromString(__DIR__ . '../'), 
+                    URL::getFromString('https://psr0.blktech.com/BLKTech')
+                ));
     }
 
     
