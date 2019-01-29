@@ -16,6 +16,7 @@
 namespace BLKTech\Storage\String\Driver\DataBase\SQL;
 use BLKTech\DataBase\SQL\Driver\MySQL;
 use BLKTech\DataType\Integer;
+use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
 
 /**
  *
@@ -26,9 +27,11 @@ class Dynamic extends \BLKTech\Storage\String\Driver\DataBase\SQL
 {
     
     private $driver;    
+    private $dynamic;
     public function __construct(MySQL $driver)
     {
         $this->driver = $driver;
+        $this->dynamic = new MySQLDynamic($driver);
     }
 
     public function delete($id) 

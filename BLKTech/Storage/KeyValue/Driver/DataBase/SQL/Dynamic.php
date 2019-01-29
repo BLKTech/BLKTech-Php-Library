@@ -35,23 +35,23 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL{
     {
         $this->driver = $driver;
         $this->string = new \BLKTech\Storage\String\Driver\DataBase\SQL\Dynamic($driver);
-        $this->dynamic = new MySQLDynamic($driver);
+        $this->dynamic = new MySQLDynamic($driver, $this::tableNamePrefix);
     }
     
     public function delete($id) 
     {
-        return $this->dynamic->delete($this::tableNamePrefix,$id);
+        return $this->dynamic->delete($id);
     }
 
     public function exists($id) 
     {
-        return $this->dynamic->exists($this::tableNamePrefix,$id);
+        return $this->dynamic->exists($id);
     }
 
     public function get($id) 
     {
         $_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        $row = $this->dynamic->get($this::tableNamePrefix,$id);
+        $row = $this->dynamic->get($id);
         return array(
             $this->string->get(Integer::unSignedInt32CombineIntoInt64($_[0], $row['idKey'])),
             $this->string->get(Integer::unSignedInt32CombineIntoInt64($row['lenValue'], $row['idValue']))
@@ -70,7 +70,7 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL{
         );
         
         $this->createTable($key_[0]);
-        return $this->dynamic->set($this::tableNamePrefix, $key_[0], $data);
+        return $this->dynamic->set($key_[0], $data);
     }
 
 
