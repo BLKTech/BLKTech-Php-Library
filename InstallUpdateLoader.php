@@ -11,6 +11,7 @@ $clasess = array(
          'BLKTech/DataType/URL',
          'BLKTech/Loader/Library',
          'BLKTech/Loader/Loader',
+         'BLKTech/Loader/PreLoader'
 );
 
 $ok = true;
@@ -47,14 +48,13 @@ foreach($clasess as $class)
         continue;
     }            
     
-    require_once $file;
     error_log('OK');
 }
 error_log("================================ Install Finished ================================");
 if($ok)
 {
     error_log("OK");
-    BLKTech\Loader\Loader::getInstance();
+    require_once $libsPath . '/BLKTech/Loader/PreLoader.php';
     \BLKTech\Logger\Console::getInstance()->info('Core Ready');
 }
 else

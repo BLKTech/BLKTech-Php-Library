@@ -19,7 +19,6 @@ use \BLKTech\DataType\URL;
 use \BLKTech\DataType\Path;
 use \BLKTech\DesignPattern\Singleton;
 
-
 /**
  * Description of Loader
  *
