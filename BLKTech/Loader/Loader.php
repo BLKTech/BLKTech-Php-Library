@@ -44,9 +44,14 @@ class Loader extends Singleton
         spl_autoload_register(array($this, 'loadClass'));
         $this->addLibrary(new Library(
                     Path::getPathFromString('/BLKTech'), 
-                    Path::getPathFromString(__DIR__ . '../'), 
-                    URL::getFromString('https://psr0.blktech.com/BLKTech')
+                    Path::getPathFromString(__DIR__ . '/../'), 
+                    URL::getFromString('https://psr0.blktech.org/BLKTech')
                 ));
+        $this->addLibrary(new Library(
+                    Path::getPathFromString('/Psr'), 
+                    Path::getPathFromString(__DIR__ . '/../../Psr'), 
+                    URL::getFromString('https://psr0.blktech.org/Psr')
+                ));        
     }
 
     
@@ -95,7 +100,7 @@ class Loader extends Singleton
 
     private static function getFilePath(Library $library,$middle,$className)
     {
-        $basePath = $library->getPath();
+        $basePath = $library->getPath();        
         $middlePath = Path::getPathFromString(implode(DIRECTORY_SEPARATOR, $middle));
         $classNamePath = Path::getPathFromString($className);       
         return $basePath->combinePath($middlePath)->combinePath($classNamePath);        

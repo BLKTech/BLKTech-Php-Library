@@ -54,7 +54,7 @@ error_log("================================ Install Finished ===================
 if($ok)
 {
     error_log("OK");
-    $loader = BLKTech\Loader\Loader::getInstance();
+    BLKTech\Loader\Loader::getInstance();
     \BLKTech\Logger\Console::getInstance()->info('Core Ready');
 }
 else
