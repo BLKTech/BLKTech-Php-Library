@@ -14,6 +14,12 @@ namespace BLKTech\Cryptography;
  * @author instalacion
  */
 class OneTimePassword {
+    
+    private static function combineStrings($passwordHash, $timeHash)
+    {
+        return $passwordHash.$timeHash.$passwordHash;
+    }
+    
     private $hashAlgorithm;
     private $passwordHash;
     private $passwordCurrent;
@@ -62,7 +68,7 @@ class OneTimePassword {
     }
     private function getSubTime()
     {
-        return $this->getTime() & $this->timeDivider;
+        return $this->getTime() / $this->timeDivider;
     }
   
     public function getOneTimePassword(int $timeOffset = null)
@@ -75,8 +81,9 @@ class OneTimePassword {
         if($this->passwordCurrent === null || $this->timeCurrent != $timeCurrent)
         {
             $this->timeCurrent = $timeCurrent;
-            
-            //
+            $timeHash = $this->hashAlgorithm->calc($timeCurrent);
+            var_dump("Time Hash HEX:".$timeHash);            
+            $this->passwordCurrent = $this->hashAlgorithm->calc(self::combineStrings($this->passwordHash, $timeHash));                        
         }
         
         
