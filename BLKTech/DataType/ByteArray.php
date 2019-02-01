@@ -15,13 +15,22 @@ namespace BLKTech\DataType;
  */
 class ByteArray 
 {
-    public static function fromInt(int $number)
+    public static function fromNumber(int $number)
     {
-        return unpack("C*", pack("L", $number));
+        $_ = array();
+        foreach (str_split(hex2bin(dechex($number))) as $byte)
+            $_[] = hexdec (bin2hex ($byte));
+        
+        return $_;
     }
     
-    public static function toLong(array $number)
+    public static function toNumber(array $bytes)
     {
-        return unpack("L",pack("C*",$number[3],$number[2],$number[1],$number[0]));
+        $hex = '';
+        foreach ($bytes as $byte)        
+            $hex .= str_pad(dechex($byte), 2, 0, STR_PAD_LEFT); 
+        
+        return hexdec(hexdec($hex));
+
     }    
 }
