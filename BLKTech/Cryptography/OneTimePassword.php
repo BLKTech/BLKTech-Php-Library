@@ -15,11 +15,7 @@ namespace BLKTech\Cryptography;
  */
 class OneTimePassword {
     
-    private static function combineStrings($passwordHash, $timeHash)
-    {
-        return $passwordHash.$timeHash.$passwordHash;
-    }
-    
+ 
     private $hashAlgorithm;
     private $passwordHash;
     private $passwordCurrent;
@@ -68,7 +64,7 @@ class OneTimePassword {
     }
     private function getSubTime()
     {
-        return $this->getTime() / $this->timeDivider;
+        return round($this->getTime() / $this->timeDivider,0,PHP_ROUND_HALF_DOWN);
     }
   
     public function getOneTimePassword(int $timeOffset = null)
@@ -82,8 +78,7 @@ class OneTimePassword {
         {
             $this->timeCurrent = $timeCurrent;
             $timeHash = $this->hashAlgorithm->calc($timeCurrent);
-            var_dump("Time Hash HEX:".$timeHash);            
-            $this->passwordCurrent = $this->hashAlgorithm->calc(self::combineStrings($this->passwordHash, $timeHash));                        
+            $this->passwordCurrent = $this->hashAlgorithm->calc($this->passwordHash.$timeHash.$this->passwordHash);                        
         }
         
         
@@ -91,4 +86,15 @@ class OneTimePassword {
     }
 
 
+    public function debug()
+    {
+        var_dump("===========================================");
+        var_dump("Time System: ".time());  
+        var_dump("Time Offset: ".$this->getTime());  
+        var_dump("Time Part:   ".$this->getSubTime());  
+        var_dump("Time Hash:   ".$this->hashAlgorithm->calc($this->getSubTime())); 
+        var_dump("Pass Hash:   ".$this->passwordHash); 
+        var_dump("OTP  Hash:   ".$this->getOneTimePassword()); 
+        var_dump("===========================================");
+    }
 }
