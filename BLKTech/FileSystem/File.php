@@ -14,7 +14,7 @@
  */
 
 namespace BLKTech\FileSystem;
-use \BLKTech\Type\Path;
+use \BLKTech\DataType\Path;
 use BLKTech\FileSystem\Exception\IOException;
 use BLKTech\FileSystem\Exception\NotIsFileException;
 use BLKTech\FileSystem\Exception\CopyFileException;
@@ -27,6 +27,12 @@ use BLKTech\FileSystem\Exception\CreateFileException;
 
 class File extends FileSystem
 {
+    public static function getFromStringPath($stringPath)
+    {
+        return new self(Path::getPathFromString($stringPath));
+    }
+    
+    
     public static function pathFileSize(Path $path)
     {
         self::pathValidateReadable($path);        

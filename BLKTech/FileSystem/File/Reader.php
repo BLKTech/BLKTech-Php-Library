@@ -42,7 +42,7 @@ class Reader extends \BLKTech\FileSystem\File
         if($this->eof())
             return null;
         
-        $line = fgets($this->handle, $maxLength);
+        $line = trim(str_replace("\n", '', str_replace("\r", '', fgets($this->handle, $maxLength))));
         
         if($line===FALSE)
             throw new IOException($this->__toString());        

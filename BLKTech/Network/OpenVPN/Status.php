@@ -64,7 +64,6 @@ class Status
         while(!$reader->eof())
         {
             $line = $reader->readLine();
-            $line = trim(str_replace("\n", '', str_replace("\r", '', $line)));
             $line = explode(',', $line);                
             foreach($line as $index => $value)                
                 $line[$index] = trim($value);

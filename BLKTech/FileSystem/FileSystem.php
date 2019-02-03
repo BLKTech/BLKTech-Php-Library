@@ -15,7 +15,7 @@
  */
 
 namespace BLKTech\FileSystem;
-use BLKTech\Type\Path;
+use BLKTech\DataType\Path;
 use BLKTech\FileSystem\Exception\NotIsDirectoryException;
 use BLKTech\FileSystem\Exception\NotIsFileException;
 use BLKTech\FileSystem\Exception\NotIsLinkException;
@@ -147,5 +147,15 @@ class FileSystem extends Path
     protected function __construct(Path $path)     {parent::__construct($path->pathElements,$path->getDirectorySeparator());}    
     public function combinePath(Path $subPath)  {return new FileSystem(parent::combinePath($subPath),parent::getDirectorySeparator());}        
     
+    public function __toString() 
+    {
+        $_ = parent::__toString();
+        
+        if (!empty($_) && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') //remove root / on WIN OS
+            return substr ($_, 1);
+        
+        return $_;
+    }
+
 }
     
