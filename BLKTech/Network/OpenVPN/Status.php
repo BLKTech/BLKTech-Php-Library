@@ -15,6 +15,7 @@
 
 namespace BLKTech\Network\OpenVPN;
 use BLKTech\DataType\Path;
+use BLKTech\DataType\File;
         
 /**
  *
@@ -28,32 +29,34 @@ class Status
     
     public static function getStatus()
     {
-        return new Status(Path::getPathFromString('/var/log/openvpn-status.log'));
+        return new Status(new File(Path::getPathFromString('/var/log/openvpn-status.log')));
     }
 
 
-    private $statusFilePath;
+    private $statusFile;
     private $lastRead = 0;
     
     private $clients = array();
     private $routes = array();
     private $lines = array();
     
-    public function __construct(Path $statusFilePath) 
+    public function __construct(File $statusFile) 
     {
-        $this->statusFilePath = $statusFilePath;
+        $this->statusFile = $statusFile;
     }
     
     private function parseFile()
     {
-        if(filemtime($this->statusFilePath) <= $this->lastRead)
+        if($this->statusFile->getModificationTime() <= $this->lastRead)
             return;
+        
+        $this->lastRead = time();
         
         $this->clients = array();
         $this->routes = array();
         $this->lines = array();
 
-        $reader = new \BLKTech\FileSystem\File\Reader($this->statusFilePath);
+        $reader = $this->statusFile->getReader();
 
         $clientsSection = false;
         $routingSection = false;

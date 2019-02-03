@@ -96,4 +96,9 @@ class File extends FileSystem
             throw new CreateFileException($this->__toString());  
                          
     }    
+    
+    public final function getReader()
+    {
+        return new File\Reader($this);
+    }
 }
