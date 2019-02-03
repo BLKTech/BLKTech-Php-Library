@@ -15,7 +15,7 @@
 
 namespace BLKTech\Network\OpenVPN;
 use BLKTech\DataType\Path;
-use BLKTech\DataType\File;
+use BLKTech\FileSystem\File;
         
 /**
  *
@@ -97,5 +97,14 @@ class Status
         return strtolower(preg_replace("/[^A-Za-z0-9]/", '', implode('', $headerArray))) == strtolower(preg_replace("/[^A-Za-z0-9]/", '', implode('', $lineArray)));
     }
 
-    
+    public function getClients() 
+    {
+        $this->parseFile();
+        return $this->clients;
+    }
+    public function getRoutes() 
+    {
+        $this->parseFile();
+        return $this->routes;
+    }
 }

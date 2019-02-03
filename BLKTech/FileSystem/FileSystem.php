@@ -31,6 +31,12 @@ use BLKTech\FileSystem\Exception\IOException;
 
 class FileSystem extends Path
 {   
+    
+    public static function getFromStringPath($stringPath)
+    {
+        return new self(Path::getPathFromString($stringPath));
+    }
+    
     public static function pathValidateIsDirectory(Path $path)   {if(!self::pathIsDirectory($path)) throw new NotIsDirectoryException($path);}
     public static function pathValidateIsFile(Path $path)        {if(!self::pathIsFile($path))      throw new NotIsFileException($path);}    
     public static function pathValidateIsLink(Path $path)        {if(!self::pathIsLink($path))      throw new NotIsLinkException($path);}    

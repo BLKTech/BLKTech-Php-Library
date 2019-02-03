@@ -28,10 +28,12 @@ class Reader extends \BLKTech\FileSystem\File
     
     public function __construct(Path $path) 
     {
+        parent::__construct($path);
+        
         parent::validateExistence();        
         parent::validateReadable();
 
-        $this->handle = fopen($this->__toString(), $mode);
+        $this->handle = fopen($this->__toString(), 'r');
         
         if($this->handle===FALSE)
             throw new IOException($this->__toString());
@@ -41,6 +43,9 @@ class Reader extends \BLKTech\FileSystem\File
     {
         if($this->eof())
             return null;
+        
+        if ($maxLength === NULL)
+            $maxLength = 1024;
         
         $line = trim(str_replace("\n", '', str_replace("\r", '', fgets($this->handle, $maxLength))));
         

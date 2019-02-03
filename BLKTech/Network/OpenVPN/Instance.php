@@ -15,6 +15,8 @@
 
 namespace BLKTech\Network\OpenVPN;
 use BLKTech\FileSystem\File;
+use BLKTech\FileSystem\Directory;
+
 
 /**
  *
@@ -22,6 +24,21 @@ use BLKTech\FileSystem\File;
  */
 
 class Instance {
+    
+        
+    public function getInstances(Directory $configDirectory = null)    
+    {
+        if($configDirectory===null)
+            $configDirectory = Directory::getFromStringPath ('/etc/openvpn');
+        
+        $_ = array();
+        
+        foreach($configDirectory->getChildren() as $fso)
+            if($fso instanceof File && strtolower ($fso->getExtension())=='conf')
+                $_[] = new self($fso);
+            
+        return $_;
+    }
     
     private $configFile;
     private $lastRead = 0;
@@ -31,6 +48,17 @@ class Instance {
     {
         $this->configFile = $configFile;
     }
+
+    public function getStatus()
+    {
+        $this->parseFile();
+        
+        if(!isset($this->keys['status']))
+            return null;
+        
+        return new Status(File::getFromStringPath($this->keys['status']));
+    }
+
 
     private function parseFile()
     {
@@ -64,7 +92,7 @@ class Instance {
             
             if(count($line)>0)
             {
-                $key = array_shift($line);
+                $key = strtolower(array_shift($line));
 
                 if(!isset($this->keys[$key]))
                     $this->keys[$key] = array();
@@ -77,5 +105,8 @@ class Instance {
             }
         }
         
+        foreach($this->keys as $index => $value)
+            if(count($value)==1)
+                $this->keys[$index] = array_shift($value);                
     }
 }

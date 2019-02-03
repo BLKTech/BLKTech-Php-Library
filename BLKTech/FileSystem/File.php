@@ -27,10 +27,7 @@ use BLKTech\FileSystem\Exception\CreateFileException;
 
 class File extends FileSystem
 {
-    public static function getFromStringPath($stringPath)
-    {
-        return new self(Path::getPathFromString($stringPath));
-    }
+
     
     
     public static function pathFileSize(Path $path)
@@ -106,5 +103,10 @@ class File extends FileSystem
     public final function getReader()
     {
         return new File\Reader($this);
+    }
+    
+    public final function getExtension()
+    {        
+        return end(explode('.', parent::getName()));
     }
 }
