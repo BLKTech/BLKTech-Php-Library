@@ -23,6 +23,11 @@ namespace BLKTech;
 
 class Exception extends \Exception
 {
+    public static function throwException(string $message = "", int $code = 0, \Throwable $previous = null)
+    {
+        throw new static($message, $code, $previous);
+    }
+    
     public function __construct(string $message = "", int $code = 0, \Throwable $previous = null) 
     {
         $classFullName = get_class($this);

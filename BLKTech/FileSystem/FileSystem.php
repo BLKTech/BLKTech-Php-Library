@@ -37,12 +37,12 @@ class FileSystem extends Path
         return new self(Path::getPathFromString($stringPath));
     }
     
-    public static function pathValidateIsDirectory(Path $path)   {if(!self::pathIsDirectory($path)) throw new NotIsDirectoryException($path);}
-    public static function pathValidateIsFile(Path $path)        {if(!self::pathIsFile($path))      throw new NotIsFileException($path);}    
-    public static function pathValidateIsLink(Path $path)        {if(!self::pathIsLink($path))      throw new NotIsLinkException($path);}    
-    public static function pathValidateReadable(Path $path)      {if(!self::pathIsReadable($path))  throw new NotIsReadableException($path);}
-    public static function pathValidateWritable(Path $path)      {if(!self::pathIsWritable($path))  throw new NotIsWritableException($path);}
-    public static function pathValidateExistence(Path $path)     {if(!self::pathExists($path))      throw new NotFoundException($path);}
+    public static function pathValidateIsDirectory(Path $path)   {if(!self::pathIsDirectory($path)) NotIsDirectoryException::throwException($path);}
+    public static function pathValidateIsFile(Path $path)        {if(!self::pathIsFile($path))      NotIsFileException::throwException($path);}    
+    public static function pathValidateIsLink(Path $path)        {if(!self::pathIsLink($path))      NotIsLinkException::throwException($path);}    
+    public static function pathValidateReadable(Path $path)      {if(!self::pathIsReadable($path))  NotIsReadableException::throwException($path);}
+    public static function pathValidateWritable(Path $path)      {if(!self::pathIsWritable($path))  NotIsWritableException::throwException($path);}
+    public static function pathValidateExistence(Path $path)     {if(!self::pathExists($path))      NotFoundException::throwException($path);}
                
 
 
@@ -157,7 +157,7 @@ class FileSystem extends Path
     {
         $_ = parent::__toString();
         
-        if (!empty($_) && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && strtolower(substr($_, 2, 1)) == ':') //remove root / on WIN OS
+        if (!empty($_) && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && strtolower(substr($_, 2, 1)) == ':') //remove root / on WIN OS if drive present
             return substr ($_, 1);
         
         return $_;
