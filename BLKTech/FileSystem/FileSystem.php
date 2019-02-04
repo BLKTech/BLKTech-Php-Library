@@ -157,7 +157,7 @@ class FileSystem extends Path
     {
         $_ = parent::__toString();
         
-        if (!empty($_) && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') //remove root / on WIN OS
+        if (!empty($_) && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && strtolower(substr($_, 2, 1)) == ':') //remove root / on WIN OS
             return substr ($_, 1);
         
         return $_;
