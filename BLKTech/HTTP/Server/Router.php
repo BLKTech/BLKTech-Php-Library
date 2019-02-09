@@ -17,6 +17,7 @@ namespace BLKTech\HTTP\Server;
 use \BLKTech\DataType\Path;
 use \BLKTech\HTTP\Server;
 use \BLKTech\Logger;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
@@ -39,7 +40,7 @@ class Router extends \BLKTech\DesignPattern\Singleton
         Logger::getInstance()->debug('Request Length: ' . count($this->requestPathElements));
     }
     
-    private function route($method, Path $path, $callback)
+    private function route($method, Path $path, $callback, $strict = true)
     {
         
         Logger::getInstance()->debug('Route Method: ' . $method);
@@ -53,11 +54,23 @@ class Router extends \BLKTech\DesignPattern\Singleton
         Logger::getInstance()->debug('Route Path: ' . implode('/', $lPath));   
         Logger::getInstance()->debug('Route Length: ' . count($lPath));
 
-        if(count($lPath) != count($this->requestPathElements))
-            return;        
-        
-        Logger::getInstance()->debug('Path Length Match');             
+        if($strict)
+        {
+            Logger::getInstance()->debug('Strict Mode');               
             
+            if(count($lPath) != count($this->requestPathElements))
+                return;        
+        }
+        else
+        {
+            Logger::getInstance()->debug('Non Strict Mode');               
+            
+            if(count($lPath) > count($this->requestPathElements))
+                return;                            
+        }
+            
+        Logger::getInstance()->debug('Path Length Match');   
+        
         $vars = array();
         
         for($i = 0 ; $i < count($lPath) ; $i++)
@@ -66,15 +79,9 @@ class Router extends \BLKTech\DesignPattern\Singleton
             $eP = strtolower($lPath[$i]);
         
             Logger::getInstance()->debug($eP . '=' . $eR);        
-            
-            Logger::getInstance()->debug(substr($eP, 0, 1));        
-            Logger::getInstance()->debug(substr($eP, -1, 1));        
-            
-            if(substr($eP, 0, 1) == '{' && substr($eP, -1, 1) == '}')
-            {
-                $vars[substr($eP,1,-1)] = $eR;
-                Logger::getInstance()->debug(substr($eP,1,-1) . '=' . $eR);        
-            }
+                              
+            if(substr($eP, 0, 1) == '{' && substr($eP, -1, 1) == '}')            
+                $vars[substr($eP,1,-1)] = $eR;            
             elseif($eR == $eP)
                 continue;
             else
@@ -82,45 +89,48 @@ class Router extends \BLKTech\DesignPattern\Singleton
         }
 
         Logger::getInstance()->debug('Path Match');      
+        Logger::getInstance()->debug(json_encode($vars));      
         
         $args = array();
         
-        foreach((new \ReflectionFunction($callback))->getParameters() as $parameter)
-            if(isset($vars[strtolower($parameter)]))
-                $args[] = $vars[strtolower($parameter)];
+        foreach((new \ReflectionFunction($callback))->getParameters() as $parameter)        
+            if(isset($vars[strtolower($parameter->name)]))
+                $args[] = $vars[strtolower($parameter->name)];
             else
                 $args[] = null;
-                
+        
+        
+        Logger::getInstance()->debug(json_encode($args));      
         return call_user_func_array($callback, $args);        
     }
     
-    public function get(Path $path, $callback)
+    public function get(Path $path, $callback, $strict = true)
     {
-        return $this->route('GET', $path, $callback);
+        return $this->route('GET', $path, $callback, $strict);
     }
 
-    public function post(Path $path, $callback)
+    public function post(Path $path, $callback, $strict = true)
     {
-        return $this->route('POST', $path, $callback);
+        return $this->route('POST', $path, $callback, $strict);
     }    
     
-    public function delete(Path $path, $callback)
+    public function delete(Path $path, $callback, $strict = true)
     {
-        return $this->route('DELETE', $path, $callback);
+        return $this->route('DELETE', $path, $callback, $strict);
     }    
     
-    public function put(Path $path, $callback)
+    public function put(Path $path, $callback, $strict = true)
     {
-        return $this->route('PUT', $path, $callback);
+        return $this->route('PUT', $path, $callback, $strict);
     }    
     
-    public function head(Path $path, $callback)
+    public function head(Path $path, $callback, $strict = true)
     {
-        return $this->route('HEAD', $path, $callback);
+        return $this->route('HEAD', $path, $callback, $strict);
     }
     
-    public function any(Path $path, $callback)
+    public function any(Path $path, $callback, $strict = true)
     {
-        return $this->route('ANY', $path, $callback);
+        return $this->route('ANY', $path, $callback, $strict);
     }    
 }

@@ -51,6 +51,11 @@ class Loader extends Singleton
                     Path::getFromString(__DIR__ . '/../../Psr'), 
                     URL::getFromString('https://psr0.blktech.org/Psr')
                 ));        
+        $this->addLibrary(new Library(
+                    Path::getFromString('/Symfony'), 
+                    Path::getFromString(__DIR__ . '/../../Symfony'), 
+                    URL::getFromString('https://raw.githubusercontent.com/symfony/symfony/master/src/Symfony')
+                ));         
     }
 
     
