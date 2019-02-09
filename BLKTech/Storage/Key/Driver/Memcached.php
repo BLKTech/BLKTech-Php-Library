@@ -13,7 +13,7 @@
  *
  */
 
-namespace BLKTech\Storage\KeyValue\Driver\Memory;
+namespace BLKTech\Storage\Key\Driver\Memory;
 use \BLKTech\DataType\Service;
 
 /**
@@ -21,7 +21,7 @@ use \BLKTech\DataType\Service;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Memcached extends \BLKTech\Storage\KeyValue\Driver\Memory{
+class Memcached extends \BLKTech\Storage\Key\Driver{
     
     public static function getLocalHost()
     {
