@@ -14,9 +14,9 @@
  */
 
 namespace BLKTech\HTTP\Server;
-use BLKTech\DataType\Path;
+use \BLKTech\DataType\Path;
 use \BLKTech\HTTP\Server;
-
+use \BLKTech\Logger;
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
@@ -34,18 +34,29 @@ class Router extends \BLKTech\DesignPattern\Singleton
         $request = Server::getRequestFromGlobals();
         $this->requestMethod = $request->getMethod();
         $this->requestPathElements = $request->getURL()->getPath()->getElements();
+        Logger::getInstance()->debug('Request Method: ' . $this->requestMethod);
+        Logger::getInstance()->debug('Request Path: ' . implode('/', $this->requestPathElements));
+        Logger::getInstance()->debug('Request Length: ' . count($this->requestPathElements));
     }
     
     private function route($method, Path $path, $callback)
     {
+        
+        Logger::getInstance()->debug('Route Method: ' . $method);
+
         if($method!='ANY' && $this->request->getMethod() != strtoupper($method))
             return;
+
+        Logger::getInstance()->debug('Route Method Match');             
         
         $lPath = $path->getElements();
+        Logger::getInstance()->debug('Route Path: ' . implode('/', $lPath));   
+        Logger::getInstance()->debug('Route Length: ' . count($lPath));
+
+        if(count($lPath) != count($this->requestPathElements))
+            return;        
         
-        if(count($lPath) != count($this->requestPathElements));
-            return;
-        
+        Logger::getInstance()->debug('Path Length Match');             
             
         $vars = array();
         
@@ -53,15 +64,24 @@ class Router extends \BLKTech\DesignPattern\Singleton
         {
             $eR = strtolower($this->requestPathElements[$i]);
             $eP = strtolower($lPath[$i]);
+        
+            Logger::getInstance()->debug($eP . '=' . $eR);        
+            
+            Logger::getInstance()->debug(substr($eP, 0, 1));        
+            Logger::getInstance()->debug(substr($eP, -1, 1));        
             
             if(substr($eP, 0, 1) == '{' && substr($eP, -1, 1) == '}')
+            {
                 $vars[substr($eP,1,-1)] = $eR;
+                Logger::getInstance()->debug(substr($eP,1,-1) . '=' . $eR);        
+            }
             elseif($eR == $eP)
                 continue;
             else
                 return;
         }
 
+        Logger::getInstance()->debug('Path Match');      
         
         $args = array();
         

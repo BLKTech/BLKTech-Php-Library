@@ -63,7 +63,7 @@ class URL
         $this->service = new Service($this->getElement('host'), $this->getElement('port'), $this->getElement('scheme'), $this->getElement('user'), $this->getElement('password'), '://');
         
         if(isset($urlElements['path']))
-            $this->path = Path::getPathFromString($urlElements['path'], '/');
+            $this->path = Path::getFromString($urlElements['path'], '/');
         else
             $this->path = Path::getRoot('/');
         

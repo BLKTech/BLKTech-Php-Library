@@ -14,7 +14,7 @@
  */
 
 namespace BLKTech\HTTP;
-
+use \BLKTech\DataType\URL;
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
@@ -42,9 +42,9 @@ abstract class Server
     public static function getRequestFromGlobals() 
     {
         return new Request(Method::getFromGlobals(), 
-                                \BLKTech\DataTypes\URL::getFromGlobals(), 
+                                URL::getFromGlobals(), 
                                 Header::getFromGlobals(),
-                                Body::getFromGlobals()
+                                 file_get_contents('php://input')
         );
     }   
     

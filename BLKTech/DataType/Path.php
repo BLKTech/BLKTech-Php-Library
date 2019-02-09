@@ -48,7 +48,7 @@ class Path
         return $tmp;        
     }
     
-    public static function getPathFromString($stringPath, $directorySeparator = DIRECTORY_SEPARATOR)
+    public static function getFromString($stringPath, $directorySeparator = DIRECTORY_SEPARATOR)
     {
         return new Path(self::parsePath($stringPath, $directorySeparator), $directorySeparator);
     }

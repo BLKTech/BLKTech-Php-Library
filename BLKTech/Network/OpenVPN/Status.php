@@ -29,7 +29,7 @@ class Status
     
     public static function getStatus()
     {
-        return new Status(new File(Path::getPathFromString('/var/log/openvpn-status.log')));
+        return new Status(new File(Path::getFromString('/var/log/openvpn-status.log')));
     }
 
 

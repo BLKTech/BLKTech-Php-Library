@@ -93,7 +93,7 @@ class Dynamic extends \BLKTech\Storage\Path\Driver\DataBase\SQL
             $level--;
         }
 
-        return Path::getPathFromString($stringPath);        
+        return Path::getFromString($stringPath);        
     }
     public function set(Path $path) 
     {

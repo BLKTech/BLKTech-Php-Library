@@ -42,13 +42,13 @@ class Loader extends Singleton
         parent::__construct();
         spl_autoload_register(array($this, 'loadClass'));
         $this->addLibrary(new Library(
-                    Path::getPathFromString('/BLKTech'), 
-                    Path::getPathFromString(__DIR__ . '/../'), 
+                    Path::getFromString('/BLKTech'), 
+                    Path::getFromString(__DIR__ . '/../'), 
                     URL::getFromString('https://psr0.blktech.org/BLKTech')
                 ));
         $this->addLibrary(new Library(
-                    Path::getPathFromString('/Psr'), 
-                    Path::getPathFromString(__DIR__ . '/../../Psr'), 
+                    Path::getFromString('/Psr'), 
+                    Path::getFromString(__DIR__ . '/../../Psr'), 
                     URL::getFromString('https://psr0.blktech.org/Psr')
                 ));        
     }
@@ -76,7 +76,7 @@ class Loader extends Singleton
     {
         self::log('SPL Loading ' . $classNameSpace);
         
-        $classPath = Path::getPathFromString($classNameSpace,"\\");
+        $classPath = Path::getFromString($classNameSpace,"\\");
         
         $nameSpacePath = $classPath->getParent();
         $middle = array();
@@ -87,7 +87,7 @@ class Loader extends Singleton
                 self::log('Library match ' . $nameSpacePath->__toString());
                 if(self::tryFind(
                         $this->libraries[$nameSpacePath->__toString()],
-                        $middle,
+                        array_reverse($middle),
                         $classPath->getName() . '.php'                        
                 )){break;}
             }
@@ -100,8 +100,8 @@ class Loader extends Singleton
     private static function getFilePath(Library $library,$middle,$className)
     {
         $basePath = $library->getPath();        
-        $middlePath = Path::getPathFromString(implode(DIRECTORY_SEPARATOR, $middle));
-        $classNamePath = Path::getPathFromString($className);       
+        $middlePath = Path::getFromString(implode(DIRECTORY_SEPARATOR, $middle));
+        $classNamePath = Path::getFromString($className);       
         return $basePath->combine($middlePath)->combine($classNamePath);        
     }
     
@@ -156,8 +156,8 @@ class Loader extends Singleton
     
     private static function log($message)
     {
-        if(class_exists('Logger',false))
-            Logger::getInstance()->debug($message);
+        if(class_exists('\BLKTech\Logger',false))
+            \BLKTech\Logger::getInstance()->debug($message);
         else
             error_log ($message);
     }
