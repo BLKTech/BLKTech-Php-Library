@@ -60,7 +60,8 @@ class Path
         $this->directorySeparator = $directorySeparator;
         $this->pathElements = $pathElements;
     }    
-    public function isRoot()                    {return count($this->pathElements)==0;}    
+    public function isRoot()                    {return $this->getDeep()==0;}    
+    public function getDeep()                   {return count($this->pathElements);}    
     public function getName()                   {return end($this->pathElements);}    
     public function getChild($name)             {return new Path(array_merge($this->pathElements,array($name)) , $this->directorySeparator);}    
     public function getParent()                 {if($this->isRoot())return null ; return new Path(array_slice ($this->pathElements, 0, count($this->pathElements)-1, true) , $this->directorySeparator);}    

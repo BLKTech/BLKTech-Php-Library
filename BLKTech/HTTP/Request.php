@@ -14,6 +14,7 @@
  */
 
 namespace BLKTech\HTTP;
+use \BLKTech\DataType\URL;
 
 /**
  *
@@ -25,7 +26,7 @@ class Request extends Message
     private $method;
     private $url;
     
-    public function __construct(Method $method, \BLKTech\DataTypes\URL $url,Header $header, $payload) 
+    public function __construct(Method $method, URL $url,Header $header, $payload) 
     {
         parent::__construct($header, $payload);       
         $this->method = $method;
