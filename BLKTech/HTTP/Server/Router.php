@@ -12,9 +12,11 @@
  * GNU Lesser General Public License for more details.
  *
  */
+
 namespace BLKTech\HTTP\Server;
-use BLKTech\HTTP\Request;
 use BLKTech\DataType\Path;
+use \BLKTech\HTTP\Server;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
@@ -22,47 +24,83 @@ use BLKTech\DataType\Path;
 
 class Router extends \BLKTech\DesignPattern\Singleton
 {
-    private $request;
+    private $requestMethod;
+    private $requestPathElements;
+    
     protected function __construct() 
     {
         parent::__construct();
         
-        $this->request = \BLKTech\HTTP\Server::getRequestFromGlobals();
+        $request = Server::getRequestFromGlobals();
+        $this->requestMethod = $request->getMethod();
+        $this->requestPathElements = $request->getURL()->getPath()->getElements();
     }
     
-    public function route($method, Path $path, $function)
+    private function route($method, Path $path, $callback)
     {
-        if($this->request->getMethod() != strtoupper($method))
+        if($method!='ANY' && $this->request->getMethod() != strtoupper($method))
             return;
         
-        if($path->getDeep() != $this->request->getURL()->getPath()->getDeep());
+        $lPath = $path->getElements();
+        
+        if(count($lPath) != count($this->requestPathElements));
             return;
         
+            
+        $vars = array();
         
+        for($i = 0 ; $i < count($lPath) ; $i++)
+        {
+            $eR = strtolower($this->requestPathElements[$i]);
+            $eP = strtolower($lPath[$i]);
+            
+            if(substr($eP, 0, 1) == '{' && substr($eP, -1, 1) == '}')
+                $vars[substr($eP,1,-1)] = $eR;
+            elseif($eR == $eP)
+                continue;
+            else
+                return;
+        }
+
+        
+        $args = array();
+        
+        foreach((new \ReflectionFunction($callback))->getParameters() as $parameter)
+            if(isset($vars[strtolower($parameter)]))
+                $args[] = $vars[strtolower($parameter)];
+            else
+                $args[] = null;
+                
+        return call_user_func_array($callback, $args);        
     }
     
-    public function get(Path $path, $function)
+    public function get(Path $path, $callback)
     {
-        return $this->route('GET', $path, $function);
+        return $this->route('GET', $path, $callback);
     }
 
-    public function post(Path $path, $function)
+    public function post(Path $path, $callback)
     {
-        return $this->route('POST', $path, $function);
+        return $this->route('POST', $path, $callback);
     }    
     
-    public function delete(Path $path, $function)
+    public function delete(Path $path, $callback)
     {
-        return $this->route('DELETE', $path, $function);
+        return $this->route('DELETE', $path, $callback);
     }    
     
-    public function put(Path $path, $function)
+    public function put(Path $path, $callback)
     {
-        return $this->route('PUT', $path, $function);
+        return $this->route('PUT', $path, $callback);
     }    
     
-    public function HEAD(Path $path, $function)
+    public function head(Path $path, $callback)
     {
-        return $this->route('HEAD', $path, $function);
+        return $this->route('HEAD', $path, $callback);
     }
+    
+    public function any(Path $path, $callback)
+    {
+        return $this->route('ANY', $path, $callback);
+    }    
 }

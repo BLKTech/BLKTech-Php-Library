@@ -66,10 +66,10 @@ class Path
     public function getChild($name)             {return new Path(array_merge($this->pathElements,array($name)) , $this->directorySeparator);}    
     public function getParent()                 {if($this->isRoot())return null ; return new Path(array_slice ($this->pathElements, 0, count($this->pathElements)-1, true) , $this->directorySeparator);}    
     public function __toString()                {return $this->directorySeparator . implode($this->directorySeparator, $this->pathElements);}    
-    public function combinePath(Path $subPath)  {return new Path(array_merge($this->pathElements,$subPath->pathElements) , $this->directorySeparator);}        
+    public function combine(Path $subPath)  {return new Path(array_merge($this->pathElements,$subPath->pathElements) , $this->directorySeparator);}        
     public function getDirectorySeparator()     {return $this->directorySeparator;}
-    public function getPathElements()           {return $this->pathElements;}
-    public function getPathElement($index)      {return isset($this->pathElements[$index])?$this->pathElements[$index]:null;}
+    public function getElements()           {return $this->pathElements;}
+    public function getElement($index)      {return isset($this->pathElements[$index])?$this->pathElements[$index]:null;}
     public function getHash(\Cryptography\Hash $hash) {return $hash->calc($this->__toString());}   
     public function getUID() {return implode('#', $this->pathElements);}   
     
