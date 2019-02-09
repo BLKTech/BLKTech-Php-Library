@@ -102,7 +102,7 @@ class Loader extends Singleton
         $basePath = $library->getPath();        
         $middlePath = Path::getPathFromString(implode(DIRECTORY_SEPARATOR, $middle));
         $classNamePath = Path::getPathFromString($className);       
-        return $basePath->combinePath($middlePath)->combinePath($classNamePath);        
+        return $basePath->combine($middlePath)->combine($classNamePath);        
     }
     
     private static function getFileURL(Library $library,$middle,$className)
@@ -110,7 +110,7 @@ class Loader extends Singleton
         $baseURL = $library->getUrl();
         $middleURL = URL::getFromString(implode('/', $middle));
         $classNameURL = URL::getFromString($className);        
-        return $baseURL->combineURL($middleURL)->combineURL($classNameURL);        
+        return $baseURL->combine($middleURL)->combine($classNameURL);        
     }
     
     private static function tryLoad(Path $filePath)

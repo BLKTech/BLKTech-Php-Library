@@ -100,13 +100,13 @@ class URL
         return $_; 
     } 
     
-    public function combineURL(URL $otherURL)
+    public function combine(URL $otherURL)
     {             
         if($otherURL->getElement('host')!==null)
             return $otherURL;
                        
         $elements = $this->urlElements;
-        $elements['path'] = $this->getPath()->combinePath($otherURL->getPath())->__toString();
+        $elements['path'] = $this->getPath()->combine($otherURL->getPath())->__toString();
         return new URL($elements);
     }
     
