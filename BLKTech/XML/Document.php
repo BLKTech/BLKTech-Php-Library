@@ -25,6 +25,11 @@ class Document
     private $declaration = '?xml version="1.0" encoding="UTF-8"?';
     private $elements = array();
     
+    public function __construct($declaration = '?xml version="1.0" encoding="UTF-8"?') 
+    {
+        $this->declaration = $declaration;
+    }
+
     public function getDeclaration() 
     {
         return $this->declaration;
@@ -59,6 +64,6 @@ class Document
     {
         echo  '<'.$this->declaration.'>'.PHP_EOL;
         foreach ($this->elements as $element)
-            $element->dump($level+1); 
+            $element->dump($level); 
     }
 }

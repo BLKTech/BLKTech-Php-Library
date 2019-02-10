@@ -27,6 +27,11 @@ class Tag extends Element
     private $elements = array();
     private $attributes = array();
     
+    public function __construct($name) 
+    {
+        $this->name = $name;
+    }
+
     public function addElement(Element $element)
     {
         $this->elements[] = $element;

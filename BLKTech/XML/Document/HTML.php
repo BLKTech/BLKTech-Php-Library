@@ -23,10 +23,15 @@ use \BLKTech\XML\Document;
 
 class HTML extends Document
 {
+    
     public function __construct() 
     {        
-        parent();
+        parent::__construct();
         parent::setDeclaration('!DOCTYPE html');               
+        parent::addElement(new \BLKTech\XML\Element\Tag\HTML());
     }
+    
+    
 
+    
 }
