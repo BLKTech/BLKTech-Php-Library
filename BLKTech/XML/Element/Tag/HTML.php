@@ -15,9 +15,27 @@ use \BLKTech\XML\Element\Tag;
  */
 class HTML extends Tag
 {
+    private $head;
+    private $body;
+    
     public function __construct() 
     {
-        parent::__construct('html');
+        parent::__construct();
+        $this->head = new HTML\Head();
+        $this->body = new HTML\Body();
+        parent::addElement($this->head);
+        parent::addElement($this->body);
     }
+
+    public function getHead() 
+    {
+        return $this->head;
+    }
+
+    public function getBody() 
+    {
+        return $this->body;
+    }
+
 
 }

@@ -21,15 +21,15 @@ use \BLKTech\XML\Element;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Tag extends Element
+abstract class Tag extends Element
 {
     private $name;
     private $elements = array();
     private $attributes = array();
     
-    public function __construct($name) 
+    public function __construct() 
     {
-        $this->name = $name;
+        $this->name = strtolower((new \ReflectionClass($this))->getShortName());
     }
 
     public function addElement(Element $element)
@@ -45,13 +45,13 @@ class Tag extends Element
             echo $attribute;
         
         if(count($this->elements)==0)
-            echo ' />';
+            echo ' />'.PHP_EOL;
         else
         {
-            echo '>';
+            echo '>'.PHP_EOL;
             
             foreach ($this->elements as $element)
-                echo $element->toString ($level+1).PHP_EOL;
+                echo $element->toString ($level+1);
             
             echo parent::getTabs($level) . '</' . $this->name . ">".PHP_EOL;
         }        
@@ -65,15 +65,15 @@ class Tag extends Element
             $_ .= ' ' . $attribute;
         
         if(count($this->elements)==0)
-            $_ .= ' />';
+            $_ .= ' />'.PHP_EOL;
         else
         {
-            $_ .= '>';
+            $_ .= '>'.PHP_EOL;
             
             foreach ($this->elements as $element)
-                $_ .= $element->toString ($level+1).PHP_EOL;
+                $_ .= $element->toString ($level+1);
             
-            $_ .= parent::getTabs($level) . '</' . $this->name . ">".PHP_EOL;
+            $_ .= parent::getTabs($level) . '</' . $this->name . '>'.PHP_EOL;
         }
         
         return $_;
