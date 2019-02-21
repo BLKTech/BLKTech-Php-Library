@@ -14,6 +14,7 @@
  */
 
 namespace BLKTech\DataType;
+use \BLKTech\Cryptography\Hash;
 
 /**
  *
@@ -55,7 +56,7 @@ class Path
     
     private $directorySeparator;
     protected $pathElements;
-    protected function __construct($pathElements = array(), $directorySeparator = DIRECTORY_SEPARATOR)
+    public function __construct(array $pathElements = array(), $directorySeparator = DIRECTORY_SEPARATOR)
     {
         $this->directorySeparator = $directorySeparator;
         $this->pathElements = $pathElements;
@@ -70,7 +71,7 @@ class Path
     public function getDirectorySeparator()     {return $this->directorySeparator;}
     public function getElements()           {return $this->pathElements;}
     public function getElement($index)      {return isset($this->pathElements[$index])?$this->pathElements[$index]:null;}
-    public function getHash(\Cryptography\Hash $hash) {return $hash->calc($this->__toString());}   
+    public function getHash(Hash $hash) {return $hash->calc($this->__toString());}   
     public function getUID() {return implode('#', $this->pathElements);}   
     
     public function setDirectorySeparator($directorySeparator) {$this->directorySeparator = $directorySeparator;}

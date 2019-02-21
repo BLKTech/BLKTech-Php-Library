@@ -50,8 +50,10 @@ abstract class Server
     
     public static function sendResponse(Response $response)
     { 
-        $response->getHeader()->set('Content-Type', $response->getBody()->getContentType());  
-        $response->getHeader()->set('Content-Length', $response->getBody()->getContentLength());
+        $payload = $response->getPayload();
+//        if($payload!==null)
+//            $response->getHeader()->set('Content-Type', $response->getBody()->getContentType());  
+//            $response->getHeader()->set('Content-Length', $response->getBody()->getContentLength());
         
         self::resetBuffer();        
         http_response_code($response->getCode());
@@ -59,13 +61,16 @@ abstract class Server
             header ($headerName . ': ' . $headerValue, true, $response->getCode());
         
         if(Method::getFromGlobals()!='HEAD')
-            $response->getBody()->dump();
+        {
+            if($payload!==null)
+                echo $payload;
+        }
         else
             http_response_code(204);
         
         ob_flush();
         exit();
-    }    
+    }   
     
     public static function sendResponseCode($code)
     {

@@ -22,6 +22,16 @@ namespace BLKTech\HTTP;
  
 class Response extends Message
 {
+    public static function getCodeResponse($code)
+    {
+        return new Response($code, new Header(), null);
+    }
+    
+    public static function sendCodeResponse($code)
+    {
+        Server::sendResponse(self::getCodeResponse($code));
+    }    
+    
     private $code;
  
     public function __construct($code, Header $header, $payload) 

@@ -15,8 +15,10 @@
 
 namespace BLKTech\DataBase\SQL\Driver;
 use \mysqli;
+use \BLKTech\Logger;
 use \BLKTech\DataBase\SQL\Exception\ConnectException;
 use \BLKTech\DataBase\SQL\Exception\CommandException;
+use \BLKTech\DataBase\SQL\Exception\QueryException;
 use \BLKTech\DataBase\SQL\Exception\SelectException;
 use \BLKTech\DataBase\SQL\Exception\InsertException;
 use \BLKTech\DataBase\SQL\Exception\UpdateException;
@@ -144,7 +146,7 @@ class MySQL extends \BLKTech\DataBase\SQL\Driver
 
             $t = round(microtime(true) - $t, 3);
             
-            \Logger::getInstance()->debug("QUERY ($t): " . $query);
+            Logger::getInstance()->debug("QUERY ($t): " . $query);
 
             return $rs;
         } catch (Exception $e) {
@@ -162,7 +164,7 @@ class MySQL extends \BLKTech\DataBase\SQL\Driver
 
             $t = round(microtime(true) - $t, 3);
 
-            \Logger::getInstance()->debug("COMMAND ($t): " . $command);
+            Logger::getInstance()->debug("COMMAND ($t): " . $command);
 
             return true;
         } catch (Exception $e) {
