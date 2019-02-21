@@ -14,7 +14,7 @@
  */
 
 namespace BLKTech\Storage\Path;
-use BLKTech\DataType\Path;
+use \BLKTech\DataType\Path;
 
 /**
  *

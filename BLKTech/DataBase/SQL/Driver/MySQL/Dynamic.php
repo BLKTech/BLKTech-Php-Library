@@ -15,7 +15,7 @@
 
 namespace BLKTech\DataBase\SQL\Driver\MySQL;
 use \BLKTech\DataBase\SQL\Driver\MySQL;
-use BLKTech\DataType\Integer;
+use \BLKTech\DataType\Integer;
 
 /**
  *

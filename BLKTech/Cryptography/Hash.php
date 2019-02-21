@@ -14,10 +14,10 @@
  */
 
 namespace BLKTech\Cryptography;
-use BLKTech\FileSystem\File;
-use BLKTech\Cryptography\Exception\InvalidHashValueException;
-use BLKTech\Cryptography\Exception\HashAlgorithmCalcException;
-use BLKTech\Cryptography\Exception\HashAlgorithmNotFoundException;
+use \BLKTech\FileSystem\File;
+use \BLKTech\Cryptography\Exception\InvalidHashValueException;
+use \BLKTech\Cryptography\Exception\HashAlgorithmCalcException;
+use \BLKTech\Cryptography\Exception\HashAlgorithmNotFoundException;
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >

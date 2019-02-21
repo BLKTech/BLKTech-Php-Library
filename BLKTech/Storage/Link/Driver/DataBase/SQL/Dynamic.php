@@ -7,9 +7,9 @@
  */
 
 namespace BLKTech\Storage\Link\Driver\DataBase\SQL;
-use BLKTech\DataType\Integer;
-use BLKTech\DataBase\SQL\Driver\MySQL;
-use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
+use \BLKTech\DataType\Integer;
+use \BLKTech\DataBase\SQL\Driver\MySQL;
+use \BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
 
 
 /**

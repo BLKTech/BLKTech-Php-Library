@@ -14,8 +14,8 @@
  */
 
 namespace BLKTech\Storage\Path\Driver;
-use BLKTech\Storage\Path\Driver;
-use BLKTech\DataType\Path;
+use \BLKTech\Storage\Path\Driver;
+use \BLKTech\DataType\Path;
 
 /**
  *

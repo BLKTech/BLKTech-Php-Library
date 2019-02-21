@@ -14,7 +14,7 @@
  */
 
 namespace BLKTech\Storage\Path\Driver\DataBase;
-use BLKTech\Storage\Path\Driver;
+use \BLKTech\Storage\Path\Driver;
 
 /**
  *

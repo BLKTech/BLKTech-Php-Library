@@ -14,9 +14,11 @@
  */
 
 namespace BLKTech\Loader;
-use BLKTech\Loader\Library;
+use \BLKTech\Loader\Library;
 use \BLKTech\DataType\URL;
 use \BLKTech\DataType\Path;
+use \BLKTech\FileSystem\File;
+use \BLKTech\FileSystem\Directory;
 use \BLKTech\DesignPattern\Singleton;
 
 /**
@@ -43,17 +45,17 @@ class Loader extends Singleton
         spl_autoload_register(array($this, 'loadClass'));
         $this->addLibrary(new Library(
                     Path::getFromString('/BLKTech'), 
-                    Path::getFromString(__DIR__ . '/../'), 
+                    Directory::getFromString(__DIR__ . '/../'), 
                     URL::getFromString('https://psr0.blktech.org/BLKTech')
                 ));
         $this->addLibrary(new Library(
                     Path::getFromString('/Psr'), 
-                    Path::getFromString(__DIR__ . '/../../Psr'), 
+                    Directory::getFromString(__DIR__ . '/../../Psr'), 
                     URL::getFromString('https://psr0.blktech.org/Psr')
                 ));        
         $this->addLibrary(new Library(
                     Path::getFromString('/Symfony'), 
-                    Path::getFromString(__DIR__ . '/../../Symfony'), 
+                    Directory::getFromString(__DIR__ . '/../../Symfony'), 
                     URL::getFromString('https://raw.githubusercontent.com/symfony/symfony/master/src/Symfony')
                 ));         
     }
@@ -102,12 +104,12 @@ class Loader extends Singleton
         }
     }
 
-    private static function getFilePath(Library $library,$middle,$className)
+    private static function getFile(Library $library,$middle,$className)
     {
-        $basePath = $library->getPath();        
+        $baseDirectory = $library->getDirectory();        
         $middlePath = Path::getFromString(implode(DIRECTORY_SEPARATOR, $middle));
         $classNamePath = Path::getFromString($className);       
-        return $basePath->combine($middlePath)->combine($classNamePath);        
+        return new File($baseDirectory->combine($middlePath)->combine($classNamePath));        
     }
     
     private static function getFileURL(Library $library,$middle,$className)
@@ -118,30 +120,27 @@ class Loader extends Singleton
         return $baseURL->combine($middleURL)->combine($classNameURL);        
     }
     
-    private static function tryLoad(Path $filePath)
+    private static function tryLoad(File $file)
     {        
-        self::log('Trying Load Path ' . $filePath->__toString());
+        self::log('Trying Load Path ' . $file->__toString());
 
-        if(file_exists($filePath->__toString()))
-            require_once $filePath->__toString();        
+        if($file->exists())
+            require_once $file->__toString();        
     }
     
-    private static function writeClass(Path $filePath,$data)
+    private static function writeClass(File $file,$data)
     {
-        $dirPath = $filePath->getParent()->__toString();                
-        if(is_dir ($dirPath) || mkdir($dirPath, 0777, true))
-            return file_put_contents($filePath->__toString(), $data)!==FALSE;                
-                
-        return false;
+        $file->getParent()->create();                   
+        return $file->setContent($data);
     }
     
     private static function tryFind($library,$middle,$className)
     {
-        $filePath = self::getFilePath($library, $middle, $className);
+        $file = self::getFile($library, $middle, $className);
 
-        if(file_exists($filePath->__toString()))
+        if($file->exists())
         {
-            return self::tryLoad($filePath);            
+            return self::tryLoad($file);            
         }      
         elseif($library->getUrl()!==NULL)
         {
@@ -150,9 +149,9 @@ class Loader extends Singleton
             self::log('File Not Found, Trying Download: '.$url);            
             $data = @file_get_contents($url);
             
-            if($data!==FALSE && self::writeClass($filePath, $data))
+            if($data!==FALSE && self::writeClass($file, $data))
             {   
-                return self::tryLoad($filePath);;
+                return self::tryLoad($file);
             }
         }
         

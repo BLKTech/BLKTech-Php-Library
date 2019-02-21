@@ -14,8 +14,8 @@
  */
 
 namespace BLKTech\Storage\Raw;
-use BLKTech\Cryptography\Hash;
-use BLKTech\Storage\Raw\Exception\CorruptedFileException;
+use \BLKTech\Cryptography\Hash;
+use \BLKTech\Storage\Raw\Exception\CorruptedFileException;
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >

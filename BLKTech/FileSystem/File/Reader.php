@@ -14,8 +14,8 @@
  */
 
 namespace BLKTech\FileSystem\File;
-use BLKTech\FileSystem\Exception\IOException;
-use BLKTech\DataType\Path;
+use \BLKTech\FileSystem\Exception\IOException;
+use \BLKTech\DataType\Path;
 
 /**
  *

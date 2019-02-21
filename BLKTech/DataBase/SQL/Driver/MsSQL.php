@@ -14,17 +14,17 @@
  */
 
 namespace BLKTech\DataBase\SQL\Driver;
-use BLKTech\DataBase\SQL\Exception\ConnectException;
-use BLKTech\DataBase\SQL\Exception\SelectDBException;
-use BLKTech\DataBase\SQL\Exception\ConnectionClosedException;
-use BLKTech\DataBase\SQL\Exception\CommandException;
-use BLKTech\DataBase\SQL\Exception\GetResultSetException;
-use BLKTech\DataBase\SQL\Exception\SelectException;
-use BLKTech\DataBase\SQL\Exception\InsertException;
-use BLKTech\DataBase\SQL\Exception\UpdateException;
-use BLKTech\DataBase\SQL\Exception\DeleteException;
-use BLKTech\DataBase\SQL\Exception\TooManyRowsException;
-use BLKTech\Exception\NotImplementedException;
+use \BLKTech\DataBase\SQL\Exception\ConnectException;
+use \BLKTech\DataBase\SQL\Exception\SelectDBException;
+use \BLKTech\DataBase\SQL\Exception\ConnectionClosedException;
+use \BLKTech\DataBase\SQL\Exception\CommandException;
+use \BLKTech\DataBase\SQL\Exception\GetResultSetException;
+use \BLKTech\DataBase\SQL\Exception\SelectException;
+use \BLKTech\DataBase\SQL\Exception\InsertException;
+use \BLKTech\DataBase\SQL\Exception\UpdateException;
+use \BLKTech\DataBase\SQL\Exception\DeleteException;
+use \BLKTech\DataBase\SQL\Exception\TooManyRowsException;
+use \BLKTech\Exception\NotImplementedException;
 
 /**
  *

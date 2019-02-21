@@ -14,8 +14,8 @@
  */
 
 namespace BLKTech\Network\OpenVPN;
-use BLKTech\DataType\Path;
-use BLKTech\FileSystem\File;
+use \BLKTech\DataType\Path;
+use \BLKTech\FileSystem\File;
         
 /**
  *

@@ -15,10 +15,10 @@
 
 namespace BLKTech\FileSystem;
 use \BLKTech\DataType\Path;
-use BLKTech\FileSystem\Exception\IOException;
-use BLKTech\FileSystem\Exception\NotIsFileException;
-use BLKTech\FileSystem\Exception\CopyFileException;
-use BLKTech\FileSystem\Exception\CreateFileException;
+use \BLKTech\FileSystem\Exception\IOException;
+use \BLKTech\FileSystem\Exception\NotIsFileException;
+use \BLKTech\FileSystem\Exception\CopyFileException;
+use \BLKTech\FileSystem\Exception\CreateFileException;
 
 /**
  *

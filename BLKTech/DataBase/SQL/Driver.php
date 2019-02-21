@@ -14,8 +14,8 @@
  */
 
 namespace BLKTech\DataBase\SQL;
-use BLKTech\DataBase\SQL\Exception\InsertException;
-use BLKTech\DataBase\SQL\Exception\TooManyRowsException;
+use \BLKTech\DataBase\SQL\Exception\InsertException;
+use \BLKTech\DataBase\SQL\Exception\TooManyRowsException;
 
 /**
  *

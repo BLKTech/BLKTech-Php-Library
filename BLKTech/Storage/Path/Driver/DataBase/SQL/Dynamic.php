@@ -14,9 +14,9 @@
  */
 
 namespace BLKTech\Storage\Path\Driver\DataBase\SQL;
-use BLKTech\DataBase\SQL\Driver\MySQL;
-use BLKTech\DataType\Path;
-use BLKTech\DataType\Integer;
+use \BLKTech\DataBase\SQL\Driver\MySQL;
+use \BLKTech\DataType\Path;
+use \BLKTech\DataType\Integer;
 
 /**
  *

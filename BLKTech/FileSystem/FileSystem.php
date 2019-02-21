@@ -15,14 +15,14 @@
  */
 
 namespace BLKTech\FileSystem;
-use BLKTech\DataType\Path;
-use BLKTech\FileSystem\Exception\NotIsDirectoryException;
-use BLKTech\FileSystem\Exception\NotIsFileException;
-use BLKTech\FileSystem\Exception\NotIsLinkException;
-use BLKTech\FileSystem\Exception\NotIsReadableException;
-use BLKTech\FileSystem\Exception\NotIsWritableException;
-use BLKTech\FileSystem\Exception\NotFoundException;
-use BLKTech\FileSystem\Exception\IOException;
+use \BLKTech\DataType\Path;
+use \BLKTech\FileSystem\Exception\NotIsDirectoryException;
+use \BLKTech\FileSystem\Exception\NotIsFileException;
+use \BLKTech\FileSystem\Exception\NotIsLinkException;
+use \BLKTech\FileSystem\Exception\NotIsReadableException;
+use \BLKTech\FileSystem\Exception\NotIsWritableException;
+use \BLKTech\FileSystem\Exception\NotFoundException;
+use \BLKTech\FileSystem\Exception\IOException;
 
 /**
  *

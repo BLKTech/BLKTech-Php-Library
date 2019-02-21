@@ -13,10 +13,10 @@
  *
  */
 
-namespace BLKTech\Storage\KeyValue\Driver\DataBase\SQL;
-use BLKTech\DataBase\SQL\Driver\MySQL;
-use BLKTech\DataType\Integer;
-use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
+namespace BLKTech\Storage\Key\Driver\DataBase\SQL;
+use \BLKTech\DataBase\SQL\Driver\MySQL;
+use \BLKTech\DataType\Integer;
+use \BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
 
 
 /**
@@ -24,9 +24,9 @@ use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL{
+class Dynamic extends \BLKTech\Storage\Key\Driver\DataBase\SQL{
     
-    const tableNamePrefix='blktech_storage_keyvalue__';
+    const tableNamePrefix='blktech_storage_key__';
     
     private $driver;    
     private $string;
@@ -107,14 +107,6 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL{
         return $_;
     }
 
-    public function getValues($key) 
-    {
-        $key_ = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($key));
-        
-        $_ = array();        
-        foreach($this->driver->select($this->getTableNameKeyValue($key_[0]), array('lenValue','idValue'), array('idKey'=>$key_[1])) as $row)
-            $_[] = $this->string->get(Integer::unSignedInt32CombineIntoInt64($row['lenValue'], $row['idValue']));
-        return $_;
-    }
+
 
 }

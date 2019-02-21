@@ -16,5 +16,10 @@ use \BLKTech\XML\Element\Tag;
  */
 class Title extends Tag
 {
-    //put your code here
+    public function __construct($title) 
+    {
+        parent::__construct();
+        parent::addElement(new \BLKTech\XML\Element\Text($title));
+    }
+
 }

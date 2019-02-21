@@ -14,8 +14,9 @@
  */
 
 namespace BLKTech\Loader;
-use BLKTech\DataType\Path;
-use BLKTech\DataType\URL;
+use \BLKTech\DataType\Path;
+use \BLKTech\FileSystem\Directory;
+use \BLKTech\DataType\URL;
 
 /**
  *
@@ -25,20 +26,20 @@ use BLKTech\DataType\URL;
 class Library 
 {
     private $namespace;    
-    private $path;
+    private $directory;
     private $url;
     
-    public function __construct(Path $namespace, Path $path, URL $url = null) 
+    public function __construct(Path $namespace, Directory $directory, URL $url = null) 
     {
         $this->namespace = $namespace;
-        $this->path = $path;
+        $this->directory = $directory;
         $this->url = $url;
         
         $this->namespace->setDirectorySeparator("\\");        
     }
 
     public function getNamespace() {return $this->namespace;}
-    public function getPath() {return $this->path;}
+    public function getDirectory() {return $this->path;}
     public function getUrl() {return $this->url;}
 
 
