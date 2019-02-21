@@ -30,6 +30,7 @@ class Console extends Singleton implements LoggerInterface
     function __construct() 
     {
         parent::__construct();
+        $this->ms = microtime(true);
         $this->debug('Logger Started')    ;
     }
 
@@ -60,7 +61,7 @@ class Console extends Singleton implements LoggerInterface
 
     public function log($level, $message, array $context = array()) {
         error_log("[" . str_pad(round(microtime(true)-$this->ms,8),10,'0',STR_PAD_LEFT) . "]\t" . $level . ": \t" . $message);
-        $this->ms = microtime(true);
+        
     }
 
     public function notice($message, array $context = array()) {

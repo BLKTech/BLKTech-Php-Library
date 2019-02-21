@@ -168,7 +168,7 @@ class MySQL extends \BLKTech\DataBase\SQL\Driver
 
             return true;
         } catch (Exception $e) {
-            throw new CommandException($command, $e->getMessage(), $e->getCode());
+            throw new CommandException($command .':'. $e->getMessage(), $e->getCode());
         }
     }
 
