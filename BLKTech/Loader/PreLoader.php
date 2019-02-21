@@ -30,10 +30,13 @@ class Preloader
          'BLKTech/DataType/Query',
          'BLKTech/DataType/Service',
          'BLKTech/DataType/URL',
+         'BLKTech/FileSystem/FileSystem',    
+         'BLKTech/FileSystem/Directory', 
+         'BLKTech/FileSystem/File',         
          'BLKTech/Loader/Library',
          'BLKTech/Loader/Loader',
     );
-    
+ 
     public static function preLoad()
     {
         foreach (self::$clasess as $class)

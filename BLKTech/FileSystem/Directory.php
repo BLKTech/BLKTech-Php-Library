@@ -14,7 +14,7 @@
  */
 
 namespace BLKTech\FileSystem;
-use \BLKTech\Type\Path;
+use \BLKTech\DataType\Path;
 use \BLKTech\FileSystem\Exception\NotIsDirectoryException;
 use \BLKTech\FileSystem\Exception\CreateDirectoryException;
 

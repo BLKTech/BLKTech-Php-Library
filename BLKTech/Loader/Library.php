@@ -39,7 +39,7 @@ class Library
     }
 
     public function getNamespace() {return $this->namespace;}
-    public function getDirectory() {return $this->path;}
+    public function getDirectory() {return $this->directory;}
     public function getUrl() {return $this->url;}
 
 
