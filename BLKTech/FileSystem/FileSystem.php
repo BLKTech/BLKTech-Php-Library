@@ -150,7 +150,7 @@ class FileSystem extends Path
     protected function validateIsFile()        {return self::pathValidateIsFile($this);}    
     protected function validateIsLink()        {return self::pathValidateIsLink($this);}    
     
-    protected function __construct(Path $path)     {parent::__construct($path->pathElements,$path->getDirectorySeparator());}    
+    public function __construct(Path $path)     {parent::__construct($path->pathElements,$path->getDirectorySeparator());}    
     public function combinePath(Path $subPath)  {return new FileSystem(parent::combinePath($subPath),parent::getDirectorySeparator());}        
     
     public function __toString() 

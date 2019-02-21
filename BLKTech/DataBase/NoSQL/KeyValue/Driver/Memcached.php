@@ -13,7 +13,7 @@
  *
  */
 
-namespace BLKTech\Storage\Key\Driver;
+namespace BLKTech\DataBase\NoSQL\KeyValue\Driver;
 use \BLKTech\DataType\Service;
 use \BLKTech\Cryptography\Hash;
 
@@ -22,7 +22,7 @@ use \BLKTech\Cryptography\Hash;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Memcached extends \BLKTech\Storage\Key\Driver{
+class Memcached extends \BLKTech\DataBase\NoSQL\KeyValue\Driver{
     
     public static function getLocalHost($keyPrefix = NULL, Hash $hashAlgorithm = null)
     {
