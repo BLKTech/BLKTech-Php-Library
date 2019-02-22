@@ -73,7 +73,7 @@ class Dynamic extends \BLKTech\Storage\String\Driver\DataBase\SQL
         if($_ === null)
             $_ = array();
         
-        if(!isset($_[$tableName]))        
+        if(!$this->dynamic->checkTable($suffix))        
             $_[$tableName] = $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $tableName . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `value` char(" . $suffix . ") NOT NULL, PRIMARY KEY (id),UNIQUE (`value`)) ENGINE=MyISAM;");
         
         return $tableName;        

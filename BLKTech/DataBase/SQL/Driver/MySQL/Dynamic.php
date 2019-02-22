@@ -26,12 +26,21 @@ class Dynamic
 {
     private $driver;
     private $tablePrefix;
+    private $tables = array();
+    
     function __construct(MySQL $driver,$tablePrefix) 
     {
         $this->driver = $driver;
         $this->tablePrefix = $tablePrefix;
+        
+        foreach($driver->getTablesWithPrefix($tablePrefix) as $table)        
+            $this->tables[] = substr ($table, strlen ($this->tablePrefix));
     }
     
+    public function checkTable($suffix) 
+    {
+        return in_array($suffix, $this->tables);     
+    }    
     
     public function delete($id) 
     {

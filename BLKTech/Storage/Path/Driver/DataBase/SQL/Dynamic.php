@@ -17,6 +17,7 @@ namespace BLKTech\Storage\Path\Driver\DataBase\SQL;
 use \BLKTech\DataBase\SQL\Driver\MySQL;
 use \BLKTech\DataType\Path;
 use \BLKTech\DataType\Integer;
+use \BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
 
 /**
  *
@@ -25,35 +26,26 @@ use \BLKTech\DataType\Integer;
  
 class Dynamic extends \BLKTech\Storage\Path\Driver\DataBase\SQL
 {
-    
+    const tableNamePrefix='blktech_storage_path__';
+
     private $driver;    
     private $string;
+    private $dynamic;
+
     public function __construct(MySQL $driver)
     {
         $this->driver = $driver;
         $this->string = new \BLKTech\Storage\String\Driver\DataBase\SQL\Dynamic($driver);
+        $this->dynamic = new MySQLDynamic($driver, self::tableNamePrefix);
+
     }
     
-    private function checkTable($tableName)
-    {
-        static $_ = null;
         
-        if($_ === null)
-            $_ = array();
-        
-        if(isset($_[$tableName]))
-            return false;
-        else
-        {
-            $_[$tableName] = true;
-            return true;
-        }
-    }        
     private function getTableNameNode($level)
     {
         $_ = 'blktech_storage_path__' . $level;
         
-        if($this->checkTable($_))
+        if(!$this->dynamic->checkTable($level))
             $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $_ . "` (`id` int(11) NOT NULL AUTO_INCREMENT, `idParent` int(11) NOT NULL, `idElement` int(11) NOT NULL, `lenElement` int(11) NOT NULL, PRIMARY KEY (id),UNIQUE (`idParent`,`idElement`,`lenElement`)) ENGINE=MyISAM");
         
         return $_;        
