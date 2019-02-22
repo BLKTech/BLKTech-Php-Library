@@ -157,9 +157,13 @@ class FileSystem extends Path
     {
         $_ = parent::__toString();
         
-        if (!empty($_) && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && strtolower(substr($_, 2, 1)) == ':') //remove root / on WIN OS if drive present
-            return substr ($_, 1);
-        
+        if (!empty($_) && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+        {
+            if(substr($_, 2, 1) == ':') //remove root / on WIN OS if drive present
+                return substr ($_, 1);
+            else
+                return "\\" . $_; // add extra \ on UNC path
+        }
         return $_;
     }
 
