@@ -99,7 +99,7 @@ class Dynamic extends \BLKTech\Storage\Path\Driver\SQL
             $level++;
         }
 
-        return Integer::unSignedInt32CombineIntoInt64($level, $idParent);
+        return Integer::unSignedInt32CombineIntoInt64($level-1, $idParent);
     }
     public function getChilds($id)
     {
