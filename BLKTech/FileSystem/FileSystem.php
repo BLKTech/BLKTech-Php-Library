@@ -32,6 +32,20 @@ use \BLKTech\FileSystem\Exception\IOException;
 class FileSystem extends Path
 {   
     
+    public static function parsePathFileSystem(Path $path)
+    {
+        $_ = $path->__toString();
+        
+        if (!empty($_) && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+        {
+            if(substr($_, 2, 1) == ':') //remove root / on WIN OS if drive present
+                return substr ($_, 1);
+            elseif(substr($_, 0, 2) != '\\\\')
+                return '\\' . $_; // add extra \ on UNC path
+        }
+        return $_;
+    }
+    
     public static function getFromStringPath($stringPath)
     {
         return new self(Path::getPathFromString($stringPath));
@@ -52,63 +66,63 @@ class FileSystem extends Path
     public static function pathIsFile(Path $path)
     {
         self::pathValidateExistence($path);        
-        return is_file($path->__toString());
+        return is_file(self::parsePathFileSystem($path));
     }
     public static function pathIsLink(Path $path)
     {
         self::pathValidateExistence($path);        
-        return is_link($path->__toString());
+        return is_link(self::parsePathFileSystem($path));
     }        
     public static function pathIsDirectory(Path $path)
     {
         self::pathValidateExistence($path);
-        return is_dir($path->__toString());
+        return is_dir(self::parsePathFileSystem($path)) || is_array(@scandir(self::parsePathFileSystem($path)));
     }    
 
 	
     public static function pathIsReadable(Path $path)
     {
         self::pathValidateExistence($path);
-        return is_readable($path->__toString());
+        return is_readable(self::parsePathFileSystem($path));
     }
     public static function pathGetModificationTime(Path $path)
     {
         self::pathValidateExistence($path);        
-        return filemtime($path->__toString());
+        return filemtime(self::parsePathFileSystem($path));
     }
     public static function pathGetFreeSpace(Path $path)
     {
         self::pathValidateExistence($path);        
-        return disk_free_space ($path->__toString());
+        return disk_free_space (self::parsePathFileSystem($path));
     }
     public static function pathGetTotalSpace(Path $path)
     {
         self::pathValidateExistence($path);        
-        return disk_total_space  ($path->__toString());
+        return disk_total_space  (self::parsePathFileSystem($path));
     }
     
     public static function pathSetModificationTime(Path $path,$time)
     {
         self::pathValidateExistence($path);        
         self::pathValidateWritable($path);        
-        if(!touch($path->__toString(),$time))
+        if(!touch(self::parsePathFileSystem($path),$time))
             throw new IOException ($path);
     }
     
     public static function pathFreeSpace(Path $path)
     {
         self::pathValidateExistence($path);        
-        return disk_free_space($path->__toString());
+        return disk_free_space(self::parsePathFileSystem($path));
     }
     
     public static function pathIsWritable(Path $path)
     {
         if(self::pathExists($path))
-            return is_writable($path->__toString());
+            return is_writable(self::parsePathFileSystem($path));
         else
         {
             self::pathValidateExistence($path->getParent());                  
-            return is_writable($path->getParent()->__toString());
+            return is_writable(self::parsePathFileSystem($path->getParent()));
         }
     }
     
@@ -117,7 +131,7 @@ class FileSystem extends Path
         self::pathValidateIsDirectory($path);      
                        
         $tmp = array();
-        foreach (scandir($path->__toString()) as $_)
+        foreach (scandir(self::parsePathFileSystem($path)) as $_)
         {
             if($_=='.')
                 continue;
@@ -155,16 +169,7 @@ class FileSystem extends Path
     
     public function __toString() 
     {
-        $_ = parent::__toString();
-        
-        if (!empty($_) && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
-        {
-            if(substr($_, 2, 1) == ':') //remove root / on WIN OS if drive present
-                return substr ($_, 1);
-            else
-                return "\\" . $_; // add extra \ on UNC path
-        }
-        return $_;
+        return self::parsePathFileSystem(new Path(parent::getElements()));
     }
 
 }
