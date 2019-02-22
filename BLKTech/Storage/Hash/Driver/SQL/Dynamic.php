@@ -47,9 +47,10 @@ class Dynamic extends \BLKTech\Storage\Hash\Driver\SQL
 
     public function set($hash) 
     {
-        $idHigh = hexdec(substr($hash, 0, 8));     
-        $hash = substr($hash, 8);
+        $idHigh = hexdec(substr($hash, 0, 7));     
+        $hash = substr($hash, 7);
         $this->createTable($idHigh, strlen($hash));
+        
         $data = array(
             'value'=>$hash
         );
@@ -62,17 +63,10 @@ class Dynamic extends \BLKTech\Storage\Hash\Driver\SQL
     
     private function createTable($suffix,$len)
     {
-        $tableName = $this->tableNamePrefix . $suffix;
-                
-        static $_ = null;
-        
-        if($_ === null)
-            $_ = array();
-        
-        if(!isset($_[$tableName]))        
-            $_[$tableName] = $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $tableName . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `value` char(" . $len. ") NOT NULL, PRIMARY KEY (id),UNIQUE (`value`)) ENGINE=MyISAM;");
-        
-        return $tableName;        
+        if($this->dynamic->checkTable($suffix))
+            return;
+   
+        $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $this->tableNamePrefix . $suffix . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `value` char(" . $len. ") NOT NULL, PRIMARY KEY (id),UNIQUE (`value`)) ENGINE=MyISAM;");        
     }     
     
 

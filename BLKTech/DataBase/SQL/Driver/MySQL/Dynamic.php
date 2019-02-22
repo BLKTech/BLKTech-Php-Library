@@ -62,7 +62,7 @@ class Dynamic
     
     public function set($idHigh, $data = array()) 
     {        
-        $idLow = $this->driver->autoTable($this->tablePrefix . $idHigh, $data, array('id'))['id'];        
+        $idLow = $this->driver->autoTable($this->tablePrefix . $idHigh, $data, array('id'))['id'];   
         return Integer::unSignedInt32CombineIntoInt64(
                 $idHigh, 
                 $idLow

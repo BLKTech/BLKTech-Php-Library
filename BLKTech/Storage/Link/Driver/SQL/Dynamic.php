@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace BLKTech\Storage\Link\Driver\DataBase\SQL;
+namespace BLKTech\Storage\Link\Driver\SQL;
 use \BLKTech\DataType\Integer;
 use \BLKTech\DataBase\SQL\Driver\MySQL;
 use \BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
@@ -17,7 +17,7 @@ use \BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
  *
  * @author instalacion
  */
-class Dynamic extends \BLKTech\Storage\Link\Driver\DataBase\SQL{
+class Dynamic extends \BLKTech\Storage\Link\Driver\SQL{
     
     const tableNamePrefix='blktech_storage_link__';
     
@@ -43,10 +43,7 @@ class Dynamic extends \BLKTech\Storage\Link\Driver\DataBase\SQL{
     {
         $id_ = Integer::unSignedInt64UnCombineIntoInt32($id);
         $row = $this->dynamic->get($id);
-        return array(
-            Integer::unSignedInt32CombineIntoInt64($id_[0], $row['idSourceLow']),
-            Integer::unSignedInt32CombineIntoInt64($row['idDestinationHigh'], $row['idDestinationLow']),
-        );
+        return Integer::unSignedInt32CombineIntoInt64($row['idDestinationHigh'], $row['idDestinationLow']);      
     }
 
     public function set($idSource, $idDestination) 
@@ -66,16 +63,10 @@ class Dynamic extends \BLKTech\Storage\Link\Driver\DataBase\SQL{
    
     private function createTable($suffix)
     {
-        $tableName = self::tableNamePrefix . $suffix;
-                
-        static $_ = null;
-        
-        if($_ === null)
-            $_ = array();
-        
-        if(!isset($_[$tableName]))        
-            $_[$tableName] = $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $tableName . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `idSourceLow` int(11) UNSIGNED NOT NULL, `idDestinationHigh` int(11) UNSIGNED NOT NULL, `idDestinationLow` int(11) UNSIGNED NOT NULL, PRIMARY KEY (id),INDEX (`idSourceLow`)) ENGINE=MyISAM;");
-        
-        return $tableName;        
+        if($this->dynamic->checkTable($suffix))
+            return;
+    
+        $_[$tableName] = $this->driver->command("CREATE TABLE IF NOT EXISTS `" . self::tableNamePrefix . $suffix . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `idSourceLow` int(11) UNSIGNED NOT NULL, `idDestinationHigh` int(11) UNSIGNED NOT NULL, `idDestinationLow` int(11) UNSIGNED NOT NULL, PRIMARY KEY (id),INDEX (`idSourceLow`)) ENGINE=MyISAM;");
+     
     }    
 }

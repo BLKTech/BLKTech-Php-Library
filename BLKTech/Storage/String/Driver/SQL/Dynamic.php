@@ -13,7 +13,7 @@
  *
  */
 
-namespace BLKTech\Storage\String\Driver\DataBase\SQL;
+namespace BLKTech\Storage\String\Driver\SQL;
 use \BLKTech\DataBase\SQL\Driver\MySQL;
 use \BLKTech\DataType\Integer;
 use \BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
@@ -23,7 +23,7 @@ use \BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Dynamic extends \BLKTech\Storage\String\Driver\DataBase\SQL
+class Dynamic extends \BLKTech\Storage\String\Driver\SQL
 {
     const tableNamePrefix='blktech_storage_string__';
 
@@ -66,17 +66,10 @@ class Dynamic extends \BLKTech\Storage\String\Driver\DataBase\SQL
     
     private function createTable($suffix)
     {
-        $tableName = self::tableNamePrefix . $suffix;
-                
-        static $_ = null;
-        
-        if($_ === null)
-            $_ = array();
-        
-        if(!$this->dynamic->checkTable($suffix))        
-            $_[$tableName] = $this->driver->command("CREATE TABLE IF NOT EXISTS `" . $tableName . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `value` char(" . $suffix . ") NOT NULL, PRIMARY KEY (id),UNIQUE (`value`)) ENGINE=MyISAM;");
-        
-        return $tableName;        
+        if($this->dynamic->checkTable($suffix)) 
+            return;
+
+        $this->driver->command("CREATE TABLE IF NOT EXISTS `" .  self::tableNamePrefix . $suffix . "` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, `value` char(" . $suffix . ") NOT NULL, PRIMARY KEY (id),UNIQUE (`value`)) ENGINE=MyISAM;");                
     }     
     
  

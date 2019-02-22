@@ -6,13 +6,15 @@
  * and open the template in the editor.
  */
 
-namespace BLKTech\Storage\Link\Driver\DataBase;
+namespace BLKTech\Storage\String\Driver;
 
 /**
  * Description of SQL
  *
  * @author instalacion
  */
-abstract class SQL extends \BLKTech\Storage\Link\Driver\DataBase{
+abstract class SQL extends \BLKTech\Storage\String\Driver{
     //put your code here
+    
+
 }

@@ -13,7 +13,7 @@
  *
  */
 
-namespace BLKTech\Storage\Path\Driver\DataBase\SQL;
+namespace BLKTech\Storage\Path\Driver\SQL;
 use \BLKTech\DataBase\SQL\Driver\MySQL;
 use \BLKTech\DataType\Path;
 use \BLKTech\DataType\Integer;
@@ -24,7 +24,7 @@ use \BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Dynamic extends \BLKTech\Storage\Path\Driver\DataBase\SQL
+class Dynamic extends \BLKTech\Storage\Path\Driver\SQL
 {
     const tableNamePrefix='blktech_storage_path__';
 
@@ -35,7 +35,7 @@ class Dynamic extends \BLKTech\Storage\Path\Driver\DataBase\SQL
     public function __construct(MySQL $driver)
     {
         $this->driver = $driver;
-        $this->string = new \BLKTech\Storage\String\Driver\DataBase\SQL\Dynamic($driver);
+        $this->string = new \BLKTech\Storage\String\Driver\SQL\Dynamic($driver);
         $this->dynamic = new MySQLDynamic($driver, self::tableNamePrefix);
 
     }

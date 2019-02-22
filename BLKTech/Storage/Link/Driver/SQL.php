@@ -9,10 +9,10 @@
 namespace BLKTech\Storage\Link\Driver;
 
 /**
- * Description of DataBase
+ * Description of SQL
  *
  * @author instalacion
  */
-abstract class DataBase extends \BLKTech\Storage\Link\Driver{
+abstract class SQL extends \BLKTech\Storage\Link\Driver{
     //put your code here
 }
