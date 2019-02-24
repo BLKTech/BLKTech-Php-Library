@@ -14,7 +14,6 @@
  */
 
 namespace BLKTech\DataBase\SQL\Driver\MySQL;
-use \BLKTech\DataBase\SQL\Driver\MySQL;
 use \BLKTech\DataType\Integer;
 
 /**
@@ -22,47 +21,30 @@ use \BLKTech\DataType\Integer;
  * @author TheKito < blankitoracing@gmail.com >
  */
  
-class Dynamic 
+class Dynamic extends SubTable
 {
-    private $driver;
-    private $tablePrefix;
-    private $tables = array();
-    
-    function __construct(MySQL $driver,$tablePrefix) 
-    {
-        $this->driver = $driver;
-        $this->tablePrefix = $tablePrefix;
-        
-        foreach($driver->getTablesWithPrefix($tablePrefix) as $table)        
-            $this->tables[] = substr ($table, strlen ($this->tablePrefix));
-    }
-    
-    public function checkTable($suffix) 
-    {
-        return in_array($suffix, $this->tables);     
-    }    
     
     public function delete($id) 
     {
         $id_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        return $this->driver->delete($this->tablePrefix . $id_[0],array('id'=>$id_[1]));        
+        return $this->driver->delete(parent::getTable($id_[0], false), array('id'=>$id_[1]));        
     }
     
     public function exists($id) 
     {
         $id_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        return $this->driver->exists($this->tablePrefix . $id_[0],array('id'=>$id_[1]));   
+        return $this->driver->exists(parent::getTable($id_[0], false), array('id'=>$id_[1]));   
     }
 
     public function get($id) 
     {
         $id_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        return $this->driver->getRow($this->tablePrefix . $id_[0], array(), array('id'=>$id_[1]));        
+        return $this->driver->getRow(parent::getTable($id_[0], false), array(), array('id'=>$id_[1]));        
     }    
     
     public function set($idHigh, $data = array()) 
     {        
-        $idLow = $this->driver->autoTable($this->tablePrefix . $idHigh, $data, array('id'))['id'];   
+        $idLow = $this->driver->autoTable(parent::getTable($idHigh, true), $data, array('id'))['id'];   
         return Integer::unSignedInt32CombineIntoInt64(
                 $idHigh, 
                 $idLow
