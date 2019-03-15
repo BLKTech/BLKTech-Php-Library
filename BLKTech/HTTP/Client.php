@@ -14,7 +14,10 @@
  */
 
 namespace BLKTech\HTTP;
-
+use \BLKTech\DataType\URL;
+use \BLKTech\HTTP\Header;
+use \BLKTech\HTTP\Request;
+use \BLKTech\HTTP\Method;
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
@@ -22,7 +25,32 @@ namespace BLKTech\HTTP;
  
 class Client 
 {
-
+    public static function easyCall(URL $url, Header $headers, String $prefix = null, $payload = null)
+    {
+        if(prefix!=null)        
+            foreach($headers as $key => $value)
+            {
+                $headers[$prefix . $key] = $value;
+                unset($headers[$key]);
+            }
+        
+        $response = Client::call(new Request(Method::GET(), $url, $headers, $payload));
+                                
+        if($prefix==null)        
+            return $response->getHeader();
+        
+        
+        
+//        hr = new HashMap();                
+//        for (Map.Entry<String, String> entry : response.getHeader().entrySet()) 
+//            if(entry.getKey()!=null && entry.getKey().toUpperCase().startsWith(prefix.toUpperCase()))
+//            {
+//                System.out.println(entry.getKey());
+//                System.out.println(entry.getValue());
+//                hr.put(entry.getKey().substring(prefix.length()), entry.getValue());
+//            }
+//        return hr;
+    }
     
     public static function call(Request $request, $deep = 10)
     {
@@ -55,4 +83,7 @@ class Client
         
         return new Response(curl_getinfo($curl, CURLINFO_HTTP_CODE), $header, $body);        
     }
+    
+    
+    
 }
