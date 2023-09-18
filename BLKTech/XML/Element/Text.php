@@ -14,27 +14,29 @@
  */
 
 namespace BLKTech\XML\Element;
-use \BLKTech\XML\Element;
+
+use BLKTech\XML\Element;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
+
 class Text extends Element
 {
     private $text;
-    
-    public function __construct($text) 
+
+    public function __construct($text)
     {
         $this->text = utf8_encode($text);
     }
 
-    public function dump($level) 
+    public function dump($level)
     {
         echo $this->toString($level);
     }
 
-    public function toString($level) 
+    public function toString($level)
     {
         return parent::getTabs($level). '<![CDATA[ ' . PHP_EOL  .$this->text . PHP_EOL . parent::getTabs($level) .' ]]>';
     }

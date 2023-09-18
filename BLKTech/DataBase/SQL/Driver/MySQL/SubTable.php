@@ -14,52 +14,58 @@
  */
 
 namespace BLKTech\DataBase\SQL\Driver\MySQL;
-use \BLKTech\DataBase\SQL\Driver\MySQL;
+
+use BLKTech\DataBase\SQL\Driver\MySQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class SubTable 
-{    
-    private static function clearTableName($tableName){return strtoupper(preg_replace("/[^A-Za-z0-9_]/", '', $tableName));}
-    
+class SubTable
+{
+    private static function clearTableName($tableName)
+    {
+        return strtoupper(preg_replace("/[^A-Za-z0-9_]/", '', $tableName));
+    }
+
     protected $driver;
     protected $tablePrefix;
     protected $suffixes = array();
-    
-    public function __construct(MySQL $driver,$tablePrefix) 
+
+    public function __construct(MySQL $driver, $tablePrefix)
     {
         $this->driver = $driver;
         $this->tablePrefix = strtolower(self::clearTableName($tablePrefix));
 
-        foreach($driver->getTablesWithPrefix($tablePrefix) as $table)        
-            $this->suffixes[] = substr ($table, strlen ($this->tablePrefix));        
+        foreach($driver->getTablesWithPrefix($tablePrefix) as $table) {
+            $this->suffixes[] = substr($table, strlen($this->tablePrefix));
+        }
     }
-    
-    function getSuffixes() 
+
+    public function getSuffixes()
     {
         return $this->suffixes;
     }
 
-    public function checkTable($suffix) 
+    public function checkTable($suffix)
     {
-        return in_array(self::clearTableName($suffix), $this->tables);     
-    }    
-    
-    public function getTable($suffix, $create = true)
-    {       
-        $suffix = self::clearTableName($suffix);
-        
-        $destinationTable = $this->tablePrefix . '__' . $suffix;
-        
-        if($create && !$this->checkTable($suffix));
-            if($this->driver->copyTable($this->tablePrefix, $destinationTable))
-                $this->suffixes[] = $suffix;
-        
-        return $destinationTable;                
+        return in_array(self::clearTableName($suffix), $this->tables);
     }
-    
+
+    public function getTable($suffix, $create = true)
+    {
+        $suffix = self::clearTableName($suffix);
+
+        $destinationTable = $this->tablePrefix . '__' . $suffix;
+
+        if($create && !$this->checkTable($suffix));
+        if($this->driver->copyTable($this->tablePrefix, $destinationTable)) {
+            $this->suffixes[] = $suffix;
+        }
+
+        return $destinationTable;
+    }
+
 
 }

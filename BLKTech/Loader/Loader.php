@@ -14,12 +14,13 @@
  */
 
 namespace BLKTech\Loader;
-use \BLKTech\Loader\Library;
-use \BLKTech\DataType\URL;
-use \BLKTech\DataType\Path;
-use \BLKTech\FileSystem\File;
-use \BLKTech\FileSystem\Directory;
-use \BLKTech\DesignPattern\Singleton;
+
+use BLKTech\Loader\Library;
+use BLKTech\DataType\URL;
+use BLKTech\DataType\Path;
+use BLKTech\FileSystem\File;
+use BLKTech\FileSystem\Directory;
+use BLKTech\DesignPattern\Singleton;
 
 /**
  * Description of Loader
@@ -29,38 +30,37 @@ use \BLKTech\DesignPattern\Singleton;
  */
 
 class Loader extends Singleton
-{        
-
+{
     /**
      * An associative array where the key is a namespace prefix and the value
      * is an instance of Library class.
      *
      * @var array
      */
-    protected $libraries = array();    
-    
-    protected function __construct() 
+    protected $libraries = array();
+
+    protected function __construct()
     {
         parent::__construct();
         spl_autoload_register(array($this, 'loadClass'));
         $this->addLibrary(new Library(
-                    Path::getFromString('/BLKTech'), 
-                    Directory::getFromString(__DIR__ . '/../'), 
-                    URL::getFromString('https://psr0.blktech.org/BLKTech')
-                ));
+            Path::getFromString('/BLKTech'),
+            Directory::getFromString(__DIR__ . '/../'),
+            URL::getFromString('https://psr0.blktech.org/BLKTech')
+        ));
         $this->addLibrary(new Library(
-                    Path::getFromString('/Psr'), 
-                    Directory::getFromString(__DIR__ . '/../../Psr'), 
-                    URL::getFromString('https://psr0.blktech.org/Psr')
-                ));        
+            Path::getFromString('/Psr'),
+            Directory::getFromString(__DIR__ . '/../../Psr'),
+            URL::getFromString('https://psr0.blktech.org/Psr')
+        ));
         $this->addLibrary(new Library(
-                    Path::getFromString('/Symfony'), 
-                    Directory::getFromString(__DIR__ . '/../../Symfony'), 
-                    URL::getFromString('https://raw.githubusercontent.com/symfony/symfony/master/src/Symfony')
-                ));         
+            Path::getFromString('/Symfony'),
+            Directory::getFromString(__DIR__ . '/../../Symfony'),
+            URL::getFromString('https://raw.githubusercontent.com/symfony/symfony/master/src/Symfony')
+        ));
     }
 
-    
+
     /**
      * Adds a Library
      *
@@ -70,8 +70,8 @@ class Loader extends Singleton
     public function addLibrary(Library $library)
     {
         $this->libraries[$library->getNamespace()->__toString()] = $library;
-    }    
-    
+    }
+
     /**
      * Loads the class file for a given class name.
      *
@@ -82,88 +82,86 @@ class Loader extends Singleton
     public function loadClass($classNameSpace)
     {
         self::log('SPL Loading ' . $classNameSpace);
-        
-        $classPath = Path::getFromString($classNameSpace,"\\");
-        
+
+        $classPath = Path::getFromString($classNameSpace, "\\");
+
         $nameSpacePath = $classPath->getParent();
         $middle = array();
-        while(!$nameSpacePath->isRoot())
-        {
-            if(isset($this->libraries[$nameSpacePath->__toString()]))
-            {
+        while(!$nameSpacePath->isRoot()) {
+            if(isset($this->libraries[$nameSpacePath->__toString()])) {
                 self::log('Library match ' . $nameSpacePath->__toString());
                 if(self::tryFind(
-                        $this->libraries[$nameSpacePath->__toString()],
-                        array_reverse($middle),
-                        $classPath->getName() . '.php'                        
-                )){break;}
+                    $this->libraries[$nameSpacePath->__toString()],
+                    array_reverse($middle),
+                    $classPath->getName() . '.php'
+                )) {
+                    break;
+                }
             }
-            
+
             $middle[] = $nameSpacePath->getName();
             $nameSpacePath = $nameSpacePath->getParent();
         }
     }
 
-    private static function getFile(Library $library,$middle,$className)
+    private static function getFile(Library $library, $middle, $className)
     {
-        $baseDirectory = $library->getDirectory();        
+        $baseDirectory = $library->getDirectory();
         $middlePath = Path::getFromString(implode(DIRECTORY_SEPARATOR, $middle));
-        $classNamePath = Path::getFromString($className);       
-        return new File($baseDirectory->combine($middlePath)->combine($classNamePath));        
+        $classNamePath = Path::getFromString($className);
+        return new File($baseDirectory->combine($middlePath)->combine($classNamePath));
     }
-    
-    private static function getFileURL(Library $library,$middle,$className)
+
+    private static function getFileURL(Library $library, $middle, $className)
     {
         $baseURL = $library->getUrl();
         $middleURL = URL::getFromString(implode('/', $middle));
-        $classNameURL = URL::getFromString($className);        
-        return $baseURL->combine($middleURL)->combine($classNameURL);        
+        $classNameURL = URL::getFromString($className);
+        return $baseURL->combine($middleURL)->combine($classNameURL);
     }
-    
+
     private static function tryLoad(File $file)
-    {        
+    {
         self::log('Trying Load Path ' . $file->__toString());
 
-        if($file->exists())
-            require_once $file->__toString();        
+        if($file->exists()) {
+            require_once $file->__toString();
+        }
     }
-    
-    private static function writeClass(File $file,$data)
+
+    private static function writeClass(File $file, $data)
     {
-        $file->getParent()->create();                   
+        $file->getParent()->create();
         return $file->setContent($data);
     }
-    
-    private static function tryFind($library,$middle,$className)
+
+    private static function tryFind($library, $middle, $className)
     {
         $file = self::getFile($library, $middle, $className);
 
-        if($file->exists())
-        {
-            return self::tryLoad($file);            
-        }      
-        elseif($library->getUrl()!==NULL)
-        {
+        if($file->exists()) {
+            return self::tryLoad($file);
+        } elseif($library->getUrl()!==null) {
             $fileURL = self::getFileURL($library, $middle, $className);
             $url = $fileURL->__toString();
-            self::log('File Not Found, Trying Download: '.$url);            
+            self::log('File Not Found, Trying Download: '.$url);
             $data = @file_get_contents($url);
-            
-            if($data!==FALSE && self::writeClass($file, $data))
-            {   
+
+            if($data!==false && self::writeClass($file, $data)) {
                 return self::tryLoad($file);
             }
         }
-        
+
         return false;
     }
-    
+
     private static function log($message)
     {
-        if(class_exists('\BLKTech\Logger',false))
+        if(class_exists('\BLKTech\Logger', false)) {
             \BLKTech\Logger::getInstance()->debug($message);
-        else
-            error_log ($message);
+        } else {
+            error_log($message);
+        }
     }
-    
+
 }

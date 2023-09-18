@@ -14,26 +14,32 @@
  */
 
 namespace BLKTech\HTTP;
-use \BLKTech\DataType\URL;
+
+use BLKTech\DataType\URL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
+
 class Request extends Message
-{    
+{
     private $method;
     private $url;
-    
-    public function __construct(Method $method, URL $url,Header $header, $payload) 
+
+    public function __construct(Method $method, URL $url, Header $header, $payload)
     {
-        parent::__construct($header, $payload);       
+        parent::__construct($header, $payload);
         $this->method = $method;
         $this->url = $url;
     }
-    
-    public function getMethod() {return $this->method;}
-    public function getURL() {return $this->url;}       
+
+    public function getMethod()
+    {
+        return $this->method;
+    }
+    public function getURL()
+    {
+        return $this->url;
+    }
 }
- 

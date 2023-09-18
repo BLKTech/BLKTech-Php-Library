@@ -13,6 +13,7 @@ namespace BLKTech\Storage\KeyValue\Driver;
  *
  * @author instalacion
  */
-abstract class Memory extends \BLKTech\Storage\KeyValue\Driver{
+abstract class Memory extends \BLKTech\Storage\KeyValue\Driver
+{
     //put your code here
 }

@@ -14,90 +14,93 @@
  */
 
 namespace BLKTech\HTTP;
-use \BLKTech\DataType\URL;
+
+use BLKTech\DataType\URL;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-abstract class Server 
+
+abstract class Server
 {
     public static function setup()
-    {        
+    {
         self::resetBuffer();
     }
-    
+
     public static function resetBuffer()
     {
         // remove all data in output buffer writed by echo, print_r, readfile etc
         while(@ob_end_clean());
-        
-        // create new empty buffer       
-        if (version_compare(PHP_VERSION, '5.4.0', '>='))                 
+
+        // create new empty buffer
+        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
             ob_start(null, 0, PHP_OUTPUT_HANDLER_STDFLAGS ^ PHP_OUTPUT_HANDLER_REMOVABLE);
-        else 
+        } else {
             ob_start(null, 0, false);
-    }
-    
-    public static function getRequestFromGlobals() 
-    {
-        return new Request(Method::getFromGlobals(), 
-                                URL::getFromGlobals(), 
-                                Header::getFromGlobals(),
-                                 file_get_contents('php://input')
-        );
-    }   
-    
-    public static function sendResponse(Response $response)
-    { 
-        $payload = $response->getPayload();
-//        if($payload!==null)
-//            $response->getHeader()->set('Content-Type', $response->getBody()->getContentType());  
-//            $response->getHeader()->set('Content-Length', $response->getBody()->getContentLength());
-        
-        self::resetBuffer();        
-        http_response_code($response->getCode());
-        foreach ($response->getHeader() as $headerName => $headerValue)
-            header ($headerName . ': ' . $headerValue, true, $response->getCode());
-        
-        if(Method::getFromGlobals()!='HEAD')
-        {
-            if($payload!==null)
-                echo $payload;
         }
-        else
+    }
+
+    public static function getRequestFromGlobals()
+    {
+        return new Request(
+            Method::getFromGlobals(),
+            URL::getFromGlobals(),
+            Header::getFromGlobals(),
+            file_get_contents('php://input')
+        );
+    }
+
+    public static function sendResponse(Response $response)
+    {
+        $payload = $response->getPayload();
+        //        if($payload!==null)
+        //            $response->getHeader()->set('Content-Type', $response->getBody()->getContentType());
+        //            $response->getHeader()->set('Content-Length', $response->getBody()->getContentLength());
+
+        self::resetBuffer();
+        http_response_code($response->getCode());
+        foreach ($response->getHeader() as $headerName => $headerValue) {
+            header($headerName . ': ' . $headerValue, true, $response->getCode());
+        }
+
+        if(Method::getFromGlobals()!='HEAD') {
+            if($payload!==null) {
+                echo $payload;
+            }
+        } else {
             http_response_code(204);
-        
+        }
+
         ob_flush();
         exit();
-    }   
-    
+    }
+
     public static function sendResponseCode($code)
     {
         self::sendResponseCodeMessage($code, Response::getCodeMessage($code));
     }
-    
+
     public static function sendResponseCodeMessage($code, $message)
     {
         self::sendResponse(new Response($code, new Header(), new Body($message)));
-    }    
+    }
 
 
     public function __destruct()
     {
         $request = self::getRequestFromGlobals();
-        try 
-        {
+        try {
             $method = $request->getMethod()->__toString();
-            if(method_exists($this, $method))
-                self::sendResponse($this->$method($request)); 
-            else
+            if(method_exists($this, $method)) {
+                self::sendResponse($this->$method($request));
+            } else {
                 self::sendResponseCode(405);
-        } 
-        catch (\Exception $ex) 
-        {            
+            }
+        } catch (\Exception $ex) {
             self::sendResponseCodeMessage(503, get_class($ex));
-        }        
-        
+        }
+
     }
 }

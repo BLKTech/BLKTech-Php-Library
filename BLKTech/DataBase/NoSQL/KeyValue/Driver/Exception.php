@@ -19,7 +19,7 @@ namespace BLKTech\DataBase\NoSQL\KeyValue\Driver;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\DataBase\NoSQL\KeyValue\Exception {
 
+class Exception extends \BLKTech\DataBase\NoSQL\KeyValue\Exception
+{
 }

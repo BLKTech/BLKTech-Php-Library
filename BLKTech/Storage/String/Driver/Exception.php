@@ -19,7 +19,7 @@ namespace BLKTech\Storage\String\Driver;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\Storage\String\Exception {
 
+class Exception extends \BLKTech\Storage\String\Exception
+{
 }

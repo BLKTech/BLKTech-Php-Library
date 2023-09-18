@@ -19,7 +19,7 @@ namespace BLKTech\test;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\Exception {
 
+class Exception extends \BLKTech\Exception
+{
 }

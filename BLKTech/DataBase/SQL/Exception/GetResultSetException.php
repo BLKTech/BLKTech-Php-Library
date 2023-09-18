@@ -20,6 +20,7 @@ namespace BLKTech\DataBase\SQL\Exception;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class GetResultSetException extends Exception{
+class GetResultSetException extends Exception
+{
     //put your code here
 }

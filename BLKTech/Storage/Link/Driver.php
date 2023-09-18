@@ -14,11 +14,11 @@ namespace BLKTech\Storage\Link;
  * @author instalacion
  */
 
-abstract class Driver implements \BLKTech\Storage\DriverInterface{
-
-    public abstract function delete($id);
-    public abstract function exists($id);
-    public abstract function get($id);
-    public abstract function set($idSource,$idDestination);
+abstract class Driver implements \BLKTech\Storage\DriverInterface
+{
+    abstract public function delete($id);
+    abstract public function exists($id);
+    abstract public function get($id);
+    abstract public function set($idSource, $idDestination);
 
 }

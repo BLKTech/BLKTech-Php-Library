@@ -14,30 +14,32 @@
  */
 
 namespace BLKTech\XML\Element;
-use \BLKTech\XML\Element;
+
+use BLKTech\XML\Element;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
+
 abstract class Tag extends Element
 {
-    public static function open($name,$attributes = array(),$close = true)
+    public static function open($name, $attributes = array(), $close = true)
     {
         $_ = '<' . $name;
-        
-        foreach ($attributes as $key => $value)
-        {
-            $_ .= ' ' . $key;            
-            if($value!==null)            
-                $_ .= '="' . str_replace ('"', '&quot;', $value) . '"';            
+
+        foreach ($attributes as $key => $value) {
+            $_ .= ' ' . $key;
+            if($value!==null) {
+                $_ .= '="' . str_replace('"', '&quot;', $value) . '"';
+            }
         }
-        
-        if($close)
+
+        if($close) {
             return $_ . '/>';
-        else
+        } else {
             return $_ . '>';
+        }
     }
     public static function close($name)
     {
@@ -52,54 +54,56 @@ abstract class Tag extends Element
     private $name;
     private $elements = array();
     private $attributes = array();
-    
-    public function __construct() 
+
+    public function __construct()
     {
         $this->name = strtolower((new \ReflectionClass($this))->getShortName());
     }
     public function addElement(Element $element)
     {
         $this->elements[] = $element;
-    }        
-    public function dump($level) 
+    }
+    public function dump($level)
     {
-        $tabs = parent::getTabs($level);       
-        
-        if(count($this->elements)==0)        
-        {
+        $tabs = parent::getTabs($level);
+
+        if(count($this->elements)==0) {
             echo $tabs . self::open($this->name, $this->attributes, true);
             return;
         }
-        
-        echo $tabs . self::open($this->name, $this->attributes, false) . PHP_EOL;
-                    
-        foreach ($this->elements as $element)
-            $element->dump ($level+1);
 
-        echo $tabs . self::close($this->name) . PHP_EOL;    
+        echo $tabs . self::open($this->name, $this->attributes, false) . PHP_EOL;
+
+        foreach ($this->elements as $element) {
+            $element->dump($level+1);
+        }
+
+        echo $tabs . self::close($this->name) . PHP_EOL;
     }
-    public function toString($level) 
+    public function toString($level)
     {
         $tabs = parent::getTabs($level);
-        
-        if(count($this->elements)==0)        
-            return $tabs . self::open($this->name, $this->attributes, true);
-        
-        $_ = $tabs . self::open($this->name, $this->attributes, false) . PHP_EOL;
-                    
-        foreach ($this->elements as $element)
-            $_ .= $element->toString ($level+1);
 
-        return $_ . $tabs . self::close($this->name) . PHP_EOL;        
+        if(count($this->elements)==0) {
+            return $tabs . self::open($this->name, $this->attributes, true);
+        }
+
+        $_ = $tabs . self::open($this->name, $this->attributes, false) . PHP_EOL;
+
+        foreach ($this->elements as $element) {
+            $_ .= $element->toString($level+1);
+        }
+
+        return $_ . $tabs . self::close($this->name) . PHP_EOL;
     }
 
-    
-    public function setAttribute($name,$value)
+
+    public function setAttribute($name, $value)
     {
         $this->attributes[strtolower($name)] = $value;
     }
     public function getAttribute($name)
     {
         return $this->attributes[strtolower($name)];
-    }    
+    }
 }

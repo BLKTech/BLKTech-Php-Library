@@ -19,7 +19,7 @@ namespace BLKTech\Storage\KeyValue;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\Storage\Exception {
 
+class Exception extends \BLKTech\Storage\Exception
+{
 }

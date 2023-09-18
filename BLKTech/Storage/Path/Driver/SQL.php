@@ -19,9 +19,7 @@ namespace BLKTech\Storage\Path\Driver;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-abstract class SQL extends \BLKTech\Storage\Path\Driver{
 
-
-
+abstract class SQL extends \BLKTech\Storage\Path\Driver
+{
 }

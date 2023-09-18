@@ -19,7 +19,7 @@ namespace BLKTech\Storage\KeyValue\Driver;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\Storage\KeyValue\Exception {
 
+class Exception extends \BLKTech\Storage\KeyValue\Exception
+{
 }

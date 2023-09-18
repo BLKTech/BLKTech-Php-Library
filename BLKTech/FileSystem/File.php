@@ -14,11 +14,12 @@
  */
 
 namespace BLKTech\FileSystem;
-use \BLKTech\DataType\Path;
-use \BLKTech\FileSystem\Exception\IOException;
-use \BLKTech\FileSystem\Exception\NotIsFileException;
-use \BLKTech\FileSystem\Exception\CopyFileException;
-use \BLKTech\FileSystem\Exception\CreateFileException;
+
+use BLKTech\DataType\Path;
+use BLKTech\FileSystem\Exception\IOException;
+use BLKTech\FileSystem\Exception\NotIsFileException;
+use BLKTech\FileSystem\Exception\CopyFileException;
+use BLKTech\FileSystem\Exception\CreateFileException;
 
 /**
  *
@@ -27,86 +28,92 @@ use \BLKTech\FileSystem\Exception\CreateFileException;
 
 class File extends FileSystem
 {
-
-    
-    
     public static function pathFileSize(Path $path)
     {
-        self::pathValidateReadable($path);        
+        self::pathValidateReadable($path);
         return filesize($path->__toString());
-    }    
-    
-    
-    
-    public function __construct(Path $path) 
+    }
+
+
+
+    public function __construct(Path $path)
     {
         parent::__construct($path);
-        
-        if(parent::exists() && !parent::isFile())
+
+        if(parent::exists() && !parent::isFile()) {
             throw new NotIsFileException($path);
-    }    
-
-    
-    public final function getSize() {return self::pathFileSize($this);}    
-
-    public final function delete()
-    {
-        if(!parent::exists())
-            return;        
-        
-        parent::validateWritable();                
-        if(!unlink($this->__toString()))
-            throw new IOException ($this);
-    }    
-    
-    
-    public final function copyTo(File $destination)
-    {
-        if(copy($this->__toString(), $destination->__toString())===FALSE)
-            throw new CopyFileException($this->__toString() . ' > ' . $destination->__toString());            
+        }
     }
-    
-    
+
+
+    final public function getSize()
+    {
+        return self::pathFileSize($this);
+    }
+
+    final public function delete()
+    {
+        if(!parent::exists()) {
+            return;
+        }
+
+        parent::validateWritable();
+        if(!unlink($this->__toString())) {
+            throw new IOException($this);
+        }
+    }
+
+
+    final public function copyTo(File $destination)
+    {
+        if(copy($this->__toString(), $destination->__toString())===false) {
+            throw new CopyFileException($this->__toString() . ' > ' . $destination->__toString());
+        }
+    }
+
+
     public function getContent()
     {
         parent::validateReadable();
         return file_get_contents($this->__toString());
     }
-    
+
     public function setContent($content)
     {
         parent::validateWritable();
         return file_put_contents($this->__toString(), $content);
-    }    
-    
+    }
+
     public function touch()
     {
         parent::validateExistence();
-        parent::validateWritable();        
+        parent::validateWritable();
         touch($this->__toString());
     }
-    
-    public final function create()
+
+    final public function create()
     {
-        if(parent::exists())
+        if(parent::exists()) {
             return;
-               
+        }
+
         $this->getParent()->create();
-        
+
         parent::validateWritable();
-        
-        if(!touch ($this->__toString()))
-            throw new CreateFileException($this->__toString());  
-                         
-    }    
-    
-    public final function getReader()
+
+        if(!touch($this->__toString())) {
+            throw new CreateFileException($this->__toString());
+        }
+
+    }
+
+    final public function getReader()
     {
         return new File\Reader($this);
     }
-    
-    public final function getExtension()
-    {        
+
+    final public function getExtension()
+    {
         return end(explode('.', parent::getName()));
     }
 }

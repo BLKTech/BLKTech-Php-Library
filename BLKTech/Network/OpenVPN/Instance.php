@@ -14,37 +14,39 @@
  */
 
 namespace BLKTech\Network\OpenVPN;
-use \BLKTech\FileSystem\File;
-use \BLKTech\FileSystem\Directory;
 
+use BLKTech\FileSystem\File;
+use BLKTech\FileSystem\Directory;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class Instance {
-    
-        
-    public function getInstances(Directory $configDirectory = null)    
+class Instance
+{
+    public function getInstances(Directory $configDirectory = null)
     {
-        if($configDirectory===null)
-            $configDirectory = Directory::getFromStringPath ('/etc/openvpn');
-        
+        if($configDirectory===null) {
+            $configDirectory = Directory::getFromStringPath('/etc/openvpn');
+        }
+
         $_ = array();
-        
-        foreach($configDirectory->getChildren() as $fso)
-            if($fso instanceof File && strtolower ($fso->getExtension())=='conf')
+
+        foreach($configDirectory->getChildren() as $fso) {
+            if($fso instanceof File && strtolower($fso->getExtension())=='conf') {
                 $_[] = new self($fso);
-            
+            }
+        }
+
         return $_;
     }
-    
+
     private $configFile;
     private $lastRead = 0;
     private $keys = array();
-    
-    public function __construct(File $configFile) 
+
+    public function __construct(File $configFile)
     {
         $this->configFile = $configFile;
     }
@@ -52,50 +54,52 @@ class Instance {
     public function getStatus()
     {
         $this->parseFile();
-        
-        if(!isset($this->keys['status']))
+
+        if(!isset($this->keys['status'])) {
             return null;
-        
+        }
+
         return new Status(File::getFromStringPath($this->keys['status']));
     }
 
 
     private function parseFile()
     {
-        if($this->configFile->getModificationTime() <= $this->lastRead)
+        if($this->configFile->getModificationTime() <= $this->lastRead) {
             return;
-        
+        }
+
         $this->lastRead = time();
-        
+
         $reader = $this->configFile->getReader();
-        
+
         $this->keys = array();
-        
-        while(!$reader->eof())
-        {            
-            $line = trim(explode('#', $reader->readLine(),2)[0]);
-            
-            if($line=='')
+
+        while(!$reader->eof()) {
+            $line = trim(explode('#', $reader->readLine(), 2)[0]);
+
+            if($line=='') {
                 continue;
-            
-            $line = explode(' ', $line);
-            
-            foreach($line as $index => $value)
-            {
-                $value = trim($value);
-                
-                if($value=='')
-                    unset($line[$index]);
-                else
-                    $line[$index] = $value;
             }
-            
-            if(count($line)>0)
-            {
+
+            $line = explode(' ', $line);
+
+            foreach($line as $index => $value) {
+                $value = trim($value);
+
+                if($value=='') {
+                    unset($line[$index]);
+                } else {
+                    $line[$index] = $value;
+                }
+            }
+
+            if(count($line)>0) {
                 $key = strtolower(array_shift($line));
 
-                if(!isset($this->keys[$key]))
+                if(!isset($this->keys[$key])) {
                     $this->keys[$key] = array();
+                }
 
                 $list = $this->keys[$key];
 
@@ -104,9 +108,11 @@ class Instance {
                 $this->keys[$key] = $list;
             }
         }
-        
-        foreach($this->keys as $index => $value)
-            if(count($value)==1)
-                $this->keys[$index] = array_shift($value);                
+
+        foreach($this->keys as $index => $value) {
+            if(count($value)==1) {
+                $this->keys[$index] = array_shift($value);
+            }
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace BLKTech\Loader;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class StaticMethodNotFoundException extends Exception {
 
+class StaticMethodNotFoundException extends Exception
+{
 }

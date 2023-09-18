@@ -13,15 +13,16 @@ namespace BLKTech\XML;
  *
  * @author instalacion
  */
-abstract class Element {
-    public abstract function toString($level);    
-    public abstract function dump($level);
+abstract class Element
+{
+    abstract public function toString($level);
+    abstract public function dump($level);
 
-    public function __toString() 
+    public function __toString()
     {
         return $this->toString(0);
     }
-    
+
     protected function getTabs($level)
     {
         return str_pad('', $level, "\t");

@@ -13,6 +13,7 @@ namespace BLKTech;
  *
  * @author instalacion
  */
-class NotImplementedException extends Exception{
+class NotImplementedException extends Exception
+{
     //put your code here
 }

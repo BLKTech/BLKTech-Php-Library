@@ -20,6 +20,7 @@ namespace BLKTech\FileSystem\Exception;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class NotFoundException extends Exception {
+class NotFoundException extends Exception
+{
     //put your code here
 }

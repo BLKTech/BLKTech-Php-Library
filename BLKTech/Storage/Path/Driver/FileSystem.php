@@ -14,34 +14,35 @@
  */
 
 namespace BLKTech\Storage\Path\Driver;
-use \BLKTech\Storage\Path\Driver;
-use \BLKTech\DataType\Path;
+
+use BLKTech\Storage\Path\Driver;
+use BLKTech\DataType\Path;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class FileSystem extends Driver{
 
-    public function delete($id) 
+class FileSystem extends Driver
+{
+    public function delete($id)
     {
-        
+
     }
 
-    public function exists($id) 
+    public function exists($id)
     {
-        
+
     }
 
-    public function get($id) 
+    public function get($id)
     {
-        
+
     }
 
-    public function set(Path $path) 
+    public function set(Path $path)
     {
-        
+
     }
 
 }

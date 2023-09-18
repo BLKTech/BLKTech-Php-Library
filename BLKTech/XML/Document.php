@@ -20,22 +20,22 @@ namespace BLKTech\XML;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class Document 
+class Document
 {
     private $declaration = '?xml version="1.0" encoding="UTF-8"?';
     private $elements = array();
-    
-    public function __construct($declaration = '?xml version="1.0" encoding="UTF-8"?') 
+
+    public function __construct($declaration = '?xml version="1.0" encoding="UTF-8"?')
     {
         $this->declaration = $declaration;
     }
 
-    public function getDeclaration() 
+    public function getDeclaration()
     {
         return $this->declaration;
     }
 
-    protected function setDeclaration($declaration) 
+    protected function setDeclaration($declaration)
     {
         $this->declaration = $declaration;
     }
@@ -45,25 +45,27 @@ class Document
         $this->elements[] = $element;
     }
 
-    public function __toString() 
+    public function __toString()
     {
-        return $this->toString(0);        
+        return $this->toString(0);
     }
-    
-    public function toString($level) 
+
+    public function toString($level)
     {
         $_ = '<'.$this->declaration.'>'.PHP_EOL;
-        
-        foreach ($this->elements as $element)
-            $_ .= $element->toString($level+1); 
-        
+
+        foreach ($this->elements as $element) {
+            $_ .= $element->toString($level+1);
+        }
+
         return $_;
     }
-    
+
     public function dump($level)
     {
         echo  '<'.$this->declaration.'>'.PHP_EOL;
-        foreach ($this->elements as $element)
-            $element->dump($level); 
+        foreach ($this->elements as $element) {
+            $element->dump($level);
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace BLKTech\HTTP\Server;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\HTTP\Exception {
 
+class Exception extends \BLKTech\HTTP\Exception
+{
 }

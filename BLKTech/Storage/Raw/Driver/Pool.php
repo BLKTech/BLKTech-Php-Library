@@ -19,76 +19,86 @@ namespace BLKTech\Storage\Raw\Driver;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
+
 class Pool extends Driver
 {
     private $nodes;
     private $replicas;
-    public function __construct($replicas = 1) {
+    public function __construct($replicas = 1)
+    {
         $this->nodes = array();
         $this->replicas = $replicas;
     }
     public function addNode(Driver $node)
     {
         $this->nodes[$node->getUID()] = $node;
-        
+
         shuffle($this->nodes);
-        
+
         $_ = array();
-        foreach ($this->nodes as $node)        
+        foreach ($this->nodes as $node) {
             $_[$node->getUID()] = $node;
-        
+        }
+
         $this->nodes = $_;
     }
 
-    public function delete($id) 
+    public function delete($id)
     {
-        foreach ($this->nodes as $node)
-            $node->delete ($id);
+        foreach ($this->nodes as $node) {
+            $node->delete($id);
+        }
     }
 
-    public function exists($id) 
+    public function exists($id)
     {
-        foreach ($this->nodes as $node)
-            if($node->exists($id))
+        foreach ($this->nodes as $node) {
+            if($node->exists($id)) {
                 return true;
-            
+            }
+        }
+
         return false;
     }
 
-    public function get($id) 
+    public function get($id)
     {
-        foreach ($this->nodes as $node)
-            if($node->exists($id))
+        foreach ($this->nodes as $node) {
+            if($node->exists($id)) {
                 return $node->get($id);
-            
+            }
+        }
+
         throw new IDNotFoundException($id);
     }
 
-    public function set($id, $data) 
+    public function set($id, $data)
     {
         $_ = array();
-        foreach ($this->nodes as $node)
+        foreach ($this->nodes as $node) {
             $_[$node->getUID()] = $node->spaceAvailable();
-            
-        asort($_, SORT_NUMERIC);                
-        $_ = array_slice(array_reverse(array_keys($_)),0,$this->replicas);
+        }
+
+        asort($_, SORT_NUMERIC);
+        $_ = array_slice(array_reverse(array_keys($_)), 0, $this->replicas);
 
         $this->delete($id);
-        
-        foreach ($_ as $uid)
-            $this->nodes[$uid]->set ($id, $data);       
+
+        foreach ($_ as $uid) {
+            $this->nodes[$uid]->set($id, $data);
+        }
     }
 
-    public function spaceAvailable() 
+    public function spaceAvailable()
     {
         $total = 0;
-        foreach ($this->nodes as $node)
+        foreach ($this->nodes as $node) {
             $total = $total + $node->spaceAvailable();
+        }
         return $total / $this->replicas;
     }
 
-    public function getUID() 
+    public function getUID()
     {
         return implode("#", array_keys($this->nodes));
     }

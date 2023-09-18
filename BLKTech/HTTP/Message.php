@@ -19,8 +19,8 @@ namespace BLKTech\HTTP;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-abstract class Message 
+
+abstract class Message
 {
     private $header;
     private $payload;
@@ -29,6 +29,12 @@ abstract class Message
         $this->header = $header;
         $this->payload = $payload;
     }
-    public function getHeader() {return $this->header;}
-    public function getPayload() {return $this->payload;}
+    public function getHeader()
+    {
+        return $this->header;
+    }
+    public function getPayload()
+    {
+        return $this->payload;
+    }
 }

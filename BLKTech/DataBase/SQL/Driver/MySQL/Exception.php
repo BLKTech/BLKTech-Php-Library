@@ -19,7 +19,7 @@ namespace BLKTech\DataBase\SQL\Driver\MySQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\DataBase\SQL\Driver\Exception {
 
+class Exception extends \BLKTech\DataBase\SQL\Driver\Exception
+{
 }

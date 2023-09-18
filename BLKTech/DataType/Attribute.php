@@ -20,28 +20,28 @@ namespace BLKTech\DataType;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class Attribute 
+class Attribute
 {
     private $name;
     private $value;
-    
-    public function __construct($name, $value) 
+
+    public function __construct($name, $value)
     {
         $this->name = $name;
         $this->value = $value;
     }
-    
-    public function getValue() 
+
+    public function getValue()
     {
         return $this->value;
     }
 
-    public function setValue($value) 
+    public function setValue($value)
     {
         $this->value = $value;
     }
 
-    public function getName() 
+    public function getName()
     {
         return $this->name;
     }

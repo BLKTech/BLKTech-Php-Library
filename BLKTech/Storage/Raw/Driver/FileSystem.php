@@ -19,11 +19,11 @@ namespace BLKTech\Storage\Raw\Driver;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
+
 class FileSystem extends \BLKTech\Storage\Driver
 {
     private $rootDirectory;
-    function __construct(\BLKTech\FileSystem\Directory $rootDirectory) 
+    public function __construct(\BLKTech\FileSystem\Directory $rootDirectory)
     {
         $this->rootDirectory = $rootDirectory;
         \Logger::getInstance()->debug("FileSystemDriver UID:".$this->getUID());
@@ -32,47 +32,49 @@ class FileSystem extends \BLKTech\Storage\Driver
     private function getFileById($id)
     {
         $id = strtoupper($id);
-        
+
         $newPath = $this->rootDirectory;
-        
+
         $pathElements = array();
-        
-        foreach(array_merge(range('A', 'Z'), range(0, 9)) as $char)
-            if(strpos($id, $char)!==FALSE) 
-                    $newPath = $newPath->getChild ($char);                    
-            
-        $newPath = $newPath->getChild ($id);
+
+        foreach(array_merge(range('A', 'Z'), range(0, 9)) as $char) {
+            if(strpos($id, $char)!==false) {
+                $newPath = $newPath->getChild($char);
+            }
+        }
+
+        $newPath = $newPath->getChild($id);
         return new \BLKTech\FileSystem\File($newPath);
     }
-    
-    public function exists($id) 
-    {        
+
+    public function exists($id)
+    {
         return self::getFileById($id)->exists();
     }
-    
-    public function spaceAvailable() 
+
+    public function spaceAvailable()
     {
         return $this->rootDirectory->getFreeSpace();
     }
 
-    public function delete($id) 
+    public function delete($id)
     {
         return self::getFileById($id)->delete();
     }
 
-    public function get($id) 
-    {   
+    public function get($id)
+    {
         return self::getFileById($id)->getContent();
     }
 
-    public function set($id, $data) 
+    public function set($id, $data)
     {
-        $file = self::getFileById($id);                
+        $file = self::getFileById($id);
         $file->getParent()->create();
-        $file->setContent($data);    
+        $file->setContent($data);
     }
 
-    public function getUID() 
+    public function getUID()
     {
         return $this->rootDirectory->getUID();
     }

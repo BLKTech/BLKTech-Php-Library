@@ -24,49 +24,50 @@ class Query extends HashTable
 {
     private static function getFromGlobals()
     {
-        $_ = new self();        
-        foreach($_GET as $key => $value)
-        {
+        $_ = new self();
+        foreach($_GET as $key => $value) {
             $_->set(trim($key), $value);
-        }        
-        return $_;                
+        }
+        return $_;
     }
 
-    public static function getFromString($string) 
+    public static function getFromString($string)
     {
-        $_ = new self();        
-        foreach (explode("&", $string) as $element)
-        {
+        $_ = new self();
+        foreach (explode("&", $string) as $element) {
             $element = explode('=', $element, 2);
-            
-            if(count($element)==2)
+
+            if(count($element)==2) {
                 $value = urldecode(trim($element[1]));
-            else
+            } else {
                 $value = null;
+            }
 
             $_->set(urldecode(trim($element[0])), $value);
         }
-        return $_;         
+        return $_;
     }
-    
-        
-    public function __toString() 
+
+
+    public function __toString()
     {
         $_ = '';
-        foreach($this as $key=>$value)
-        {
-            if($key==null)
+        foreach($this as $key=>$value) {
+            if($key==null) {
                 continue;
-            
-            if($_!='')
-               $_ .= '&';
-            
+            }
+
+            if($_!='') {
+                $_ .= '&';
+            }
+
             $_ .= urlencode($key);
-            
-            if($value!==null)
+
+            if($value!==null) {
                 $_ .= '=' . urlencode($value);
-            
+            }
+
         }
         return $_;
-    }    
+    }
 }

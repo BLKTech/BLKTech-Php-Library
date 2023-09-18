@@ -14,11 +14,12 @@
  */
 
 namespace BLKTech\Storage\Key\Driver\DataBase;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-abstract class SQL extends \BLKTech\Storage\Key\Driver\DataBase{
 
+abstract class SQL extends \BLKTech\Storage\Key\Driver\DataBase
+{
 }

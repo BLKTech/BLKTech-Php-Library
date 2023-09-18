@@ -20,6 +20,7 @@ namespace BLKTech\FileSystem\Exception;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class NotIsWritableException extends Exception {
+class NotIsWritableException extends Exception
+{
     //put your code here
 }

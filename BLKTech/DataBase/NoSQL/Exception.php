@@ -19,7 +19,7 @@ namespace BLKTech\DataBase\NoSQL;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\DataBase\Exception {
 
+class Exception extends \BLKTech\DataBase\Exception
+{
 }

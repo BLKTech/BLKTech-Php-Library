@@ -20,6 +20,3 @@ class Application
         echo 'Hello World!!!';
     }
 }
-
-
-

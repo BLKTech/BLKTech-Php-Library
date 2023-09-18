@@ -13,7 +13,6 @@
  *
  */
 
-
 namespace BLKTech;
 
 /**
@@ -27,14 +26,15 @@ class Exception extends \Exception
     {
         throw new static($message, $code, $previous);
     }
-    
-    public function __construct(string $message = "", int $code = 0, \Throwable $previous = null) 
+
+    public function __construct(string $message = "", int $code = 0, \Throwable $previous = null)
     {
         $classFullName = get_class($this);
-        
-        if($code===0 || $code===null)
+
+        if($code===0 || $code===null) {
             $code = crc32($classFullName);
-        
+        }
+
         parent::__construct($classFullName . ': ' . $message, $code, $previous);
     }
 

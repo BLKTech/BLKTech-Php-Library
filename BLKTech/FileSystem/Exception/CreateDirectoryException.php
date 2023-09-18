@@ -20,6 +20,7 @@ namespace BLKTech\FileSystem\Exception;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class CreateDirectoryException extends Exception {
+class CreateDirectoryException extends Exception
+{
     //put your code here
 }

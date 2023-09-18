@@ -14,24 +14,25 @@
  */
 
 namespace BLKTech\Storage\Hash;
-use \BLKTech\Cryptography\Hash;
+
+use BLKTech\Cryptography\Hash;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-abstract class Driver 
+
+abstract class Driver
 {
     protected $hash;
-    
-    public function __construct(Hash $hash) 
+
+    public function __construct(Hash $hash)
     {
         $this->hash = $hash;
     }
 
-    public abstract function exists($id);
-    public abstract function delete($id);
-    public abstract function get($id);
-    public abstract function set($hash);        
+    abstract public function exists($id);
+    abstract public function delete($id);
+    abstract public function get($id);
+    abstract public function set($hash);
 }

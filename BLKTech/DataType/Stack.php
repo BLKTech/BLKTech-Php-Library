@@ -19,13 +19,13 @@ namespace BLKTech\DataType;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-abstract class Stack 
+
+abstract class Stack
 {
-   public abstract function push($e);
-   public abstract function pop();
-   public abstract function peek();
-   
-   public abstract function clear();
-   public abstract function isEmpty();
+    abstract public function push($e);
+    abstract public function pop();
+    abstract public function peek();
+
+    abstract public function clear();
+    abstract public function isEmpty();
 }

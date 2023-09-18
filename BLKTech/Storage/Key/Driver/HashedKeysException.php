@@ -20,6 +20,7 @@ namespace BLKTech\Storage\Key\Driver;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class HashedKeysException extends Exception{
+class HashedKeysException extends Exception
+{
     //put your code here
 }

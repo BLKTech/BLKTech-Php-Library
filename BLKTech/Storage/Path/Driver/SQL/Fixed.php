@@ -14,13 +14,15 @@
  */
 
 namespace BLKTech\Storage\Path\Driver\DataBase\SQL;
-use \BLKTech\Storage\Path\Driver\SQL;
+
+use BLKTech\Storage\Path\Driver\SQL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Fixed extends SQL{
+
+class Fixed extends SQL
+{
     //put your code here
 }

@@ -14,7 +14,8 @@
  */
 
 namespace BLKTech\XML\Element\Tag\HTML;
-use \BLKTech\XML\Element\Tag;
+
+use BLKTech\XML\Element\Tag;
 
 /**
  *

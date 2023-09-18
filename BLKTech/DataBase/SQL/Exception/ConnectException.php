@@ -20,6 +20,7 @@ namespace BLKTech\DataBase\SQL\Exception;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class ConnectException extends Exception{
+class ConnectException extends Exception
+{
     //put your code here
 }

@@ -19,7 +19,7 @@ namespace BLKTech\XML\Document;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\XML\Exception {
 
+class Exception extends \BLKTech\XML\Exception
+{
 }

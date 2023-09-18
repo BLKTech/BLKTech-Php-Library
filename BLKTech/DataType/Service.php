@@ -19,10 +19,9 @@ namespace BLKTech\DataType;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Service 
+
+class Service
 {
-    
     private $host;
     private $port;
     private $scheme;
@@ -30,57 +29,58 @@ class Service
     private $passowrd;
     private $schemeSeparator;
 
-    
-    public function __construct($host, $port = null, $scheme = null, $user = null, $passowrd = null, $schemeSeparator = '://') {
+
+    public function __construct($host, $port = null, $scheme = null, $user = null, $passowrd = null, $schemeSeparator = '://')
+    {
         $this->host = $host;
         $this->port = $port;
         $this->scheme = $scheme;
         $this->user = $user;
-        $this->passowrd = $passowrd;       
+        $this->passowrd = $passowrd;
         $this->schemeSeparator = $schemeSeparator;
     }
 
-    
 
-    function getUser() 
+
+    public function getUser()
     {
         return $this->user;
     }
 
-    function getPassowrd() 
+    public function getPassowrd()
     {
         return $this->passowrd;
     }
 
-    function getHost() 
+    public function getHost()
     {
         return $this->host;
     }
 
-    function getPort() 
+    public function getPort()
     {
-        return $this->port;    
+        return $this->port;
     }
 
-    function setUser($user) 
+    public function setUser($user)
     {
         $this->user = $user;
         return $this;
     }
 
-    function setPassowrd($passowrd) 
+    public function setPassowrd($passowrd)
     {
         $this->passowrd = $passowrd;
         return $this;
     }
 
-    function setHost($host) 
+    public function setHost($host)
     {
         $this->host = $host;
         return $this;
     }
 
-    function setPort($port) 
+    public function setPort($port)
     {
         $this->port = $port;
         return $this;
@@ -88,29 +88,32 @@ class Service
 
 
 
-    public function __toString() 
+    public function __toString()
     {
         $_ = '';
-        
-        if($this->scheme!==NULL)
+
+        if($this->scheme!==null) {
             $_.= $this->scheme . $this->schemeSeparator;
-        
-        if($this->user!==NULL)
-        {
+        }
+
+        if($this->user!==null) {
             $_.= $this->user;
-            
-            if($this->passowrd!==NULL)
+
+            if($this->passowrd!==null) {
                 $_.= ':' . $this->passowrd;
-            
+            }
+
             $_.= '@';
         }
-        
-        if($this->host!==NULL)
+
+        if($this->host!==null) {
             $_.= $this->host;
-        
-        if($this->port!==NULL)
+        }
+
+        if($this->port!==null) {
             $_.= ':' . $this->port;
-        
+        }
+
         return $_;
     }
 

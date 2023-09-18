@@ -12,7 +12,8 @@ namespace BLKTech\Storage;
  *
  * @author instalacion
  */
-interface DriverInterface {
+interface DriverInterface
+{
     public function exists($id);
     public function delete($id);
     public function get($id);

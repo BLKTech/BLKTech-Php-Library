@@ -20,6 +20,7 @@ namespace BLKTech\FileSystem\Exception;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class IOException extends Exception{
+class IOException extends Exception
+{
     //put your code here
 }

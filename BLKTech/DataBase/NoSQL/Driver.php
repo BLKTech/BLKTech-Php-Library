@@ -12,6 +12,7 @@
  * GNU Lesser General Public License for more details.
  *
  */
+
 namespace BLKTech\DataBase\NoSQL;
 
 /**
@@ -19,5 +20,6 @@ namespace BLKTech\DataBase\NoSQL;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-abstract class Driver {
+abstract class Driver
+{
 }

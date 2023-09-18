@@ -14,8 +14,6 @@ namespace BLKTech\Storage\Queue;
  * @author instalacion
  */
 
-abstract class Driver{
-
-
-
+abstract class Driver
+{
 }

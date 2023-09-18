@@ -14,28 +14,29 @@
  */
 
 namespace BLKTech\XML\Element;
-use \BLKTech\XML\Element;
+
+use BLKTech\XML\Element;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
+
 class Comment extends Element
 {
     private $comment;
-    
-    public function __construct($comment) 
+
+    public function __construct($comment)
     {
         $this->comment = utf8_encode($comment);
     }
 
-    public function dump($level) 
+    public function dump($level)
     {
         echo $this->toString($level);
     }
 
-    public function toString($level) 
+    public function toString($level)
     {
         return parent::getTabs($level). '<!-- ' . PHP_EOL  .$this->text . PHP_EOL . parent::getTabs($level) .' -->';
     }

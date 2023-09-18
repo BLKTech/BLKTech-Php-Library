@@ -19,7 +19,7 @@ namespace BLKTech\Storage\Raw\Exception;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class CorruptedFileException extends Exception {
 
+class CorruptedFileException extends Exception
+{
 }

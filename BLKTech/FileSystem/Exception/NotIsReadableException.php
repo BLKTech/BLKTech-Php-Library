@@ -20,6 +20,7 @@ namespace BLKTech\FileSystem\Exception;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class NotIsReadableException extends Exception {
+class NotIsReadableException extends Exception
+{
     //put your code here
 }

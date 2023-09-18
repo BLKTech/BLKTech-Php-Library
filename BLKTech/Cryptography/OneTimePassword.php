@@ -13,18 +13,17 @@ namespace BLKTech\Cryptography;
  *
  * @author instalacion
  */
-class OneTimePassword {
-    
- 
+class OneTimePassword
+{
     private $hashAlgorithm;
     private $passwordHash;
     private $passwordCurrent;
-    
+
     private $timeDivider;
     private $timeOffset;
-    private $timeCurrent;            
-    
-    public function __construct(Hash $hashAlgorithm, $password, int $timeDivider = 60, int $timeOffset = 0) 
+    private $timeCurrent;
+
+    public function __construct(Hash $hashAlgorithm, $password, int $timeDivider = 60, int $timeOffset = 0)
     {
         $this->hashAlgorithm = $hashAlgorithm;
         $this->passwordHash = $hashAlgorithm->calc($password);
@@ -32,56 +31,54 @@ class OneTimePassword {
         $this->timeOffset = $timeOffset;
     }
 
-    public function getTimeOffset() 
+    public function getTimeOffset()
     {
         return $this->timeOffset;
     }
-    public function setTimeOffset($timeOffset) 
+    public function setTimeOffset($timeOffset)
     {
-        if($this->timeOffset != $timeOffset)
-        {
+        if($this->timeOffset != $timeOffset) {
             $this->timeOffset = $timeOffset;
             $this->passwordCurrent = null;
         }
-    }    
+    }
     private function getTime()
     {
         return time() + $this->timeOffset;
     }
-    
-    
-    public function getTimeDivider() 
+
+
+    public function getTimeDivider()
     {
         return $this->timeDivider;
     }
-    function setTimeDivider($timeDivider) 
+    public function setTimeDivider($timeDivider)
     {
-        if($this->timeDivider != $timeDivider)
-        {        
+        if($this->timeDivider != $timeDivider) {
             $this->timeDivider = $timeDivider;
             $this->passwordCurrent = null;
         }
     }
     private function getSubTime()
     {
-        return round($this->getTime() / $this->timeDivider,0,PHP_ROUND_HALF_DOWN);
+        return round($this->getTime() / $this->timeDivider, 0, PHP_ROUND_HALF_DOWN);
     }
-  
+
     public function getOneTimePassword(int $timeOffset = null)
     {
-        if($timeOffset !== null)
-            $this->setTimeOffset ($timeOffset);
-        
+        if($timeOffset !== null) {
+            $this->setTimeOffset($timeOffset);
+        }
+
         $timeCurrent = $this->getSubTime();
-        
-        if($this->passwordCurrent === null || $this->timeCurrent != $timeCurrent)
-        {
+
+        if($this->passwordCurrent === null || $this->timeCurrent != $timeCurrent) {
             $this->timeCurrent = $timeCurrent;
             $timeHash = $this->hashAlgorithm->calc($timeCurrent);
-            $this->passwordCurrent = $this->hashAlgorithm->calc($this->passwordHash.$timeHash.$this->passwordHash);                        
+            $this->passwordCurrent = $this->hashAlgorithm->calc($this->passwordHash.$timeHash.$this->passwordHash);
         }
-        
-        
+
+
         return $this->passwordCurrent;
     }
 
@@ -89,12 +86,12 @@ class OneTimePassword {
     public function debug()
     {
         var_dump("===========================================");
-        var_dump("Time System: ".time());  
-        var_dump("Time Offset: ".$this->getTime());  
-        var_dump("Time Part:   ".$this->getSubTime());  
-        var_dump("Time Hash:   ".$this->hashAlgorithm->calc($this->getSubTime())); 
-        var_dump("Pass Hash:   ".$this->passwordHash); 
-        var_dump("OTP  Hash:   ".$this->getOneTimePassword()); 
+        var_dump("Time System: ".time());
+        var_dump("Time Offset: ".$this->getTime());
+        var_dump("Time Part:   ".$this->getSubTime());
+        var_dump("Time Hash:   ".$this->hashAlgorithm->calc($this->getSubTime()));
+        var_dump("Pass Hash:   ".$this->passwordHash);
+        var_dump("OTP  Hash:   ".$this->getOneTimePassword());
         var_dump("===========================================");
     }
 }

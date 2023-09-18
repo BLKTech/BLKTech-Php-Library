@@ -19,25 +19,25 @@ namespace BLKTech\Storage\KeyValue\Driver\Memory;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Program extends \BLKTech\Storage\KeyValue\Driver\Memory{
-    
+
+class Program extends \BLKTech\Storage\KeyValue\Driver\Memory
+{
     private $keys = array();
     private $values = array();
-    
-    public function delete($id) 
+
+    public function delete($id)
     {
         $id_ = \BLKTech\DataType\Integer::unSignedInt64UnCombineIntoInt32($id);
         unset($this->values[$id_[1]]);
     }
 
-    public function exists($id) 
+    public function exists($id)
     {
         $id_ = \BLKTech\DataType\Integer::unSignedInt64UnCombineIntoInt32($id);
         return isset($this->keys[$id_[0]]) && isset($this->values[$id_[1]]);
     }
 
-    public function get($id) 
+    public function get($id)
     {
         $id_ = \BLKTech\DataType\Integer::unSignedInt64UnCombineIntoInt32($id);
         return array(
@@ -46,23 +46,25 @@ class Program extends \BLKTech\Storage\KeyValue\Driver\Memory{
         );
     }
 
-    public function set($key, $value) 
+    public function set($key, $value)
     {
-        if(!in_array($key, $this->keys))
+        if(!in_array($key, $this->keys)) {
             $this->keys[] = $key;
-        
-        if(!in_array($value, $this->values))
+        }
+
+        if(!in_array($value, $this->values)) {
             $this->values[] = $value;
-        
-        return \BLKTech\DataType\Integer::unSignedInt32CombineIntoInt64(array_search($key, $this->keys) , array_search($value, $this->values));
+        }
+
+        return \BLKTech\DataType\Integer::unSignedInt32CombineIntoInt64(array_search($key, $this->keys), array_search($value, $this->values));
     }
 
-    public function getKeys() 
+    public function getKeys()
     {
-        return $this->keys;      
+        return $this->keys;
     }
 
-    public function getValues($key) 
+    public function getValues($key)
     {
         throw new \BLKTech\NotImplementedException();
     }

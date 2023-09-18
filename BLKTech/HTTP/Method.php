@@ -19,13 +19,12 @@ namespace BLKTech\HTTP;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Method 
-{   
+
+class Method
+{
     public static function getFromGlobals()
     {
-        switch (strtoupper(trim(filter_input(INPUT_SERVER, 'REQUEST_METHOD')))) 
-        {
+        switch (strtoupper(trim(filter_input(INPUT_SERVER, 'REQUEST_METHOD')))) {
             case 'CONNECT':
                 return self::CONNECT();
             case 'DELETE':
@@ -43,24 +42,57 @@ class Method
             case 'PUT':
                 return self::PUT();
             case 'TRACE':
-                return self::TRACE();                
-        }      
-        
+                return self::TRACE();
+        }
+
         Exception::throwByHTTPCode(420);
-    }    
-    
-    
-    public static function POST(){return new Method('POST');}
-    public static function GET(){return new Method('GET');}
-    public static function PUT(){return new Method('PUT');}
-    public static function DELETE(){return new Method('DELETE');}
-    public static function HEAD(){return new Method('HEAD');}
-    public static function CONNECT(){return new Method('CONNECT');}
-    public static function OPTIONS(){return new Method('OPTIONS');}
-    public static function TRACE(){return new Method('TRACE');}
-    public static function PATCH(){return new Method('PATCH');} 
-   
+    }
+
+
+    public static function POST()
+    {
+        return new Method('POST');
+    }
+    public static function GET()
+    {
+        return new Method('GET');
+    }
+    public static function PUT()
+    {
+        return new Method('PUT');
+    }
+    public static function DELETE()
+    {
+        return new Method('DELETE');
+    }
+    public static function HEAD()
+    {
+        return new Method('HEAD');
+    }
+    public static function CONNECT()
+    {
+        return new Method('CONNECT');
+    }
+    public static function OPTIONS()
+    {
+        return new Method('OPTIONS');
+    }
+    public static function TRACE()
+    {
+        return new Method('TRACE');
+    }
+    public static function PATCH()
+    {
+        return new Method('PATCH');
+    }
+
     private $method;
-    private function __construct($method) {$this->method = $method;}
-    public function __toString() {return $this->method;}
+    private function __construct($method)
+    {
+        $this->method = $method;
+    }
+    public function __toString()
+    {
+        return $this->method;
+    }
 }

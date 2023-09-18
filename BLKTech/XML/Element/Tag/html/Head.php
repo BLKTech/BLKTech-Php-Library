@@ -14,7 +14,8 @@
  */
 
 namespace BLKTech\XML\Element\Tag\HTML;
-use \BLKTech\XML\Element\Tag;
+
+use BLKTech\XML\Element\Tag;
 
 /**
  *
@@ -24,8 +25,8 @@ use \BLKTech\XML\Element\Tag;
 class Head extends Tag
 {
     private $title;
-    
-    public function __construct() 
+
+    public function __construct()
     {
         parent::__construct();
         $this->title = new head\Title();

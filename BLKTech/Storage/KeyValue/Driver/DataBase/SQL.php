@@ -14,13 +14,16 @@
  */
 
 namespace BLKTech\Storage\KeyValue\Driver\DataBase;
-use \BLKTech\DataBase\SQL\Driver\MySQL;
+
+use BLKTech\DataBase\SQL\Driver\MySQL;
+
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-abstract class SQL extends \BLKTech\Storage\KeyValue\Driver\DataBase{
+
+abstract class SQL extends \BLKTech\Storage\KeyValue\Driver\DataBase
+{
     public static function getDynamic(MySQL $driver)
     {
         return new SQL\Dynamic($driver);

@@ -20,6 +20,7 @@ namespace BLKTech\DataBase\SQL\Exception;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class UpdateException extends Exception{
+class UpdateException extends Exception
+{
     //put your code here
 }

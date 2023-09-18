@@ -14,8 +14,9 @@
  */
 
 namespace BLKTech\FileSystem\File;
-use \BLKTech\FileSystem\Exception\IOException;
-use \BLKTech\DataType\Path;
+
+use BLKTech\FileSystem\Exception\IOException;
+use BLKTech\DataType\Path;
 
 /**
  *
@@ -24,59 +25,67 @@ use \BLKTech\DataType\Path;
 
 class Reader extends \BLKTech\FileSystem\File
 {
-    private $handle=FALSE;
-    
-    public function __construct(Path $path) 
+    private $handle=false;
+
+    public function __construct(Path $path)
     {
         parent::__construct($path);
-        
-        parent::validateExistence();        
+
+        parent::validateExistence();
         parent::validateReadable();
 
         $this->handle = fopen($this->__toString(), 'r');
-        
-        if($this->handle===FALSE)
+
+        if($this->handle===false) {
             throw new IOException($this->__toString());
+        }
     }
-    
-    public function readLine($maxLength = NULL)
+
+    public function readLine($maxLength = null)
     {
-        if($this->eof())
+        if($this->eof()) {
             return null;
-        
-        if ($maxLength === NULL)
+        }
+
+        if ($maxLength === null) {
             $maxLength = 1024;
-        
+        }
+
         $line = trim(str_replace("\n", '', str_replace("\r", '', fgets($this->handle, $maxLength))));
-        
-        if($line===FALSE)
-            throw new IOException($this->__toString());        
-        
+
+        if($line===false) {
+            throw new IOException($this->__toString());
+        }
+
         return $line;
     }
-    
+
     public function read($length)
     {
-        if($this->eof())
+        if($this->eof()) {
             return null;
-        
-        $line = fread ($this->handle, $length);
-        
-        if($line===FALSE)
-            throw new IOException($this->__toString());        
-        
+        }
+
+        $line = fread($this->handle, $length);
+
+        if($line===false) {
+            throw new IOException($this->__toString());
+        }
+
         return $line;
     }
-    
+
     public function eof()
     {
         return feof($this->handle);
     }
-    
-    public function __destruct() 
+
+    public function __destruct()
     {
-        if($this->handle!==FALSE)
-            if(!fclose($this->handle))
+        if($this->handle!==false) {
+            if(!fclose($this->handle)) {
                 throw new IOException($this->__toString());
-    }            
+            }
+        }
+    }
 }

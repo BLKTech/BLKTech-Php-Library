@@ -13,6 +13,7 @@ namespace BLKTech\Storage\Key\Driver;
  *
  * @author instalacion
  */
-abstract class DataBase extends \BLKTech\Storage\Key\Driver{
+abstract class DataBase extends \BLKTech\Storage\Key\Driver
+{
     //put your code here
 }

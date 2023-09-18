@@ -19,8 +19,9 @@ namespace BLKTech\HTTP;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\Exception {
+
+class Exception extends \BLKTech\Exception
+{
     public static function throwByHTTPCode($code)
     {
         throw new self(Response::getCodeMessage($code), 10000+$code);

@@ -7,7 +7,9 @@
  */
 
 namespace BLKTech\XML\Element\Tag;
-use \BLKTech\XML\Element\Tag;
+
+use BLKTech\XML\Element\Tag;
+
 /**
  * Description of HTML
  *
@@ -17,8 +19,8 @@ class HTML extends Tag
 {
     private $head;
     private $body;
-    
-    public function __construct() 
+
+    public function __construct()
     {
         parent::__construct();
         $this->head = new HTML\Head();
@@ -27,12 +29,12 @@ class HTML extends Tag
         parent::addElement($this->body);
     }
 
-    public function getHead() 
+    public function getHead()
     {
         return $this->head;
     }
 
-    public function getBody() 
+    public function getBody()
     {
         return $this->body;
     }

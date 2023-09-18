@@ -14,18 +14,19 @@
  */
 
 namespace BLKTech\Storage\Path;
-use \BLKTech\DataType\Path;
+
+use BLKTech\DataType\Path;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-abstract class Driver 
+
+abstract class Driver
 {
-    public abstract function exists($id);
-    public abstract function delete($id);
-    public abstract function get($id);
-    public abstract function set(Path $path);    
-    public abstract function getChilds($id);
+    abstract public function exists($id);
+    abstract public function delete($id);
+    abstract public function get($id);
+    abstract public function set(Path $path);
+    abstract public function getChilds($id);
 }

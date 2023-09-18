@@ -19,7 +19,7 @@ namespace BLKTech\Loader;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class ClassNotFoundException extends Exception {
 
+class ClassNotFoundException extends Exception
+{
 }

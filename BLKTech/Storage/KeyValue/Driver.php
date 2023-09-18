@@ -19,17 +19,16 @@ namespace BLKTech\Storage\KeyValue;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-abstract class Driver implements \BLKTech\Storage\DriverInterface {
-    
 
-    public abstract function exists($id);
-    public abstract function delete($id);
-    public abstract function get($id);
-    public abstract function set($key,$value);
-    public abstract function getKeys();
-    public abstract function getValues($key);
-    
-//    public abstract function spaceAvailable();  
-//    public abstract function getUID();        
+abstract class Driver implements \BLKTech\Storage\DriverInterface
+{
+    abstract public function exists($id);
+    abstract public function delete($id);
+    abstract public function get($id);
+    abstract public function set($key, $value);
+    abstract public function getKeys();
+    abstract public function getValues($key);
+
+    //    public abstract function spaceAvailable();
+    //    public abstract function getUID();
 }

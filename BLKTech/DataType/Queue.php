@@ -19,14 +19,13 @@ namespace BLKTech\DataType;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-abstract class Queue {
 
+abstract class Queue
+{
+    abstract public function getFront();
+    abstract public function dequeue();
+    abstract public function enqueue($e);
 
-    public abstract function getFront();
-    public abstract function dequeue();
-    public abstract function enqueue($e);
-    
-    public abstract function clear();
-    public abstract function isEmpty();
+    abstract public function clear();
+    abstract public function isEmpty();
 }

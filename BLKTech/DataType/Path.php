@@ -14,7 +14,8 @@
  */
 
 namespace BLKTech\DataType;
-use \BLKTech\Cryptography\Hash;
+
+use BLKTech\Cryptography\Hash;
 
 /**
  *
@@ -22,7 +23,7 @@ use \BLKTech\Cryptography\Hash;
  */
 
 class Path
-{    
+{
     public static function getRoot($directorySeparator = DIRECTORY_SEPARATOR)
     {
         return new Path(array(), $directorySeparator);
@@ -30,51 +31,92 @@ class Path
     private static function parsePath($stringPath, $directorySeparator = DIRECTORY_SEPARATOR)
     {
         $tmp = array();
-        foreach(explode($directorySeparator, str_replace("/", $directorySeparator , str_replace("\\", $directorySeparator , $stringPath))) as $name)
-        {
-            if(empty($name))
-                continue;
-
-            if($name=='.')
-                continue;
-
-            if($name=='..' && count($tmp)>0)
-            {
-                array_pop ($tmp);
+        foreach(explode($directorySeparator, str_replace("/", $directorySeparator, str_replace("\\", $directorySeparator, $stringPath))) as $name) {
+            if(empty($name)) {
                 continue;
             }
-            
+
+            if($name=='.') {
+                continue;
+            }
+
+            if($name=='..' && count($tmp)>0) {
+                array_pop($tmp);
+                continue;
+            }
+
             $tmp[] = $name;
-        }        
-        return $tmp;        
+        }
+        return $tmp;
     }
-    
+
     public static function getFromString($stringPath, $directorySeparator = DIRECTORY_SEPARATOR)
     {
         return new Path(self::parsePath($stringPath, $directorySeparator), $directorySeparator);
     }
-    
+
     private $directorySeparator;
     protected $pathElements;
     public function __construct(array $pathElements = array(), $directorySeparator = DIRECTORY_SEPARATOR)
     {
         $this->directorySeparator = $directorySeparator;
         $this->pathElements = $pathElements;
-    }    
-    public function isRoot()                    {return $this->getDeep()==0;}    
-    public function getDeep()                   {return count($this->pathElements);}    
-    public function getName()                   {return end($this->pathElements);}    
-    public function getChild($name)             {return new Path(array_merge($this->pathElements,array($name)) , $this->directorySeparator);}    
-    public function getParent()                 {if($this->isRoot())return null ; return new Path(array_slice ($this->pathElements, 0, count($this->pathElements)-1, true) , $this->directorySeparator);}    
-    public function __toString()                {return $this->directorySeparator . implode($this->directorySeparator, $this->pathElements);}    
-    public function combine(Path $subPath)  {return new Path(array_merge($this->pathElements,$subPath->pathElements) , $this->directorySeparator);}        
-    public function getDirectorySeparator()     {return $this->directorySeparator;}
-    public function getElements()           {return $this->pathElements;}
-    public function getElement($index)      {return isset($this->pathElements[$index])?$this->pathElements[$index]:null;}
-    public function getHash(Hash $hash) {return $hash->calc($this->__toString());}   
-    public function getUID() {return implode('#', $this->pathElements);}   
-    
-    public function setDirectorySeparator($directorySeparator) {$this->directorySeparator = $directorySeparator;}
+    }
+    public function isRoot()
+    {
+        return $this->getDeep()==0;
+    }
+    public function getDeep()
+    {
+        return count($this->pathElements);
+    }
+    public function getName()
+    {
+        return end($this->pathElements);
+    }
+    public function getChild($name)
+    {
+        return new Path(array_merge($this->pathElements, array($name)), $this->directorySeparator);
+    }
+    public function getParent()
+    {
+        if($this->isRoot()) {
+            return null ;
+        } return new Path(array_slice($this->pathElements, 0, count($this->pathElements)-1, true), $this->directorySeparator);
+    }
+    public function __toString()
+    {
+        return $this->directorySeparator . implode($this->directorySeparator, $this->pathElements);
+    }
+    public function combine(Path $subPath)
+    {
+        return new Path(array_merge($this->pathElements, $subPath->pathElements), $this->directorySeparator);
+    }
+    public function getDirectorySeparator()
+    {
+        return $this->directorySeparator;
+    }
+    public function getElements()
+    {
+        return $this->pathElements;
+    }
+    public function getElement($index)
+    {
+        return isset($this->pathElements[$index]) ? $this->pathElements[$index] : null;
+    }
+    public function getHash(Hash $hash)
+    {
+        return $hash->calc($this->__toString());
+    }
+    public function getUID()
+    {
+        return implode('#', $this->pathElements);
+    }
+
+    public function setDirectorySeparator($directorySeparator)
+    {
+        $this->directorySeparator = $directorySeparator;
+    }
 
 
 }

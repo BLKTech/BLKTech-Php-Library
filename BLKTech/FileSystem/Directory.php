@@ -14,9 +14,10 @@
  */
 
 namespace BLKTech\FileSystem;
-use \BLKTech\DataType\Path;
-use \BLKTech\FileSystem\Exception\NotIsDirectoryException;
-use \BLKTech\FileSystem\Exception\CreateDirectoryException;
+
+use BLKTech\DataType\Path;
+use BLKTech\FileSystem\Exception\NotIsDirectoryException;
+use BLKTech\FileSystem\Exception\CreateDirectoryException;
 
 /**
  *
@@ -25,53 +26,59 @@ use \BLKTech\FileSystem\Exception\CreateDirectoryException;
 
 class Directory extends FileSystem
 {
-    public function __construct(Path $path) 
+    public function __construct(Path $path)
     {
         parent::__construct($path);
-        
-        if(parent::exists() && !parent::isDirectory())
+
+        if(parent::exists() && !parent::isDirectory()) {
             throw new NotIsDirectoryException($path);
-        
-        if(!$this->isRoot())
+        }
+
+        if(!$this->isRoot()) {
             parent::getParent();
+        }
     }
 
     public function getChild($name)
     {
         $_ = parent::getChild($name);
-        
-        if(!self::pathExists($_))
-            return new FileSystem($_,parent::getDirectorySeparator());    
-        elseif(self::pathIsDirectory($_))
-            return new Directory($_,parent::getDirectorySeparator());
-        else if (self::pathIsFile($_))
-            return new File($_,parent::getDirectorySeparator());        
-        else            
-            return new FileSystem($_,parent::getDirectorySeparator());    
+
+        if(!self::pathExists($_)) {
+            return new FileSystem($_, parent::getDirectorySeparator());
+        } elseif(self::pathIsDirectory($_)) {
+            return new Directory($_, parent::getDirectorySeparator());
+        } elseif (self::pathIsFile($_)) {
+            return new File($_, parent::getDirectorySeparator());
+        } else {
+            return new FileSystem($_, parent::getDirectorySeparator());
+        }
     }
-    
-    public function getChildren()    
+
+    public function getChildren()
     {
         $_ = array();
-        foreach(self::getSubPaths($this) as $subPath)
-            $_ = $this->getChild ($subPath->getName());
+        foreach(self::getSubPaths($this) as $subPath) {
+            $_ = $this->getChild($subPath->getName());
+        }
         return $_;
-    }    
-    
-    
-    
-    public final function create()
+    }
+
+
+
+    final public function create()
     {
-        if(parent::exists())
+        if(parent::exists()) {
             return;
-               
+        }
+
         $this->getParent()->create();
-        
+
         parent::validateWritable();
-        
-        if(!mkdir ($this->__toString()))
-            throw new CreateDirectoryException($this->__toString());  
-                         
+
+        if(!mkdir($this->__toString())) {
+            throw new CreateDirectoryException($this->__toString());
+        }
+
     }
 
     public static function getFromString($stringPath, $directorySeparator = DIRECTORY_SEPARATOR)
@@ -80,4 +87,3 @@ class Directory extends FileSystem
     }
 
 }
-    

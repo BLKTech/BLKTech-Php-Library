@@ -22,10 +22,10 @@ namespace BLKTech\DataBase\NoSQL\KeyValue;
 
 abstract class Driver extends \BLKTech\DataBase\NoSQL\Driver
 {
-    public abstract function exists($key);
-    public abstract function delete($key);
-    public abstract function get($key);
-    public abstract function set($key,$value);
-    public abstract function getKeys();  
-    
+    abstract public function exists($key);
+    abstract public function delete($key);
+    abstract public function get($key);
+    abstract public function set($key, $value);
+    abstract public function getKeys();
+
 }

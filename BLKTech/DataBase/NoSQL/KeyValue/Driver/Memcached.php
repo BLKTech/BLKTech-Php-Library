@@ -14,77 +14,83 @@
  */
 
 namespace BLKTech\DataBase\NoSQL\KeyValue\Driver;
-use \BLKTech\DataType\Service;
-use \BLKTech\Cryptography\Hash;
+
+use BLKTech\DataType\Service;
+use BLKTech\Cryptography\Hash;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Memcached extends \BLKTech\DataBase\NoSQL\KeyValue\Driver{
-    
-    public static function getLocalHost($keyPrefix = NULL, Hash $hashAlgorithm = null)
+
+class Memcached extends \BLKTech\DataBase\NoSQL\KeyValue\Driver
+{
+    public static function getLocalHost($keyPrefix = null, Hash $hashAlgorithm = null)
     {
         return new Memcached(new Service('127.0.0.1', 11211), $keyPrefix, $hashAlgorithm);
     }
-    
+
     private $memcached;
     private $keyPrefix;
     private $hashAlgorithm;
-        
-    public function __construct(Service $server, $keyPrefix = NULL, Hash $hashAlgorithm = null)
+
+    public function __construct(Service $server, $keyPrefix = null, Hash $hashAlgorithm = null)
     {
-        $this->memcached = new \Memcached();        
-        $this->memcached->addServer($server->getHost(),$server->getPort());                         
+        $this->memcached = new \Memcached();
+        $this->memcached->addServer($server->getHost(), $server->getPort());
         $this->keyPrefix = $keyPrefix;
         $this->hashAlgorithm = $hashAlgorithm;
-        
-        if($this->keyPrefix===NULL)        
-            $this->keyPrefix = abs(crc32($_SERVER['SCRIPT_FILENAME']));                
+
+        if($this->keyPrefix===null) {
+            $this->keyPrefix = abs(crc32($_SERVER['SCRIPT_FILENAME']));
+        }
     }
 
     private function mapKey($key)
     {
-        if($this->hashAlgorithm!==NULL)
+        if($this->hashAlgorithm!==null) {
             return $this->hashAlgorithm->calc($this->keyPrefix.$key);
-        else
+        } else {
             return $this->keyPrefix.$key;
+        }
     }
-    
-    public function delete($key) 
+
+    public function delete($key)
     {
         return $this->memcached->delete($this->mapKey($key));
     }
 
-    public function exists($key) 
+    public function exists($key)
     {
-        return $this->memcached->get($this->mapKey($key))!==FALSE;
+        return $this->memcached->get($this->mapKey($key))!==false;
     }
 
-    public function get($key) 
+    public function get($key)
     {
         return $this->memcached->get($this->mapKey($key));
     }
 
-    public function set($key, $data) 
+    public function set($key, $data)
     {
         return $this->memcached->set($this->mapKey($key), $data);
     }
 
-    public function getKeys() 
+    public function getKeys()
     {
-        if($this->hashAlgorithm!==NULL)
+        if($this->hashAlgorithm!==null) {
             HashedKeysException::throwException('Hashed with: ' . $this->hashAlgorithm->getName());
-        
+        }
+
         $keyPrefixLen = strlen($this->keyPrefix);
-        
+
         $_ = array();
-        
-        foreach ($this->memcached->getAllKeys() as $key)
-            if(substr($key, 0, $keyPrefixLen) == $this->keyPrefix)
-                $_[] = substr ($key, $this->keyPrefix, $keyPrefixLen);
-            
+
+        foreach ($this->memcached->getAllKeys() as $key) {
+            if(substr($key, 0, $keyPrefixLen) == $this->keyPrefix) {
+                $_[] = substr($key, $this->keyPrefix, $keyPrefixLen);
+            }
+        }
+
         return $_;
     }
 

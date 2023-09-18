@@ -19,7 +19,7 @@ namespace BLKTech\FileSystem\Exception;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\FileSystem\Exception {
 
+class Exception extends \BLKTech\FileSystem\Exception
+{
 }

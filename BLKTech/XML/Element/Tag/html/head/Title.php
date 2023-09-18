@@ -7,7 +7,8 @@
  */
 
 namespace BLKTech\XML\Element\Tag\HTML\head;
-use \BLKTech\XML\Element\Tag;
+
+use BLKTech\XML\Element\Tag;
 
 /**
  * Description of Title
@@ -16,7 +17,7 @@ use \BLKTech\XML\Element\Tag;
  */
 class Title extends Tag
 {
-    public function __construct($title) 
+    public function __construct($title)
     {
         parent::__construct();
         parent::addElement(new \BLKTech\XML\Element\Text($title));

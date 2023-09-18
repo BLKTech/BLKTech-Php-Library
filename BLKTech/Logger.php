@@ -14,7 +14,8 @@
  */
 
 namespace BLKTech;
-use \Psr\Log\LoggerInterface;
+
+use Psr\Log\LoggerInterface;
 
 /**
  *
@@ -22,6 +23,5 @@ use \Psr\Log\LoggerInterface;
  */
 
 class Logger extends \BLKTech\Logger\Console implements LoggerInterface
-{        
-    
+{
 }

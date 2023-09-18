@@ -14,33 +14,43 @@
  */
 
 namespace BLKTech\Loader;
-use \BLKTech\DataType\Path;
-use \BLKTech\FileSystem\Directory;
-use \BLKTech\DataType\URL;
+
+use BLKTech\DataType\Path;
+use BLKTech\FileSystem\Directory;
+use BLKTech\DataType\URL;
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Library 
+
+class Library
 {
-    private $namespace;    
+    private $namespace;
     private $directory;
     private $url;
-    
-    public function __construct(Path $namespace, Directory $directory, URL $url = null) 
+
+    public function __construct(Path $namespace, Directory $directory, URL $url = null)
     {
         $this->namespace = $namespace;
         $this->directory = $directory;
         $this->url = $url;
-        
-        $this->namespace->setDirectorySeparator("\\");        
+
+        $this->namespace->setDirectorySeparator("\\");
     }
 
-    public function getNamespace() {return $this->namespace;}
-    public function getDirectory() {return $this->directory;}
-    public function getUrl() {return $this->url;}
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
+    public function getDirectory()
+    {
+        return $this->directory;
+    }
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
 
 

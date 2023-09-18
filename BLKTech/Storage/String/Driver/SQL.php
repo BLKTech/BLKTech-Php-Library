@@ -13,8 +13,9 @@ namespace BLKTech\Storage\String\Driver;
  *
  * @author instalacion
  */
-abstract class SQL extends \BLKTech\Storage\String\Driver{
+abstract class SQL extends \BLKTech\Storage\String\Driver
+{
     //put your code here
-    
+
 
 }

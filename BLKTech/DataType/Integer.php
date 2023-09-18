@@ -20,18 +20,18 @@ namespace BLKTech\DataType;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class Integer 
+class Integer
 {
     public static function unSignedInt32CombineIntoInt64($highInt32, $lowInt32)
     {
-        return hexdec(str_pad(dechex($highInt32),8,'0',STR_PAD_LEFT) . str_pad(dechex($lowInt32),8,'0',STR_PAD_LEFT));
+        return hexdec(str_pad(dechex($highInt32), 8, '0', STR_PAD_LEFT) . str_pad(dechex($lowInt32), 8, '0', STR_PAD_LEFT));
     }
     public static function unSignedInt64UnCombineIntoInt32($int64)
     {
-        $int64 = dechex($int64);        
+        $int64 = dechex($int64);
         return array(
             hexdec(substr($int64, 0, strlen($int64)-8)),
-            hexdec(substr($int64,-8))
+            hexdec(substr($int64, -8))
         );
-    }        
+    }
 }

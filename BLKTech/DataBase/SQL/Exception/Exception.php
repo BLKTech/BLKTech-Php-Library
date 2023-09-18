@@ -19,7 +19,7 @@ namespace BLKTech\DataBase\SQL\Exception;
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Exception extends \BLKTech\DataBase\SQL\Exception {
 
+class Exception extends \BLKTech\DataBase\SQL\Exception
+{
 }

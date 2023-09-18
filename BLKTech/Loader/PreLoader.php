@@ -14,14 +14,15 @@
  */
 
 namespace BLKTech\Loader;
+
 Preloader::preLoad();
 
 /**
  *
  * @author TheKito < blankitoracing@gmail.com >
  */
- 
-class Preloader 
+
+class Preloader
 {
     private static $clasess = array(
          'BLKTech/DesignPattern/Singleton',
@@ -30,20 +31,20 @@ class Preloader
          'BLKTech/DataType/Query',
          'BLKTech/DataType/Service',
          'BLKTech/DataType/URL',
-         'BLKTech/FileSystem/FileSystem',    
-         'BLKTech/FileSystem/Directory', 
-         'BLKTech/FileSystem/File',         
+         'BLKTech/FileSystem/FileSystem',
+         'BLKTech/FileSystem/Directory',
+         'BLKTech/FileSystem/File',
          'BLKTech/Loader/Library',
          'BLKTech/Loader/Loader',
     );
- 
+
     public static function preLoad()
     {
-        foreach (self::$clasess as $class)
+        foreach (self::$clasess as $class) {
             require_once __DIR__ . '/../../' . $class . '.php';
-        
-        Loader::getInstance();          
-    }
-    
-}
+        }
 
+        Loader::getInstance();
+    }
+
+}

@@ -14,7 +14,8 @@
  */
 
 namespace BLKTech\XML\Document;
-use \BLKTech\XML\Document;
+
+use BLKTech\XML\Document;
 
 /**
  *
@@ -23,16 +24,14 @@ use \BLKTech\XML\Document;
 
 class HTML extends Document
 {
-
-    
-    public function __construct() 
-    {        
+    public function __construct()
+    {
         parent::__construct();
-        parent::setDeclaration('!DOCTYPE html');               
+        parent::setDeclaration('!DOCTYPE html');
         parent::addElement(new \BLKTech\XML\Element\Tag\HTML());
     }
-    
-    
 
-    
+
+
+
 }

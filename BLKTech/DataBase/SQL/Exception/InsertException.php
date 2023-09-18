@@ -20,6 +20,7 @@ namespace BLKTech\DataBase\SQL\Exception;
  * @author TheKito < blankitoracing@gmail.com >
  */
 
-class InsertException extends Exception{
+class InsertException extends Exception
+{
     //put your code here
 }
