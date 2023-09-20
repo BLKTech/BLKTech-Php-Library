@@ -92,26 +92,26 @@ class Service
     {
         $_ = '';
 
-        if($this->scheme!==null) {
-            $_.= $this->scheme . $this->schemeSeparator;
+        if($this->scheme !== null) {
+            $_ .= $this->scheme . $this->schemeSeparator;
         }
 
-        if($this->user!==null) {
-            $_.= $this->user;
+        if($this->user !== null) {
+            $_ .= $this->user;
 
-            if($this->passowrd!==null) {
-                $_.= ':' . $this->passowrd;
+            if($this->passowrd !== null) {
+                $_ .= ':' . $this->passowrd;
             }
 
-            $_.= '@';
+            $_ .= '@';
         }
 
-        if($this->host!==null) {
-            $_.= $this->host;
+        if($this->host !== null) {
+            $_ .= $this->host;
         }
 
-        if($this->port!==null) {
-            $_.= ':' . $this->port;
+        if($this->port !== null) {
+            $_ .= ':' . $this->port;
         }
 
         return $_;

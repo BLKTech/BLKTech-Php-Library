@@ -19,7 +19,7 @@ use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
  */
 class Dynamic extends \BLKTech\Storage\Hash\Driver\SQL
 {
-    private $tableNamePrefix='blktech_storage_hash__';
+    private $tableNamePrefix = 'blktech_storage_hash__';
     private $driver;
     private $dynamic;
 
@@ -53,7 +53,7 @@ class Dynamic extends \BLKTech\Storage\Hash\Driver\SQL
         $this->createTable($idHigh, strlen($hash));
 
         $data = array(
-            'value'=>$hash
+            'value' => $hash
         );
 
 

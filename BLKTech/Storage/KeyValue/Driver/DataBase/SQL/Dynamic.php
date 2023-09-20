@@ -26,7 +26,7 @@ use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
 
 class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL
 {
-    public const tableNamePrefix='blktech_storage_keyvalue__';
+    public const tableNamePrefix = 'blktech_storage_keyvalue__';
 
     private $driver;
     private $string;
@@ -64,9 +64,9 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL
         $value_ = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($value));
 
         $data = array(
-            'idKey'=>$key_[1],
-            'lenValue'=>$value_[0],
-            'idValue'=>$value_[1]
+            'idKey' => $key_[1],
+            'lenValue' => $value_[0],
+            'idValue' => $value_[1]
         );
 
         $this->createTable($key_[0]);
@@ -112,7 +112,7 @@ class Dynamic extends \BLKTech\Storage\KeyValue\Driver\DataBase\SQL
         $key_ = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($key));
 
         $_ = array();
-        foreach($this->driver->select($this->getTableNameKeyValue($key_[0]), array('lenValue','idValue'), array('idKey'=>$key_[1])) as $row) {
+        foreach($this->driver->select($this->getTableNameKeyValue($key_[0]), array('lenValue','idValue'), array('idKey' => $key_[1])) as $row) {
             $_[] = $this->string->get(Integer::unSignedInt32CombineIntoInt64($row['lenValue'], $row['idValue']));
         }
         return $_;

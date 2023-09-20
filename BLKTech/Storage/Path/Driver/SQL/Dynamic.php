@@ -27,7 +27,7 @@ use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
 
 class Dynamic extends \BLKTech\Storage\Path\Driver\SQL
 {
-    public const tableNamePrefix='blktech_storage_path__';
+    public const tableNamePrefix = 'blktech_storage_path__';
 
     private $driver;
     private $string;
@@ -99,7 +99,7 @@ class Dynamic extends \BLKTech\Storage\Path\Driver\SQL
             $level++;
         }
 
-        return Integer::unSignedInt32CombineIntoInt64($level-1, $idParent);
+        return Integer::unSignedInt32CombineIntoInt64($level - 1, $idParent);
     }
     public function getChilds($id)
     {

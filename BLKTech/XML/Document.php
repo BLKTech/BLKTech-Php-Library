@@ -55,7 +55,7 @@ class Document
         $_ = '<'.$this->declaration.'>'.PHP_EOL;
 
         foreach ($this->elements as $element) {
-            $_ .= $element->toString($level+1);
+            $_ .= $element->toString($level + 1);
         }
 
         return $_;

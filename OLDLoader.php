@@ -59,7 +59,7 @@ spl_autoload_register(
         $classNameSpace = explode(DIRECTORY_SEPARATOR, str_replace('/', DIRECTORY_SEPARATOR, str_replace("\\", DIRECTORY_SEPARATOR, $classNameSpace)));
 
         foreach ($classNameSpace as $key => $value) {
-            if(empty($value) || $value=='.' || $value=='..') {
+            if(empty($value) || $value == '.' || $value == '..') {
                 unset($classNameSpace[$key]);
             }
         }
@@ -71,7 +71,7 @@ spl_autoload_register(
 
             try {
                 $data = @file_get_contents('https://psr0.blktech.org/'.implode('/', $classNameSpace).'.php?v='. time());
-                if($data!==false) {
+                if($data !== false) {
                     class_exists('Logger', false) && Logger::getInstance()->debug('Class downloaded');
 
                     $_ = $classNameSpace;
@@ -96,14 +96,14 @@ spl_autoload_register(
             $className = array_pop($_);
             $extends = "\\" . implode("\\", $_) . 'Exception';
 
-            if(count($_)>0) {
+            if(count($_) > 0) {
                 eval('namespace ' .  implode("\\", $_) . '{ class ' . $className . ' extends '.$extends.' {} }');
             } else {
                 eval('class ' . $className . ' extends '.$extends.' {}');
             }
         }
 
-        if(!class_exists(implode("\\", $classNameSpace), false) && !interface_exists(implode("\\", $classNameSpace), false) &&! trait_exists(implode("\\", $classNameSpace), false)) {
+        if(!class_exists(implode("\\", $classNameSpace), false) && !interface_exists(implode("\\", $classNameSpace), false) && ! trait_exists(implode("\\", $classNameSpace), false)) {
             class_exists('Logger', false) && Logger::getInstance()->emergency('Class not found');
             throw new BLKTech\Loader\ClassNotFoundException(implode("\\", $classNameSpace));
         }

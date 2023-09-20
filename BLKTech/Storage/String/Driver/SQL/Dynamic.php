@@ -26,7 +26,7 @@ use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
 
 class Dynamic extends \BLKTech\Storage\String\Driver\SQL
 {
-    public const tableNamePrefix='blktech_storage_string__';
+    public const tableNamePrefix = 'blktech_storage_string__';
 
     private $driver;
     private $dynamic;
@@ -56,7 +56,7 @@ class Dynamic extends \BLKTech\Storage\String\Driver\SQL
         $idHigh = mb_strlen($string);
 
         $data = array(
-            'value'=>$string
+            'value' => $string
         );
 
         $this->createTable($idHigh);

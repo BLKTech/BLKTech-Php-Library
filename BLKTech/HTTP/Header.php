@@ -28,7 +28,7 @@ class Header extends \BLKTech\DataType\HashTable
         foreach($_SERVER as $key => $value) {
             $nkey = strtolower(trim($key));
 
-            if(strpos($nkey, 'http_')===0) {
+            if(strpos($nkey, 'http_') === 0) {
                 $_->set(substr($nkey, strlen('http_')), $value);
             }
         }
@@ -40,7 +40,7 @@ class Header extends \BLKTech\DataType\HashTable
         $_ = new self();
         foreach (explode("\n", str_replace("\r", "\n", $string)) as $line) {
             $line = explode(':', $line, 2);
-            if(count($line)==2) {
+            if(count($line) == 2) {
                 $_->set(trim($line[0]), trim($line[1]));
             }
         }

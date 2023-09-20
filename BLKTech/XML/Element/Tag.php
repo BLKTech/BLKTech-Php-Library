@@ -30,7 +30,7 @@ abstract class Tag extends Element
 
         foreach ($attributes as $key => $value) {
             $_ .= ' ' . $key;
-            if($value!==null) {
+            if($value !== null) {
                 $_ .= '="' . str_replace('"', '&quot;', $value) . '"';
             }
         }
@@ -67,7 +67,7 @@ abstract class Tag extends Element
     {
         $tabs = parent::getTabs($level);
 
-        if(count($this->elements)==0) {
+        if(count($this->elements) == 0) {
             echo $tabs . self::open($this->name, $this->attributes, true);
             return;
         }
@@ -75,7 +75,7 @@ abstract class Tag extends Element
         echo $tabs . self::open($this->name, $this->attributes, false) . PHP_EOL;
 
         foreach ($this->elements as $element) {
-            $element->dump($level+1);
+            $element->dump($level + 1);
         }
 
         echo $tabs . self::close($this->name) . PHP_EOL;
@@ -84,14 +84,14 @@ abstract class Tag extends Element
     {
         $tabs = parent::getTabs($level);
 
-        if(count($this->elements)==0) {
+        if(count($this->elements) == 0) {
             return $tabs . self::open($this->name, $this->attributes, true);
         }
 
         $_ = $tabs . self::open($this->name, $this->attributes, false) . PHP_EOL;
 
         foreach ($this->elements as $element) {
-            $_ .= $element->toString($level+1);
+            $_ .= $element->toString($level + 1);
         }
 
         return $_ . $tabs . self::close($this->name) . PHP_EOL;

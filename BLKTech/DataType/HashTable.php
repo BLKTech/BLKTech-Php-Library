@@ -34,7 +34,7 @@ class HashTable implements \Iterator
             throw new InvalidArrayException($array);
         }
 
-        $this->_= $array;
+        $this->_ = $array;
     }
 
     public function get($key, $default = null)
@@ -82,7 +82,7 @@ class HashTable implements \Iterator
     }
     public function valid()
     {
-        return $this->key()!==null;
+        return $this->key() !== null;
     }
 
 }

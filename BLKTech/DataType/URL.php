@@ -77,7 +77,7 @@ class URL
         $this->fragment = $this->getElement('fragment');
     }
 
-    private function getElement($element, $default=null, $prefix='', $suffix='')
+    private function getElement($element, $default = null, $prefix = '', $suffix = '')
     {
         if(!isset($this->urlElements[$element])) {
             return $default;
@@ -107,7 +107,7 @@ class URL
 
     public function combine(URL $otherURL)
     {
-        if($otherURL->getElement('host')!==null) {
+        if($otherURL->getElement('host') !== null) {
             return $otherURL;
         }
 

@@ -30,7 +30,7 @@ class Integer
     {
         $int64 = dechex($int64);
         return array(
-            hexdec(substr($int64, 0, strlen($int64)-8)),
+            hexdec(substr($int64, 0, strlen($int64) - 8)),
             hexdec(substr($int64, -8))
         );
     }

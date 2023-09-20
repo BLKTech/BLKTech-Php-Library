@@ -25,7 +25,7 @@ use BLKTech\DesignPattern\Singleton;
 
 class Console extends Singleton implements LoggerInterface
 {
-    private $ms=0;
+    private $ms = 0;
 
     public function __construct()
     {
@@ -67,7 +67,7 @@ class Console extends Singleton implements LoggerInterface
 
     public function log($level, $message, array $context = array())
     {
-        error_log("[" . str_pad(round(microtime(true)-$this->ms, 8), 10, '0', STR_PAD_LEFT) . "]\t" . $level . ": \t" . $message);
+        error_log("[" . str_pad(round(microtime(true) - $this->ms, 8), 10, '0', STR_PAD_LEFT) . "]\t" . $level . ": \t" . $message);
 
     }
 

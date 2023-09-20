@@ -165,11 +165,11 @@ class FileSystem extends Path
 
         $tmp = array();
         foreach (scandir(self::parsePathFileSystem($path)) as $_) {
-            if($_=='.') {
+            if($_ == '.') {
                 continue;
             }
 
-            if($_=='..') {
+            if($_ == '..') {
                 continue;
             }
 

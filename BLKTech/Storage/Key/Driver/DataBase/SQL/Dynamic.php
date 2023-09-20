@@ -26,7 +26,7 @@ use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
 
 class Dynamic extends \BLKTech\Storage\Key\Driver\DataBase\SQL
 {
-    public const tableNamePrefix='blktech_storage_key__';
+    public const tableNamePrefix = 'blktech_storage_key__';
 
     private $driver;
     private $string;
@@ -64,9 +64,9 @@ class Dynamic extends \BLKTech\Storage\Key\Driver\DataBase\SQL
         $value_ = Integer::unSignedInt64UnCombineIntoInt32($this->string->set($value));
 
         $data = array(
-            'idKey'=>$key_[1],
-            'lenValue'=>$value_[0],
-            'idValue'=>$value_[1]
+            'idKey' => $key_[1],
+            'lenValue' => $value_[0],
+            'idValue' => $value_[1]
         );
 
         $this->createTable($key_[0]);

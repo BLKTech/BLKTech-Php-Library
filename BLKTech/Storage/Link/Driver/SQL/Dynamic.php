@@ -19,7 +19,7 @@ use BLKTech\DataBase\SQL\Driver\MySQL\Dynamic as MySQLDynamic;
  */
 class Dynamic extends \BLKTech\Storage\Link\Driver\SQL
 {
-    public const tableNamePrefix='blktech_storage_link__';
+    public const tableNamePrefix = 'blktech_storage_link__';
 
     private $driver;
     private $dynamic;

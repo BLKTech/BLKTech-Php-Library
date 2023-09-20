@@ -27,14 +27,14 @@ class Instance
 {
     public function getInstances(Directory $configDirectory = null)
     {
-        if($configDirectory===null) {
+        if($configDirectory === null) {
             $configDirectory = Directory::getFromStringPath('/etc/openvpn');
         }
 
         $_ = array();
 
         foreach($configDirectory->getChildren() as $fso) {
-            if($fso instanceof File && strtolower($fso->getExtension())=='conf') {
+            if($fso instanceof File && strtolower($fso->getExtension()) == 'conf') {
                 $_[] = new self($fso);
             }
         }
@@ -78,7 +78,7 @@ class Instance
         while(!$reader->eof()) {
             $line = trim(explode('#', $reader->readLine(), 2)[0]);
 
-            if($line=='') {
+            if($line == '') {
                 continue;
             }
 
@@ -87,14 +87,14 @@ class Instance
             foreach($line as $index => $value) {
                 $value = trim($value);
 
-                if($value=='') {
+                if($value == '') {
                     unset($line[$index]);
                 } else {
                     $line[$index] = $value;
                 }
             }
 
-            if(count($line)>0) {
+            if(count($line) > 0) {
                 $key = strtolower(array_shift($line));
 
                 if(!isset($this->keys[$key])) {
@@ -110,7 +110,7 @@ class Instance
         }
 
         foreach($this->keys as $index => $value) {
-            if(count($value)==1) {
+            if(count($value) == 1) {
                 $this->keys[$index] = array_shift($value);
             }
         }

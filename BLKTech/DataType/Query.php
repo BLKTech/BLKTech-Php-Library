@@ -37,7 +37,7 @@ class Query extends HashTable
         foreach (explode("&", $string) as $element) {
             $element = explode('=', $element, 2);
 
-            if(count($element)==2) {
+            if(count($element) == 2) {
                 $value = urldecode(trim($element[1]));
             } else {
                 $value = null;
@@ -52,18 +52,18 @@ class Query extends HashTable
     public function __toString()
     {
         $_ = '';
-        foreach($this as $key=>$value) {
-            if($key==null) {
+        foreach($this as $key => $value) {
+            if($key == null) {
                 continue;
             }
 
-            if($_!='') {
+            if($_ != '') {
                 $_ .= '&';
             }
 
             $_ .= urlencode($key);
 
-            if($value!==null) {
+            if($value !== null) {
                 $_ .= '=' . urlencode($value);
             }
 

@@ -66,7 +66,7 @@ class File extends FileSystem
 
     final public function copyTo(File $destination)
     {
-        if(copy($this->__toString(), $destination->__toString())===false) {
+        if(copy($this->__toString(), $destination->__toString()) === false) {
             throw new CopyFileException($this->__toString() . ' > ' . $destination->__toString());
         }
     }

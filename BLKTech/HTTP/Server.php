@@ -65,8 +65,8 @@ abstract class Server
             header($headerName . ': ' . $headerValue, true, $response->getCode());
         }
 
-        if(Method::getFromGlobals()!='HEAD') {
-            if($payload!==null) {
+        if(Method::getFromGlobals() != 'HEAD') {
+            if($payload !== null) {
                 echo $payload;
             }
         } else {

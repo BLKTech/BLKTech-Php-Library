@@ -46,7 +46,7 @@ class Router extends \BLKTech\DesignPattern\Singleton
 
         Logger::getInstance()->debug('Route Method: ' . $method);
 
-        if($method!='ANY' && $this->requestMethod != strtoupper($method)) {
+        if($method != 'ANY' && $this->requestMethod != strtoupper($method)) {
             return;
         }
 

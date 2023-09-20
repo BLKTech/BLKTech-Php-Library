@@ -21,7 +21,7 @@ foreach($clasess as $class) {
     $file = $libsPath . '/' . $class . '.php';
     $dir = dirname($file);
 
-    if(!file_exists($file) || time()-filemtime($file)>3600) {
+    if(!file_exists($file) || time() - filemtime($file) > 3600) {
 
         error_log("================================ Install Class ================================");
         error_log(" DIR:\t\t$dir");
@@ -35,13 +35,13 @@ foreach($clasess as $class) {
         }
 
         $data = file_get_contents($url . '?time=' . time());
-        if($data===false) {
+        if($data === false) {
             error_log("Download ERROR");
             $ok = false;
             continue;
         }
 
-        if(file_put_contents($file, $data)===false) {
+        if(file_put_contents($file, $data) === false) {
             error_log("Write ERROR");
             $ok = false;
             continue;

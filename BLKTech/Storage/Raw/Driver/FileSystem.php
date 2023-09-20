@@ -38,7 +38,7 @@ class FileSystem extends \BLKTech\Storage\Driver
         $pathElements = array();
 
         foreach(array_merge(range('A', 'Z'), range(0, 9)) as $char) {
-            if(strpos($id, $char)!==false) {
+            if(strpos($id, $char) !== false) {
                 $newPath = $newPath->getChild($char);
             }
         }

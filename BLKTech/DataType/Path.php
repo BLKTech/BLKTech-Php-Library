@@ -36,11 +36,11 @@ class Path
                 continue;
             }
 
-            if($name=='.') {
+            if($name == '.') {
                 continue;
             }
 
-            if($name=='..' && count($tmp)>0) {
+            if($name == '..' && count($tmp) > 0) {
                 array_pop($tmp);
                 continue;
             }
@@ -64,7 +64,7 @@ class Path
     }
     public function isRoot()
     {
-        return $this->getDeep()==0;
+        return $this->getDeep() == 0;
     }
     public function getDeep()
     {
@@ -82,7 +82,7 @@ class Path
     {
         if($this->isRoot()) {
             return null ;
-        } return new Path(array_slice($this->pathElements, 0, count($this->pathElements)-1, true), $this->directorySeparator);
+        } return new Path(array_slice($this->pathElements, 0, count($this->pathElements) - 1, true), $this->directorySeparator);
     }
     public function __toString()
     {
