@@ -336,18 +336,18 @@ class MySQL extends \BLKTech\DataBase\SQL\Driver
         $t = "";
         foreach ($data as $key => $value) {
             if ($t != "") {
-                $t.=" $and ";
+                $t .= " $and ";
             }
 
-            if(strpos($key, '!')===0) {
+            if(strpos($key, '!') === 0) {
                 $key = substr($key, 1);
-                $t.='not ';
+                $t .= 'not ';
             }
 
             if ($value === null) {
-                $t.="`".$key . "` " . $null_case;
+                $t .= "`".$key . "` " . $null_case;
             } else {
-                $t.="`".$key . "`='" . mysqli_real_escape_string($this->cnn, $value) . "'";
+                $t .= "`".$key . "`='" . mysqli_real_escape_string($this->cnn, $value) . "'";
             }
         }
         return $t;
@@ -358,10 +358,10 @@ class MySQL extends \BLKTech\DataBase\SQL\Driver
         $t = "";
         foreach ($data as $value) {
             if ($t != "") {
-                $t.=",";
+                $t .= ",";
             }
 
-            $t.="`".$value."`";
+            $t .= "`".$value."`";
         }
         if ($t != "") {
             return $t;
@@ -376,19 +376,19 @@ class MySQL extends \BLKTech\DataBase\SQL\Driver
         $t1 = "";
         foreach ($data as $key => $value) {
             if ($t0 != "") {
-                $t0.=",";
+                $t0 .= ",";
             }
 
             if ($t1 != "") {
-                $t1.=",";
+                $t1 .= ",";
             }
 
-            $t0.="`".$key."`";
+            $t0 .= "`".$key."`";
 
             if ($value === null) {
-                $t1.="null";
+                $t1 .= "null";
             } else {
-                $t1.="'" . mysqli_real_escape_string($this->cnn, $value) . "'";
+                $t1 .= "'" . mysqli_real_escape_string($this->cnn, $value) . "'";
             }
         }
 
@@ -424,7 +424,7 @@ class MySQL extends \BLKTech\DataBase\SQL\Driver
 
     public function exists($table, $where = array())
     {
-        return $this->count($table, $where)>0;
+        return $this->count($table, $where) > 0;
     }
 
     public function copyTable($sourceTable, $destinationTable)

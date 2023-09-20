@@ -59,7 +59,7 @@ class MsSQL extends \BLKTech\DataBase\SQL\Driver
 
         $this->cnn = @mssql_connect($this->server, $this->user, $this->password);
 
-        if($this->cnn===false) {
+        if($this->cnn === false) {
             $this->cnn = null;
             throw new ConnectException($this->server, $this->user, mssql_get_last_message(), -1);
         }
@@ -86,7 +86,7 @@ class MsSQL extends \BLKTech\DataBase\SQL\Driver
 
     public function isConnected()
     {
-        return $this->cnn!==null;
+        return $this->cnn !== null;
     }
 
     public function __destruct()
@@ -104,7 +104,7 @@ class MsSQL extends \BLKTech\DataBase\SQL\Driver
 
         $RS = @mssql_query($sql, $this->cnn);
 
-        if($RS===false) {
+        if($RS === false) {
             throw new CommandException($sql, @mssql_get_last_message(), -1);
         }
 
@@ -115,7 +115,7 @@ class MsSQL extends \BLKTech\DataBase\SQL\Driver
     {
         $RS = $this->sendCommand($sql);
 
-        if($RS===true) {
+        if($RS === true) {
             throw new GetResultSetException($sql, 'No ResultSet found', -1);
         }
 
@@ -124,7 +124,7 @@ class MsSQL extends \BLKTech\DataBase\SQL\Driver
         while ($ROW = @mssql_fetch_assoc($RS)) {
             $ROW2 = array();
 
-            foreach($ROW as $KEY =>$VALUE) {
+            foreach($ROW as $KEY => $VALUE) {
                 $ROW2[strtoupper($KEY)] = utf8_encode(trim($VALUE));
             }
 
@@ -139,7 +139,7 @@ class MsSQL extends \BLKTech\DataBase\SQL\Driver
     {
         $RS = $this->sendCommand($sql);
 
-        if($RS!==true) {
+        if($RS !== true) {
             throw new CommandException($sql, 'ResultSet found', -1);
         }
 
@@ -151,18 +151,18 @@ class MsSQL extends \BLKTech\DataBase\SQL\Driver
         $t = "";
         foreach ($data as $key => $value) {
             if ($t != "") {
-                $t.=" $and ";
+                $t .= " $and ";
             }
 
-            if(strpos($key, '!')===0) {
+            if(strpos($key, '!') === 0) {
                 $key = substr($key, 1);
-                $t.='not ';
+                $t .= 'not ';
             }
 
             if ($value === null) {
-                $t.="".$key . " " . $null_case;
+                $t .= "".$key . " " . $null_case;
             } else {
-                $t.="".$key . "=" . self::mssql_escape($value) . "";
+                $t .= "".$key . "=" . self::mssql_escape($value) . "";
             }
         }
         return $t;
@@ -193,7 +193,7 @@ class MsSQL extends \BLKTech\DataBase\SQL\Driver
     private static function arrayToSelect($data)
     {
 
-        if(is_array($data) && count($data)>0) {
+        if(is_array($data) && count($data) > 0) {
             return '' . implode(',', $data) . '';
         } else {
             return '*';
@@ -206,19 +206,19 @@ class MsSQL extends \BLKTech\DataBase\SQL\Driver
         $t1 = "";
         foreach ($data as $key => $value) {
             if ($t0 != "") {
-                $t0.=",";
+                $t0 .= ",";
             }
 
             if ($t1 != "") {
-                $t1.=",";
+                $t1 .= ",";
             }
 
-            $t0.="".$key."";
+            $t0 .= "".$key."";
 
             if ($value === null) {
-                $t1.="null";
+                $t1 .= "null";
             } else {
-                $t1.="" . self::mssql_escape($value) . "";
+                $t1 .= "" . self::mssql_escape($value) . "";
             }
         }
 
@@ -290,7 +290,7 @@ class MsSQL extends \BLKTech\DataBase\SQL\Driver
 
     public static function unixTime2SQL($time)
     {
-        if($time===null) {
+        if($time === null) {
             return null;
         }
 

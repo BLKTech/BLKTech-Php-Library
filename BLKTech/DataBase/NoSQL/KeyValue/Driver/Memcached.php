@@ -41,14 +41,14 @@ class Memcached extends \BLKTech\DataBase\NoSQL\KeyValue\Driver
         $this->keyPrefix = $keyPrefix;
         $this->hashAlgorithm = $hashAlgorithm;
 
-        if($this->keyPrefix===null) {
+        if($this->keyPrefix === null) {
             $this->keyPrefix = abs(crc32($_SERVER['SCRIPT_FILENAME']));
         }
     }
 
     private function mapKey($key)
     {
-        if($this->hashAlgorithm!==null) {
+        if($this->hashAlgorithm !== null) {
             return $this->hashAlgorithm->calc($this->keyPrefix.$key);
         } else {
             return $this->keyPrefix.$key;
@@ -62,7 +62,7 @@ class Memcached extends \BLKTech\DataBase\NoSQL\KeyValue\Driver
 
     public function exists($key)
     {
-        return $this->memcached->get($this->mapKey($key))!==false;
+        return $this->memcached->get($this->mapKey($key)) !== false;
     }
 
     public function get($key)
@@ -77,7 +77,7 @@ class Memcached extends \BLKTech\DataBase\NoSQL\KeyValue\Driver
 
     public function getKeys()
     {
-        if($this->hashAlgorithm!==null) {
+        if($this->hashAlgorithm !== null) {
             HashedKeysException::throwException('Hashed with: ' . $this->hashAlgorithm->getName());
         }
 

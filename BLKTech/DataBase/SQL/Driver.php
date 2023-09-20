@@ -128,8 +128,8 @@ abstract class Driver
         }
 
         foreach($ROW as $KEY => $VALUE) {
-            if(array_key_exists($KEY, $data) && $VALUE!=$data[$KEY]) {
-                $this->update($table, array($KEY=>$data[$KEY]), $index, 1);
+            if(array_key_exists($KEY, $data) && $VALUE != $data[$KEY]) {
+                $this->update($table, array($KEY => $data[$KEY]), $index, 1);
                 $UPDATES++;
             }
         }
@@ -155,7 +155,7 @@ abstract class Driver
     {
         $prefixLen = strlen($prefix);
 
-        $_ =array();
+        $_ = array();
 
         foreach ($this->getTables() as $table) {
             if(substr($table, 0, $prefixLen) == $prefix) {

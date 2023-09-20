@@ -31,7 +31,7 @@ class Exception extends \Exception
     {
         $classFullName = get_class($this);
 
-        if($code===0 || $code===null) {
+        if($code === 0 || $code === null) {
             $code = crc32($classFullName);
         }
 

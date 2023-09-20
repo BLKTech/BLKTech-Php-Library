@@ -27,19 +27,19 @@ class Dynamic extends SubTable
     public function delete($id)
     {
         $id_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        return $this->driver->delete(parent::getTable($id_[0], false), array('id'=>$id_[1]));
+        return $this->driver->delete(parent::getTable($id_[0], false), array('id' => $id_[1]));
     }
 
     public function exists($id)
     {
         $id_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        return $this->driver->exists(parent::getTable($id_[0], false), array('id'=>$id_[1]));
+        return $this->driver->exists(parent::getTable($id_[0], false), array('id' => $id_[1]));
     }
 
     public function get($id)
     {
         $id_ = Integer::unSignedInt64UnCombineIntoInt32($id);
-        return $this->driver->getRow(parent::getTable($id_[0], false), array(), array('id'=>$id_[1]));
+        return $this->driver->getRow(parent::getTable($id_[0], false), array(), array('id' => $id_[1]));
     }
 
     public function set($idHigh, $data = array())
